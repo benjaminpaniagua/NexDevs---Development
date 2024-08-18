@@ -11,10 +11,10 @@ This repository contains the source code and resources for the NexDevs system. T
 ## Authors
 
 - [@benjaminpaniagua](https://github.com/benjaminpaniagua)
-- [@member1](https://github.com/member1)
-- [@member2](https://github.com/member1)
-- [@member3](https://github.com/member1)
-- [@member4](https://github.com/member1)
+- [@dianaartavia](https://github.com/dianaartavia)
+- [@freddy74](https://github.com/freddy74)
+- [@sofia20a](https://github.com/sofia20a)
+- [@LuisCarlosSolis](https://github.com/LuisCarlosSolis)
 
 
 
