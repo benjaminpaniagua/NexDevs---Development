@@ -1,5 +1,6 @@
-import React from "react";
 import backgroundImage from "/images/header.png";
+import MainButton from "../../ui/MainButton";
+import SecondaryButton from "../../ui/SecondaryButton";
 
 const Header = () => {
   return (
@@ -9,11 +10,12 @@ const Header = () => {
     >
       <div className="relative z-10 p-16 flex flex-col gap-12">
         <h1>
-          Connect Your <br /> Skills, Find Your <br /> Next Project
+        Conecta tus habilidades <br/>y encuentra tu próximo <br/>proyecto
         </h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Morbi quis venenatis bibendum aenean.
-        </p>
+        <div className="flex gap-6">
+        <MainButton text="Registrarse como Usuario" sizeX="L" sizeY="L"/>
+        <SecondaryButton text="Registrarse como Empresa" sizeX="L" sizeY="L"/>
+        </div>
       </div>
     </div>
   );

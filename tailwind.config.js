@@ -31,12 +31,18 @@ export default {
         //Light Mode
         "clr-white": "hsla(0, 0%, 98%, 1)",
         "clr-black": "hsla(20, 8%, 7%, 1)",
+        "clr-black-hover": "hsla(20, 8%, 7%, .33)",
         "clr-grey": "hsla(0, 0%, 24%, 75)",
         "clr-blue": "hsla(217, 81%, 43%, 1)",
         "clr-blue-hover": "hsla(217, 79%, 31%, 1)",
+        "clr-green": "hsla(149, 60%, 42%, 1)",
+        "clr-green-light": "hsla(80, 51%, 59%, 1)",
+        "clr-green-dark": "hsla(80, 45%, 45%, 1)",
+        
       },
       gridTemplateColumns: {
         "auto-150": "repeat(auto-fit, minmax(150px, 1fr))",
+        "auto-200": "repeat(auto-fit, minmax(200px, 1fr))",
         "auto-250": "repeat(auto-fit, minmax(250px, 1fr))",
         "auto-300": "repeat(auto-fit, minmax(300px, 1fr))",
         "auto-350": "repeat(auto-fit, minmax(350px, 1fr))",

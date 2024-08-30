@@ -1,22 +1,23 @@
 import NavLinks from '../../ui/NavBar/NavLinks';
-import NavButtons from '../../ui/NavBar/NavButtons';
 
 const navBar = () => {
   const links = [
     { href: "#home", label: "Inicio" },
-    { href: "#about", label: "Acerca de" },
-    { href: "#community", label: "Comunidad" },
+    { href: "#empresas", label: "Empresas" },
+    { href: "#freelance", label: "Freelance" },
+    { href: "#contacto", label: "Contacto" },
   ];
 
   return (
     <div>
       <nav className="flex items-center justify-between p-6 relative z-10 bg-clr-white">
         <div className="flex items-center">
+          <a href="#">
           <img src="/logo/logo.png" alt="Logo" className="h-8 mr-4" />
+          </a>
         </div>
         <div className="flex items-center gap-4 tracking-wide font-medium sm:hidden">
           <NavLinks links={links} />
-          <NavButtons logIn="Iniciar Sesión" registered="Registrarse" />
         </div>
       </nav>
     </div>
