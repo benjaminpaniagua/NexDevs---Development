@@ -13,7 +13,7 @@ const navBar = () => {
       <nav className="flex items-center justify-between p-6 relative z-10 bg-clr-white">
         <div className="flex items-center">
           <a href="#">
-          <img src="/logo/logo.png" alt="Logo" className="h-8 mr-4" />
+          <img src="/logo/logo.svg" alt="Logo" className="h-12 " />
           </a>
         </div>
         <div className="flex items-center gap-4 tracking-wide font-medium sm:hidden">

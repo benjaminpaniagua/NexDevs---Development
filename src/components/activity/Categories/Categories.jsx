@@ -42,7 +42,7 @@ const Categories = () => {
   };
 
   return (
-    <div className="mt-10 grid gap-12 p-4">
+    <div className="mt-10 grid gap-12 p-12 md:p-4">
       <h2 className="font-clashDisplay">Categorías Principales</h2>
       <div className="grid gap-10">
         <div className="grid grid-cols-auto-300 sm:grid-cols-auto-250 md:grid-cols-auto-300 lg:grid-cols-auto-350 gap-4">
