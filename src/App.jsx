@@ -1,16 +1,16 @@
 import './index.css'
-import NavBar from './components/NavBar/NavBar'
-import Header from './components/Header/Header'
-import LogIn from './components/LogIn/LogIn'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Landing_Page } from './components/pages/Landing_Page.jsx';
+import { Access_Panel } from './components/pages/Access_Panel.jsx';
 
-function App() {
+export function App() {
 
   return (
-    <>
-       <NavBar/> 
-       <Header/>
-    </>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing_Page />} />
+          <Route path="/Access_Panel/*" element={<Access_Panel />} />
+        </Routes>
+      </Router>
   )
 }
-
-export default App
