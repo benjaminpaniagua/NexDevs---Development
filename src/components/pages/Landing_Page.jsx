@@ -4,6 +4,7 @@ import Header from '../../components/activity/Header/Header'
 import AboutUs from '../../components/activity/AboutUs/AboutUs'
 import Categories from '../../components/activity/Categories/Categories'
 import Promotion from '../../components/activity/Promotion/Promotion'
+import Footer from '../../components/activity/Footer/Footer'
 
 export function Landing_Page() {
     return (
@@ -13,6 +14,7 @@ export function Landing_Page() {
          <AboutUs/>
          <Categories/>
          <Promotion/>
+         <Footer/>
       </>
     )
   }  
