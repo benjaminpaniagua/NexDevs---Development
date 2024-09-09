@@ -12,7 +12,7 @@ const Header = () => {
         Conecta tus habilidades y encuentra tu próximo proyecto
         </h1>
         <div className="flex gap-6">
-        <MainButton text="Comenzar"/>
+        <MainButton text="Comenzar" onClick={() => window.location.href = '/Access_Panel/login'}/>
         </div>
       </div>
     </div>

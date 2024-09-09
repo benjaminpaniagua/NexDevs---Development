@@ -10,7 +10,7 @@ const Promotion = () => {
                 <h2 className="font-clashDisplay text-clr-white">Encuentra Profesionales y Oportunidades</h2>
                 <h5 className="text-clr-white">¿Buscas un profesional para tu próximo proyecto o quieres ofrecer tus habilidades a una comunidad activa? network te conecta con los mejores talentos y te permite crear un perfil profesional para destacar tus habilidades. Encuentra oportunidades de colaboración y haz crecer tu red profesional hoy mismo.</h5>
                 <div className="flex gap-4">
-                <InfoButton text="Comenzar"/>
+                <InfoButton text="Comenzar" onClick={() => window.location.href = '/Access_Panel/signin1'}/>
                 <SimpleButton text="Explorar"/>
                 </div>
             </div>
@@ -21,7 +21,7 @@ const Promotion = () => {
                 <h2 className="font-clashDisplay text-clr-white">Promociona tus Productos y Servicios como Empresa</h2>
                 <h5 className="text-clr-white">¿Eres una empresa que busca ampliar su base de clientes? En network, te ayudamos a destacar y conectar con miles de potenciales clientes interesados en tus servicios. Publica tus ofertas y aprovecha nuestra plataforma para maximizar tu visibilidad y atraer nuevos negocios.</h5>
                 <div className="flex gap-4">
-                <InfoButton text="Comenzar"/>
+                <InfoButton text="Comenzar" onClick={() => window.location.href = '/Access_Panel/company1'}/>
                 <SimpleButton text="Explorar"/>
                 </div>
             </div>
