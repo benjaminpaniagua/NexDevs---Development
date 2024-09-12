@@ -1,10 +1,10 @@
 import '../../index.css'
-import NavBar from '../../components/activity/NavBar/NavBar'
-import Header from '../../components/activity/Header/Header'
-import AboutUs from '../../components/activity/AboutUs/AboutUs'
-import Categories from '../../components/activity/Categories/Categories'
-import Promotion from '../../components/activity/Promotion/Promotion'
-import Footer from '../../components/activity/Footer/Footer'
+import NavBar from '../ui/NavBar/NavBar'
+import Header from '../landing_page_components/Header/Header'
+import AboutUs from '../landing_page_components/AboutUs/AboutUs'
+import Categories from '../landing_page_components/Categories/Categories'
+import Promotion from '../landing_page_components/Promotion/Promotion'
+import Footer from '../landing_page_components/Footer/Footer'
 
 export function Landing_Page() {
     return (
