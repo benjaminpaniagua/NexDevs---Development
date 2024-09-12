@@ -1,11 +1,14 @@
+import React from 'react';
+import '../../../index.css'; // Asegúrate de importar tu archivo CSS
+
 const NavLinks = ({ links }) => {
   return (
-    <ul className="flex gap-8 text-clr-black transition-all">
-      {links.map((link, index) => (
-        <li key={index}>
+    <ul className="flex md:flex-col gap-8 text-clr-black md:p-2 md:items-center">
+      {links.map((link) => (
+        <li key={link.href}>
           <a
             href={link.href}
-            className="hover:text-clr-blue-hover"
+            className="underline-animated hover:text-clr-blue-hover text-sm font-medium"
           >
             {link.label}
           </a>

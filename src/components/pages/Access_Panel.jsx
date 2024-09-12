@@ -95,7 +95,7 @@ export function Access_Panel() {
             <div className="w-1/2 h-full relative overflow-hidden flex items-center justify-center bg-clr-white md:w-full">
                 {/* Logo */}
                 <div className="absolute top-6 left-6 z-10 flex flex-no-shrink p-6 cursor-pointer">
-                    <img src="/logo/logo.svg" alt="Logo" className="h-12 cursor-pointer" onClick={() => window.location.href = '/'} />
+                    <img src="/logo/Logo.svg" alt="Logo" className="h-12 cursor-pointer" onClick={() => window.location.href = '/'} />
                 </div>
                 {/* Logo */}
 
@@ -128,7 +128,7 @@ export function Access_Panel() {
 
                     {/* Formulario de Recovery */}
                     <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/recovery' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Recovery_EmailVerification switchToLogIn={() => setActiveForm('login')} switchToPassword={() => navigate('/Access_Panel/password')} />
+                        <Recovery_EmailVerification switchToLogIn={() => navigate('/Access_Panel/password')} />
                     </div>
 
                     {/* Formulario de Password */}
