@@ -2,17 +2,16 @@ import React from "react";
 import '../../../index.css';
 import PropTypes from "prop-types";
 
-export function Modal_Profile({ name, state, city, bio, picture }) {
-
+export function Modal_Profile({ name, state, city, bio, picture, onClose }) {
     return (
         <>
-            <div className="relative bg-slate-300 h-screen w-full">
-                <div className="absolute justify-center items-center bg-clr-white rounded-lg h-auto w-96">
+            <div className="relative h-screen w-full">
+                <div className="absolute justify-center items-center bg-clr-white rounded-lg h-auto w-[22rem]">
                     {/* Upper Background */}
                     <div className="relative w-full h-36">
                         {/* Botón de cerrar */}
-                        <div className="absolute top-0 right-0 z-10 m-2">
-                            <img src="/images/close_window.svg" alt="Cerrar" className="h-12 cursor-pointer transition-transform duration-300 transform hover:scale-125 transform-origin-center" onClick={() => window.location.href = '/'} />
+                        <div className="absolute top-0 right-0 z-10 m-2" onClick={onClose}>
+                            <img src="/images/close_window.svg" alt="Cerrar" className="h-12 cursor-pointer transition-transform duration-300 transform hover:scale-125 transform-origin-center"/>
                         </div>
                         {/* Botón de cerrar */}
                         <svg className="h-full w-full fill-clr-blue opacity-20">
@@ -61,7 +60,7 @@ export function Modal_Profile({ name, state, city, bio, picture }) {
 
                             {/* Log Out */}
                             <div className="flex justify-center items-center text-center mt-8">
-                                <div class="border-b border-gray-300 my-4"></div>
+                                <div className="border-b border-gray-300 my-4"></div>
                                 <button className='text-fs-xsmall text-clr-grey transition-all hover:scale-110'>
                                     Cerrar sesión
                                 </button>

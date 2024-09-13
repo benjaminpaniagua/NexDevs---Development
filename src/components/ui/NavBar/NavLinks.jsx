@@ -3,7 +3,7 @@ import '../../../index.css'; // Asegúrate de importar tu archivo CSS
 
 const NavLinks = ({ links }) => {
   return (
-    <ul className="flex md:flex-col gap-8 text-clr-black md:p-2 md:items-center">
+    <ul className="flex sm:flex-col gap-8 text-clr-black md:p-2 md:items-center">
       {links.map((link) => (
         <li key={link.href}>
           <a

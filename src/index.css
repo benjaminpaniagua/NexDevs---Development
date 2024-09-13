@@ -13,6 +13,7 @@
 
 html,body{
   height: 100%;
+  background-color: lightblue;
   /* font-size: 12px; */
 }
 
@@ -415,25 +416,25 @@ html,body{
 }
 
 .form-wrapper {
-  position: absolute; /* Permite la superposición de formularios */
-  width: 100%;
+  position: absolute;
   height: 100%;
-  opacity: 0; /* Inicialmente oculto */
-  visibility: hidden; /* Asegura que el contenido no sea interactuable */
-  transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s; /* La visibilidad tarda 0.5s en cambiar */
+  opacity: 0; 
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s;
 }
 
 .step-visible {
-  opacity: 1; /* Hacemos el formulario visible */
-  visibility: visible; /* Permite la interacción */
-  transition: opacity 0.5s ease-in-out; /* Solo la opacidad cambia durante 0.5s */
+  opacity: 1; 
+  visibility: visible;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .step-hidden {
-  opacity: 0; /* Hacemos el formulario invisible */
-  visibility: hidden; /* Hace que el contenido no sea interactuable */
-  transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s; /* Visibilidad cambia después de 0.5s */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s;
 }
+/*Transiciones y Animaciones de los Access Panel*/
 
 .underline-animated {
   position: relative;
@@ -462,4 +463,64 @@ html,body{
   transform: scaleX(2);
 }
 
+/*Profile Moda*/
+@keyframes modalEnter {
+  0% {
+    transform: translateX(100%) rotate(25deg);
+    opacity: 0;
+  }
 
+  75% {
+    transform: translateX(0) rotate(-3deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+.animate-modal-open {
+  animation: modalEnter 0.3s ease-out forwards;
+}
+
+@keyframes modalExit {
+  0% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  25% {
+    transform: translateX(10%) rotate(-5deg); /* Puedes ajustar para que la animación no sea tan abrupta */
+    opacity: 1;
+  }
+
+  75% {
+    transform: translateX(50%) rotate(-10deg); /* Más allá de la vista para asegurar la salida completa */
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(100%) rotate(-25deg); /* Estado final fuera de la vista */
+    opacity: 0;
+  }
+}
+
+.animate-modal-close {
+  animation: modalExit 0.3s ease-out forwards;
+}
+/*Profile Moda*/
+
+/*navbar*/
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.content-navbar {
+  margin-top: 60px; /* Ajusta esto al alto del NavBar */
+}

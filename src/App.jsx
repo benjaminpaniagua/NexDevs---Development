@@ -1,18 +1,31 @@
 import './index.css'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import NavBar from './components/ui/NavBar/NavBar.jsx';
+import NavBar_copy from './components/ui/NavBar/NavBar-copy.jsx';
 import { Landing_Page } from './components/pages/Landing_Page.jsx';
 import { Access_Panel } from './components/pages/Access_Panel.jsx';
-import { Modal_Profile } from './components/ui/Modal_Profile/Modal_Profile.jsx';
 
-export function App() {
+const MainApp = () => {
+  const location = useLocation();
+  const showNavbar = !location.pathname.startsWith('/Access_Panel');
 
   return (
-      <Router>
+    <div>
+      {showNavbar && <NavBar />}
+      <div className={`flex-1 ${showNavbar ? 'mt-[0px]' : ''}`}>
         <Routes>
           <Route path="/" element={<Landing_Page />} />
           <Route path="/Access_Panel/*" element={<Access_Panel />} />
-          <Route path="/Modal_Profile_Panel/*" element={<Modal_Profile />} />
         </Routes>
-      </Router>
-  )
-}
+      </div>
+    </div>
+  );
+};
+
+const App = () => (
+  <Router>
+    <MainApp />
+  </Router>
+);
+
+export default App;

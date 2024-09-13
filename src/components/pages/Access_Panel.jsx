@@ -4,10 +4,13 @@ import '../../index.css'
 import { BackgroundPattern } from "../access_panel_components/BackgroundPattern";
 import { LogIn, SignIn_1, SignIn_2, Company_SignIn_1, Company_SignIn_2, Recovery_EmailVerification, Recovery_Password } from "../access_panel_components/Forms";
 
+import useScreenWidth from '../../hooks/useScreenWidth';
+
 export function Access_Panel() {
     const navigate = useNavigate();
     const location = useLocation();
-    
+    const isRendering = useScreenWidth();  
+
     // Guarda los datos de la empresa para pasarlos entre ambos formularios de registro de empresa
     const [companyData, setCompanyData] = useState({
         companyName: '',
@@ -86,9 +89,11 @@ export function Access_Panel() {
 
         <div className="flex h-screen bg-clr-white">
             {/*Background */}
+            {isRendering && (
             <div className={`h-full transition-bg absolute inset-0 ${backgroundColor}`}>
                 <BackgroundPattern color={patternColor} />
             </div>
+            )}
             {/*Background */}
 
             {/* Forms */}
