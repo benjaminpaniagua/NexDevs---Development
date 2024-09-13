@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import NavLinks from './NavLinks';
+import NavLinks from '../../ui/NavBar/NavLinks';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,7 +20,7 @@ const NavBar = () => {
       <nav className="flex items-center justify-between p-6 relative z-50 bg-clr-white">
         <div className="flex items-center">
           <a href="#">
-            <img src="/logo/logo.svg" alt="Logo" className="h-12" />
+            <img src="/logo/Logo.svg" alt="Logo" className="h-12" />
           </a>
         </div>
         <div className="flex items-center gap-4 tracking-wide font-medium sm:hidden">
@@ -39,7 +39,7 @@ const NavBar = () => {
         </label>
 
         {isOpen && (
-          <div className="absolute top-full left-0 right-0 bg-clr-white p-4 sm:flex hidden md:justify-center md:items-center transition-transform duration-500 ease-in-out">
+          <div className="absolute top-full left-0 right-0 bg-clr-white p-4 sm:flex hidden md:justify-start md:items-start transition-transform duration-500 ease-in-out">
             <NavLinks links={links} />
           </div>
         )}
