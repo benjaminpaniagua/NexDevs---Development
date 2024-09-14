@@ -463,6 +463,53 @@ html,body{
   transform: scaleX(2);
 }
 
+/*Menu Hamburguesa*/
+@keyframes menuEnter {
+  0% {
+    transform: translateY(-500PX);
+    opacity: 0;
+  }
+
+  75% {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+.animate-menu-open {
+  animation: menuEnter 0.3s ease-out forwards;
+}
+
+@keyframes menuExit {
+  0% {
+    transform: translateY(-10px);
+    opacity: 1;
+    z-index: 10;
+  }
+
+  25% {
+    transform: translateY(0);
+    opacity: 1;
+    z-index: 10;
+  }
+
+  100% {
+    transform: translateY(-500PX);
+    opacity: 0;
+    z-index: 10;
+  }
+}
+
+.animate-menu-close {
+  animation: menuExit 0.3s ease-out forwards;
+}
+/*Menu Hamburguesa*/
+
 /*Profile Moda*/
 @keyframes modalEnter {
   0% {
@@ -492,17 +539,17 @@ html,body{
   }
 
   25% {
-    transform: translateX(10%) rotate(-5deg); /* Puedes ajustar para que la animación no sea tan abrupta */
+    transform: translateX(10%) rotate(-5deg);
     opacity: 1;
   }
 
   75% {
-    transform: translateX(50%) rotate(-10deg); /* Más allá de la vista para asegurar la salida completa */
+    transform: translateX(50%) rotate(-10deg);
     opacity: 0;
   }
 
   100% {
-    transform: translateX(100%) rotate(-25deg); /* Estado final fuera de la vista */
+    transform: translateX(100%) rotate(-25deg);
     opacity: 0;
   }
 }
