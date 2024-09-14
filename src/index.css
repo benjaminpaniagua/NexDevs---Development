@@ -14,7 +14,6 @@
 html,body{
   height: 100%;
   background-color: hsla(0, 0%, 98%, 1); 
-  /* background-color: lightblue; estaba aqui pero debes crear una clase especifica, porque el body tiene por default white */
   /* font-size: 12px; */
 }
 
@@ -511,17 +510,4 @@ html,body{
 .animate-modal-close {
   animation: modalExit 0.3s ease-out forwards;
 }
-/*Profile Moda*/
-
-/*navbar*/
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.content-navbar {
-  margin-top: 60px; /* Ajusta esto al alto del NavBar */
-}
+/*Profile Modal*/

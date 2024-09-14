@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import '../../index.css'
 import { FormInput, FormSelect, FormTextArea } from "./FormInput";
+import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 
 //Fromulario de LogIn
-export function LogIn({ switchToSignIn, switchToRecovery }) {
+export function LogIn() {
     //Guarda los datos de inicio de sesion
     const [formData, setFormData] = useState({
         email: "",
@@ -36,44 +38,31 @@ export function LogIn({ switchToSignIn, switchToRecovery }) {
             </div>
             {/* Olvide mi contraseña */}
             <div className="flex flex-col items-end mb-5">
-                <a className="text-clr-blue font-medium cursor-pointer" onClick={switchToRecovery}>Olvidé mi contraseña</a>
+                <Link to="/Access_Panel/recover" className="text-clr-blue font-medium cursor-pointer">Olvidé mi contraseña</Link>
             </div>
 
             {/* Boton de Login */}
             <button id="login_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Iniciar Sesión</button>
 
             {/* Registrarse */}
-            <div className="flex flex-col items-center">
-                <p className="mt-10">¿Aún no tienes una cuenta? <a id="login_register" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToSignIn}>Regístrate</a></p>
+            <div className="flex flex-col items-center">                
+                <p className="mt-10">¿Aún no tienes una cuenta? <Link to="/Access_Panel/register-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate</Link></p>
             </div>
         </form>
     );
 }
 
-export function SignIn_1({ switchToLogIn, switchToCompany, switchToSignIn2, userData, onUserDataChange, resetForm, onResetComplete }) {
+export function SignIn_1({ onUserDataChange }) {
+    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        name: userData.name,
-        lastName: userData.lastName,
-        email: userData.email,
-        password: userData.password,
+        name: '',
+        lastName: '',
+        email: '',
+        password: ''
     });
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-
-    //Resetea los inputs cuando detecta que se ha completado el formulario
-    useEffect(() => {
-        if (resetForm) {
-            setFormData({
-                name: '',
-                lastName: '',
-                email: '',
-                password: ''
-            });
-            setConfirmPassword('');
-            onResetComplete();
-        }
-    }, [resetForm, onResetComplete]);
 
     //Maneja los inputs
     const handleInputChange = (e) => {
@@ -98,7 +87,7 @@ export function SignIn_1({ switchToLogIn, switchToCompany, switchToSignIn2, user
         }
         setError('');
         onUserDataChange(formData);
-        switchToSignIn2();
+        navigate('/Access_Panel/register-2');
     };
 
     return (
@@ -115,28 +104,30 @@ export function SignIn_1({ switchToLogIn, switchToCompany, switchToSignIn2, user
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
 
-            {/* Boton de Siguiente */}
-            <button id="user_next" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Siguiente</button>
+            {/* Boton de Siguiente */}            
+            <button id="user_next" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">
+            Siguiente
+            </button>
 
             {/* Iniciar Sesión */}
-            <div className="flex flex-col items-center">
-                <p className="mt-10 md:mt-5">¿Ya tienes una cuenta? <a id="register_login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToLogIn}>Inicia Sesión</a></p>
+            <div className="flex flex-col items-center">                
+                <p className="mt-10 md:mt-5">¿Ya tienes una cuenta? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesión</Link></p>
             </div>
             {/* Registrar Empresa */}
-            <div className="flex flex-col items-center">
-                <p className="mt-5">¿Quieres registrar tu empresa? <a id="register_company" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center " onClick={switchToCompany}>Regístrala aquí</a></p>
+            <div className="flex flex-col items-center">                
+                <p className="mt-5">¿Quieres registrar tu empresa? <Link to="/Access_Panel/company-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrala aquí</Link></p>
             </div>
         </form>
     );
 }
-export function SignIn_2({ switchToLogIn, switchToSignIn1, userData, onResetForm }) {
+export function SignIn_2({ userData }) {
+    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
-    const initialFormData = {
-        state: userData.state || '',
-        city: userData.city || '',
-        biography: userData.biography || ''
-    };
-    const [formData, setFormData] = useState(initialFormData);
+    const [formData, setFormData] = useState({
+        state: '',
+        city: '',
+        biography: ''
+    });
 
     //Lista de opciones de los selects
     const stateOptions = [
@@ -204,15 +195,7 @@ export function SignIn_2({ switchToLogIn, switchToSignIn1, userData, onResetForm
             profileImage
         };
         console.log(updatedUserData);
-
-        // Restablecer el formulario
-        setProfileImage(null);
-        setPreviewImage('/images/default_profile_picture.jpg');
-        setFormData(initialFormData);
-        setSelectedProvince('');
-        setAvailableCities([]);
-        onResetForm();
-        switchToLogIn();
+        navigate('/Access_Panel/login');
     };
 
     return (
@@ -254,14 +237,15 @@ export function SignIn_2({ switchToLogIn, switchToSignIn1, userData, onResetForm
 
             {/* Boton de volver o confirmar */}
             <div className="flex justify-between">
-                <button id="user_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={switchToSignIn1}>Volver</button>
+                <button id="user_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={() => navigate('/Access_Panel/register-1')}>Volver</button>
                 <button id="user_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
             </div>
         </form>
     );
 }
 
-export function Recovery_EmailVerification({ switchToLogIn, switchToPassword }) {
+export function Recovery_EmailVerification() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -269,10 +253,7 @@ export function Recovery_EmailVerification({ switchToLogIn, switchToPassword }) 
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
-        // Restablecer el formulario
-        setEmail('');
-        switchToPassword();
+        navigate('/Access_Panel/password');
     };
     return (
         <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
@@ -286,13 +267,14 @@ export function Recovery_EmailVerification({ switchToLogIn, switchToPassword }) 
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿No quieres recuperar tu contraseña? <a id="recovery_login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToLogIn}>Inicia Sesión</a></p>
+                <p className="mt-10">¿No quieres recuperar tu contraseña? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Inicia Sesión</Link></p>
             </div>
         </form>
     );
 }
 
-export function Recovery_Password({ switchToLogIn }) {
+export function Recovery_Password({ }) {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         password: "",
         confirmPassword:"",
@@ -318,7 +300,7 @@ export function Recovery_Password({ switchToLogIn }) {
         console.log(formData);
         setFormData({ ...formData, password: '', confirmPassword: '' });
         setError('');
-        switchToLogIn();
+        navigate('/Access_Panel/login');
     };
     return (
         <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
@@ -332,35 +314,23 @@ export function Recovery_Password({ switchToLogIn }) {
             <button id="password_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Cambiar contraseña</button>
 
             {/* Iniciar Sesion */}
-            <div className="flex flex-col items-center">
-                <p className="mt-10">¿No quieres cambiar tu contraseña? <a id="password_login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToLogIn}>Inicia Sesión</a></p>
+            <div className="flex flex-col items-center">                
+                <p className="mt-10">¿No quieres cambiar tu contraseña? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</Link></p>
             </div>
         </form>
     );
 }
 
-export function Company_SignIn_1({ switchToLogIn, switchToSignIn, switchToCompany2, companyData, onCompanyDataChange, resetForm, onResetComplete }) {
+export function Company_SignIn_1({ onUserDataChange }) {
+    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        companyName: companyData.companyName,
-        email: companyData.email,
-        password: companyData.password,
+        companyName: '',
+        email: '',
+        password: ''
     });
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-
-    //Resetea los inputs cuando detecta que se ha completado el formulario
-    useEffect(() => {
-        if (resetForm) {
-            setFormData({
-                companyName: '',
-                email: '',
-                password: ''
-            });
-            setConfirmPassword('');
-            onResetComplete();
-        }
-    }, [resetForm, onResetComplete]);
 
     //Maneja los inputs
     const handleInputChange = (e) => {
@@ -385,7 +355,7 @@ export function Company_SignIn_1({ switchToLogIn, switchToSignIn, switchToCompan
         }
         setError('');
         onCompanyDataChange(formData);
-        switchToCompany2();
+        navigate('/Access_Panel/company-2');
     };
 
     return (
@@ -405,26 +375,26 @@ export function Company_SignIn_1({ switchToLogIn, switchToSignIn, switchToCompan
             <button id="company_next" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Siguiente</button>
 
             {/* Iniciar Sesion */}
-            <div className="flex flex-col items-center">
-                <p className="mt-10">¿Ya tienes una cuenta? <a id="company_login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToLogIn}>Inicia Sesión</a></p>
+            <div className="flex flex-col items-center">                
+                <p className="mt-10">¿Ya tienes una cuenta? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</Link></p>
             </div>
             {/* Registrar Usuario */}
             <div className="flex flex-col items-center">
-                <p className="mt-5">¿Quieres registrar un usuario normal? <a id="company_register" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center" onClick={switchToSignIn}>Regístrate aquí</a></p>
+                <p className="mt-5">¿Quieres registrar un usuario normal? <Link to="/Access_Panel/register-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate aquí</Link></p>
             </div>
         </form>
     );
 }
 
-export function Company_SignIn_2({ switchToLogIn, switchToCompany1, companyData, onResetForm }) {
+export function Company_SignIn_2({ userData }) {
+    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
-    const initialFormData = {
-        state: companyData.state || '',
-        city: companyData.city || '',
-        category: companyData.category || '',
-        description: companyData.description || ''
-    };
-    const [formData, setFormData] = useState(initialFormData);
+    const [formData, setFormData] = useState({
+        state: '',
+        city: '',
+        category: '',
+        description: ''
+    });
 
     //Lista de opciones de los selects
     const categoryOptions = [
@@ -494,15 +464,7 @@ export function Company_SignIn_2({ switchToLogIn, switchToCompany1, companyData,
             profileImage
         };
         console.log(updatedCompanyData);
-
-        // Restablecer el formulario
-        setProfileImage(null);
-        setPreviewImage('/images/default_profile_picture.jpg');
-        setFormData(initialFormData);
-        setSelectedProvince('');
-        setAvailableCities([]);
-        onResetForm();
-        switchToLogIn();
+        navigate('/Access_Panel/login');
     };
 
     return (
@@ -546,7 +508,7 @@ export function Company_SignIn_2({ switchToLogIn, switchToCompany1, companyData,
 
             {/* Boton de volver o confirmar */}
             <div className="flex justify-between">
-                <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={switchToCompany1}>Volver</button>
+                <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={() => navigate('/Access_Panel/register-1')}>Volver</button>
                 <button id="company_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
             </div>
         </form>

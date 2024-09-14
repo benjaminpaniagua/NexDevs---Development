@@ -23,10 +23,10 @@ const useScreenWidth = () => {
   useEffect(() => {
     if (screenWidth <= 765) {
       setIsRendering(false);
-      console.log('Mobile');
+      //console.log('Mobile');
     } else {
       setIsRendering(true);
-      console.log('Desktop');
+      //console.log('Desktop');
     }
   }, [screenWidth]);
 
