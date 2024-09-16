@@ -2,7 +2,7 @@ export function MainButton({ text, width, paddingX, onClick, disabled }) {
     if (disabled) {
         return (
             <>
-                <button onClick={onClick} className={`text-clr-white bg-clr-grey rounded-lg border-2 border-clr-gray transition-all duration-500 py-2 brightness-[1.5] ${paddingX} ${width}`}>{text}</button>
+                <button onClick={onClick} className={`text-clr-white bg-clr-grey rounded-lg border-2 border-clr-grey transition-all duration-500 py-2 brightness-[1.5] ${paddingX} ${width}`}>{text}</button>
             </>
         );
     } else {
