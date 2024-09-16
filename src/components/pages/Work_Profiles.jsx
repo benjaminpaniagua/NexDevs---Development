@@ -7,7 +7,7 @@ export function Work_Profiles() {
         <>
             <div>
                 {/* Upper Background */}
-                <div className="relative w-full h-80">
+                <div className="relative w-full h-80 -mt-20">
                     <svg className="h-full w-full fill-clr-blue opacity-20">
                         <defs>
                             <pattern id="backgroundPattern" x="0" y="0" width="160" height="160" patternUnits="userSpaceOnUse" patternTransform="translate(24 55)">
@@ -18,12 +18,12 @@ export function Work_Profiles() {
                     </svg>
                 </div>
                 {/* Upper Background */}
-                <div className="flex">
+                <div className="flex gap-8 mx-auto px-20 max-w-[100rem]">
                     {/* Profile */}
                     <ProfileInfo />
                     {/* Profile */}
                     {/* Mi coleccion */}
-                    <div className="h-auto w-[60%] flex flex-col mr-16 ml-3">
+                    <div className="h-auto w-[60%] flex flex-col">
                         <div className="flex flex-col justify-center">
                             <h3 className="font-clashDisplay font-medium"></h3>
                             <h6 className="font-bold"></h6>
