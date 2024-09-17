@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        clashDisplay: ['Clash Display', 'Arial', 'sans-serif'],
+        'clash': ['ClashDisplay-Variable', 'sans-serif'],
         montserrat: ['Montserrat', 'Arial', 'sans-serif'],
       },
       fontSize: {
@@ -38,7 +38,7 @@ export default {
         "clr-green": "hsla(149, 60%, 42%, 1)",
         "clr-green-light": "hsla(80, 51%, 59%, 1)",
         "clr-green-dark": "hsla(80, 45%, 45%, 1)",
-        
+
       },
       gridTemplateColumns: {
         "auto-150": "repeat(auto-fit, minmax(150px, 1fr))",

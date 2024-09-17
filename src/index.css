@@ -1,3 +1,4 @@
+@import url('../public/css/clash-display.css');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,7 +9,7 @@
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
-  font-family: 'Clash Display', sans-serif;
+  font-family: 'ClashDisplay-Variable', sans-serif;
 }
 
 html,body{
