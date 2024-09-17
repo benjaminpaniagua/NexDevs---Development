@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from "react";
 import Card from "../../ui/Categories/CardCategories";
 import SecondaryButton from "../../ui/SecondaryButton";
+import { Link } from "react-router-dom";
+import Categories_Page from "../../pages/Categories_Page";
 
 const categories = [
-  { title: "Aire Acondicionado", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  { title: "Mecánica Automotriz", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  { title: "Jardinería", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  { title: "Fotografía", imageUrl: "/images/categories/aire-acondicionado.jpg" },
+  {
+    title: "Aire Acondicionado",
+    imageUrl: "/images/categories/aire-acondicionado.jpg",
+  },
+  {
+    title: "Mecánica Automotriz",
+    imageUrl: "/images/categories/aire-acondicionado.jpg",
+  },
+  {
+    title: "Jardinería",
+    imageUrl: "/images/categories/aire-acondicionado.jpg",
+  },
+  {
+    title: "Fotografía",
+    imageUrl: "/images/categories/aire-acondicionado.jpg",
+  },
   { title: "Limpieza", imageUrl: "/images/categories/aire-acondicionado.jpg" },
   { title: "Cocina", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  { title: "Repartidor", imageUrl: "/images/categories/aire-acondicionado.jpg" },
+  {
+    title: "Repartidor",
+    imageUrl: "/images/categories/aire-acondicionado.jpg",
+  },
   { title: "Plomero", imageUrl: "/images/categories/aire-acondicionado.jpg" },
 ];
 
@@ -33,7 +50,7 @@ const Categories = () => {
 
   const handleCardClick = (title) => {
     console.log(`Categoría seleccionada: ${title}`);
-  }; 
+  };
 
   return (
     <div className="mt-10 grid gap-12 md:p-4 mx-auto max-w-[100rem]">
@@ -50,7 +67,9 @@ const Categories = () => {
           ))}
         </div>
         <div className="flex justify-center mb-10">
-          <SecondaryButton text="Ver Más" sizeX="S" sizeY="S" />
+          <Link to="/categories">
+            <SecondaryButton text="Ver Más" sizeX="S" sizeY="S" />
+          </Link>
         </div>
       </div>
     </div>
