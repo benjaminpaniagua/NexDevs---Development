@@ -3,15 +3,15 @@ import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Butto
 export function ProfileInfo() {
     return (
         <>
-            <div className="h-auto w-[40%] flex flex-col bg-gray-300">
+            <div className="h-auto">
                 {/* Profile Picture */}
                 <div className="absolute transform translate-x-2 -translate-y-1/2">
                     <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-56 h-56 rounded-full border-4 border-white object-cover" />
                 </div>
                 {/* Profile Picture */}
                 {/* Profile data */}
-                <div className="flex flex-col justify-center mt-28">
-                    <h2 className="font-clashDisplay font-medium">Alejandro Robles</h2>
+                <div className="flex flex-col mt-28">
+                    <h2 className="font-clash font-medium">Alejandro Robles</h2>
                     <h4 className="font-bold text-clr-grey">San Ramón, Alajuela</h4>
                 </div>
                 {/* Profile data */}
@@ -36,21 +36,26 @@ export function ProfileInfo() {
                 {/* Stars */}
                 {/* Botones */}
                 <div className="flex gap-5 justify-center items-center my-2">
-                    <SecondaryButtonOutline text={"Editar Perfil"} width={"w-[35%]"} />
-                    <SecondaryButton text={"Publicar"} width={"w-[65%]"} />
+                    <SecondaryButtonOutline text={"Dejar una Reseña"} extraStyles={"w-full"} />
                 </div>
                 {/* Botones */}
                 {/*About me*/}
                 <div className='flex flex-col gap-2 mt-5'>
-                    <h3>Acerca de mi</h3>
+                    <h3 className='font-clash font-medium'>Acerca de mi</h3>
                     <p className='font-bold'>Hola, soy Alejandro Robles, un apasionado jardinero de San Ramón. Como estudiante, equilibro mis estudios con mi amor por la naturaleza manteniendo espacios verdes en mi tiempo libre. Desde el cuidado del césped hasta el diseño de jardines, me enorgullece hacer que las áreas al aire libre luzcan lo mejor posible. Mi objetivo es darle un toque de verde a cada espacio en el que trabajo, creando ambientes tranquilos y hermosos para que todos disfruten.</p>
                 </div>
                 {/*About me*/}
                 {/*Contact*/}
                 <div className='flex flex-col gap-2 mt-5'>
-                    <h4>Numero de cel</h4>
-                    <h4>Email</h4>
-                    <MainButton text={"Contactar"} disabled={true}/>
+                    <div className='flex gap-2'>
+                        <img src="/images/icons/phone.svg" alt="" />
+                        <h4>+506 6890 0312</h4>
+                    </div>
+                    <div className='flex gap-2'>
+                    <img src="/images/icons/email.svg" alt="" />
+                        <h4>ale.robles@mail.com</h4>
+                    </div>
+                    <MainButton text={"Contactar"} extraStyles={'mt-2'} />
                 </div>
                 {/*Contact*/}
 

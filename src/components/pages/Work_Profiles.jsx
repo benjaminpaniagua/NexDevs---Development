@@ -1,6 +1,9 @@
 import '../../index.css'
 import { Link } from 'react-router-dom'
 import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
+import { Collection } from '../work_profiles_components/Collection'
+import { Categories } from '../work_profiles_components/Categories'
+import { Abilities } from '../work_profiles_components/Abilities'
 
 export function Work_Profiles() {
     return (
@@ -18,19 +21,52 @@ export function Work_Profiles() {
                     </svg>
                 </div>
                 {/* Upper Background */}
-                <div className="flex gap-8 mx-auto px-20 max-w-[100rem] bg-gray-100">
-                    {/* Profile */}
-                    <ProfileInfo />
-                    {/* Profile */}
-                    {/* Mi coleccion */}
-                    <div className="h-auto w-[60%] flex flex-col bg-gray-300">
-                        <div className="flex flex-col justify-center">
-                            <h3 className="font-clashDisplay font-medium"></h3>
-                            <h6 className="font-bold"></h6>
+
+                {/*Content*/}
+                <div className="flex flex-col mx-auto px-20 max-w-[100rem]">
+
+                    {/*1st Half*/}
+                    <div className="flex gap-8">
+                        {/* Profile */}
+                        <div className="w-[40%] flex flex-col">
+                            <ProfileInfo />
+                        </div>
+                        {/* Profile */}
+                        <div className="h-auto w-[60%] pl-10 pt-5 flex flex-col">
+                            {/* Mi coleccion */}
+                            <Collection />
+                            {/* Mi coleccion */}
+                            <div className="h-auto pt-4 flex">
+                                {/* Categories */}
+                                <Categories />
+                                {/* Categories */}
+                                {/* Habilidades */}
+                                <Abilities />
+                                {/* Habilidades */}
+                            </div>
                         </div>
                     </div>
-                    {/* Mi coleccion */}
+                    {/*1st Half*/}
+
+                    {/* Divisor */}
+                    <div className="w-[65%] h-[4px] bg-clr-black mx-auto my-20 rounded-2xl"></div>
+                    {/* Divisor */}
+
+                    {/*2nd Half*/}
+                    <div className="flex gap-8">
+                        {/* Profile */}
+                        <div className="w-[40%] flex flex-col">
+                            <h1>Holaaa</h1>
+                        </div>
+                        {/* Profile */}
+                        <div className="">
+                            <h1>Holaaa</h1>
+                        </div>
+                    </div>
+                    {/*2nd Half*/}
+
                 </div>
+                {/*Content*/}
 
             </div>
         </>
