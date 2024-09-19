@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import NavLinks from './NavLinks';
 import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
 import { Link } from 'react-router-dom';
+import { SecondaryButton } from '../Buttons';
 
 const NavBar = ({ profile_picture }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,8 +82,11 @@ const NavBar = ({ profile_picture }) => {
         <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
           <NavLinks links={links} />
           <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-            <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+            {/* <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" /> */}
           </a>
+          <Link to="/Access_Panel/login">
+            <SecondaryButton text="Únete" extraStyles={"px-14"} />
+          </Link>
         </div>
 
         <div className='sm:flex items-center gap-10 hidden'>

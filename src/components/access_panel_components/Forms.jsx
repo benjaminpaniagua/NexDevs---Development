@@ -663,7 +663,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
                 </div>
                 <FormSelect id="company_category" name="category" title="Categoría" value={formData.category} onChange={handleSelectChange} options={categoryOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                <FormTextArea id="company_description" name="description" title="Descripción" minLength={0} value={formData.description} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <FormTextArea id="company_description" name="description" title="Descripción" minLength={0} maxLength={235} value={formData.description} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
             </div>
 
             {/* Boton de volver o confirmar */}

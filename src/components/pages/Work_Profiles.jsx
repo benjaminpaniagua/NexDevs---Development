@@ -1,5 +1,4 @@
 import '../../index.css'
-import { Link } from 'react-router-dom'
 import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
 import { Collection } from '../work_profiles_components/Collection'
 import { Categories } from '../work_profiles_components/Categories'
@@ -8,7 +7,7 @@ import { Abilities } from '../work_profiles_components/Abilities'
 export function Work_Profiles() {
     return (
         <>
-            <div>
+            <div className=''>
                 {/* Upper Background */}
                 <div className="relative w-full h-80 -mt-40">
                     <svg className="h-full w-full fill-clr-blue opacity-20">

@@ -4,7 +4,7 @@ const CardCategories = ({ title, imageUrl, onClick }) => {
   return (
     <div
       className="relative overflow-hidden rounded-lg shadow-md group cursor-pointer hover:scale-95 transition-transform"
-      onClick={() => onClick(title)}
+      onClick={onClick}
     >
       <img
         src={imageUrl}
