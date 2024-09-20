@@ -1,6 +1,6 @@
 import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
-export function Abilities() {
+export function Skills() {
     return (
         <>
             <div className="w-1/2 md:w-full">

@@ -1,10 +1,9 @@
 import { MainButton } from '../Buttons'
-
 export function CardProfiles({ image, name, category, biography, province, city, number, email, onClick }) {
     return (
         <>
             {/* Profile Card */}
-            <div className='h-auto flex flex-col gap-2 transition-all hover:scale-105'>
+            <div className='h-auto md:w-auto flex flex-col gap-2 transition-all hover:scale-95'>
                 {/* Profile Picture */}
                 <div className='rounded-lg overflow-hidden'>
                     <img src={image} alt="Profile_Picture" />
@@ -15,7 +14,7 @@ export function CardProfiles({ image, name, category, biography, province, city,
                 <div className='px-3 flex flex-col gap-1'>
                     <h3 className=''>{name}</h3>
                     <h5 className='text-black font-bold'>{category}</h5>
-                    <p className='font-bold h-28 xs:h-24 xs:text-[0.65rem] md:text-[0.9em] text-[0.8rem]'>{biography}</p>
+                    <p className='font-bold h-28 xs:h-24 xs:text-[0.65rem] md:text-[0.74em] text-[0.8rem]'>{biography}</p>
                 </div>
                 {/* Profile Info */}
 
@@ -24,12 +23,12 @@ export function CardProfiles({ image, name, category, biography, province, city,
                     <div className='flex flex-col w-full gap-1'>
                         <div className='flex gap-2'>
                             <img className='w-5 sm:w-3' src="/images/icons/gps.svg" alt="" />
-                            <h5 className='text-black font-bold xs:text-[0.65rem] text-[1.1rem]'>{city}, {province}</h5>
+                            <h5 className='text-black font-bold xs:text-[0.65rem] md:text-[0.8rem] text-[1.1rem]'>{city}, {province}</h5>
                         </div>
                         <div className='flex gap-2'>
                             <img className='w-5 sm:w-3' src="/images/icons/phone.svg" alt="" />
-                            <h5 className='text-black font-bold xs:text-[0.65rem] text-[1.1rem]'>{number}</h5>
-                        </div>                        
+                            <h5 className='text-black font-bold xs:text-[0.65rem] md:text-[0.8rem] text-[1.1rem]'>{number}</h5>
+                        </div>
                         {/*
                         <div className='flex flex-wrap gap-2'>
                             <img className='w-5' src="/images/icons/email.svg" alt="" />

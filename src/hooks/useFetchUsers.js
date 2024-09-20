@@ -43,6 +43,26 @@ export const useFetchUsers = () => {
     },
     {
       image: "/images/Profile_Placeholder.png",
+      name: "María Fernández",
+      category: "Fontanería",
+      biography: "Soy María Fernández, una fontanera con más de 10 años de experiencia. Me especializo en solucionar problemas de fontanería en hogares y comercios. Vivo en Cartago y siempre busco ofrecer un servicio de calidad.",
+      province: "Cartago",
+      city: "Cartago",
+      number: "+506 7001 2345",
+      email: "m.fernandez@mail.com"
+    },
+    {
+      image: "/images/Profile_Placeholder.png",
+      name: "María Fernández",
+      category: "Fontanería",
+      biography: "Soy María Fernández, una fontanera con más de 10 años de experiencia. Me especializo en solucionar problemas de fontanería en hogares y comercios. Vivo en Cartago y siempre busco ofrecer un servicio de calidad.",
+      province: "Cartago",
+      city: "Cartago",
+      number: "+506 7001 2345",
+      email: "m.fernandez@mail.com"
+    },
+    {
+      image: "/images/Profile_Placeholder.png",
       name: "Alejandro Robles",
       category: "Jardineria",
       biography: "Hola, soy Alejandro Robles, un apasionado jardinero de San Ramón. Como estudiante, equilibro mis estudios con mi amor por la naturaleza manteniendo espacios verdes en mi tiempo libre.",

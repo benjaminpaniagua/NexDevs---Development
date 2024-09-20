@@ -22,7 +22,7 @@ export function Community_Posts() {
     }, []);
 
     const handleCardClick = (title) => {
-        console.log(`Categoría seleccionada: ${title}`);
+        console.log(`Post seleccionada: ${title}`);
     };
 
     return (

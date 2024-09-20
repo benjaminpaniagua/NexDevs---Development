@@ -559,3 +559,16 @@ html,body{
   animation: modalExit 0.3s ease-out forwards;
 }
 /*Profile Modal*/
+
+.swiper-button-next{
+  top: 50%;
+  transform: translateY(-100%);
+  overflow: visible;
+  z-index: 10;
+}
+
+.swiper-button-prev {
+  top: 50%;
+  transform: translateY(-100%);  
+  z-index: 10;
+}

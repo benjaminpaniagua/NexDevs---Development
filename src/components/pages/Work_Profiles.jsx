@@ -2,7 +2,7 @@ import '../../index.css'
 import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
 import { Collection } from '../work_profiles_components/Collection'
 import { Categories } from '../work_profiles_components/Categories'
-import { Abilities } from '../work_profiles_components/Abilities'
+import { Skills } from '../work_profiles_components/Skills'
 import { Posts } from '../work_profiles_components/Posts'
 import { Reviews } from '../work_profiles_components/Reviews'
 
@@ -42,7 +42,7 @@ export function Work_Profiles() {
                                 <Categories />
                                 {/* Categories */}
                                 {/* Habilidades */}
-                                <Abilities />
+                                <Skills />
                                 {/* Habilidades */}
                             </div>
                         </div>
