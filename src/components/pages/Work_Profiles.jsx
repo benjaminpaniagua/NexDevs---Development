@@ -3,6 +3,8 @@ import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
 import { Collection } from '../work_profiles_components/Collection'
 import { Categories } from '../work_profiles_components/Categories'
 import { Abilities } from '../work_profiles_components/Abilities'
+import { Posts } from '../work_profiles_components/Posts'
+import { Reviews } from '../work_profiles_components/Reviews'
 
 export function Work_Profiles() {
     return (
@@ -22,20 +24,20 @@ export function Work_Profiles() {
                 {/* Upper Background */}
 
                 {/*Content*/}
-                <div className="flex flex-col mx-auto px-20 max-w-[100rem]">
+                <div className="flex flex-col mx-auto px-20 max-w-[100rem] md:px-10">
 
                     {/*1st Half*/}
-                    <div className="flex gap-8">
+                    <div className="flex md:flex-col gap-8 md:gap-0">
                         {/* Profile */}
-                        <div className="w-[40%] flex flex-col">
+                        <div className="w-[40%] md:w-full flex flex-col">
                             <ProfileInfo />
                         </div>
                         {/* Profile */}
-                        <div className="h-auto w-[60%] pl-10 pt-5 flex flex-col">
+                        <div className="w-[60%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
                             {/* Mi coleccion */}
                             <Collection />
                             {/* Mi coleccion */}
-                            <div className="h-auto pt-4 flex">
+                            <div className="pt-4 flex md:flex-col md:gap-5">
                                 {/* Categories */}
                                 <Categories />
                                 {/* Categories */}
@@ -48,19 +50,22 @@ export function Work_Profiles() {
                     {/*1st Half*/}
 
                     {/* Divisor */}
-                    <div className="w-[65%] h-[4px] bg-clr-black mx-auto my-20 rounded-2xl"></div>
+                    <div className="w-[65%] h-[4px] bg-clr-black mx-auto my-10 rounded-2xl"></div>
                     {/* Divisor */}
 
                     {/*2nd Half*/}
-                    <div className="flex gap-8">
-                        {/* Profile */}
-                        <div className="w-[40%] flex flex-col">
-                            <h1>Holaaa</h1>
+                    <div className="flex md:flex-col gap-8">
+                        {/* Posts */}
+                        <div className="w-[40%] md:w-full flex flex-col">
+                            <Posts/>
                         </div>
-                        {/* Profile */}
-                        <div className="">
-                            <h1>Holaaa</h1>
+                        {/* Posts */}
+
+                        {/* Reviews */}
+                        <div className="w-[60%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
+                            <Reviews/>
                         </div>
+                        {/* Reviews */}
                     </div>
                     {/*2nd Half*/}
 

@@ -91,8 +91,11 @@ const NavBar = ({ profile_picture }) => {
 
         <div className='sm:flex items-center gap-10 hidden'>
           <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-            <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+            {/* <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" /> */}          
           </a>
+          <Link to="/Access_Panel/login">
+            <SecondaryButton text="Únete" extraStyles={"px-5"} />
+          </Link>
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
               id="menu-toggle"

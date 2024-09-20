@@ -6,7 +6,6 @@ import { useFetchCategories } from "../../hooks/useFetchCategories";
 
 export function Main_Categories() {
     const categories = useFetchCategories();
-
     const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
     useEffect(() => {
@@ -17,10 +16,8 @@ export function Main_Categories() {
                 setCategoriesToShow(categories.slice(0, 8));
             }
         };
-
         updateCategories();
         window.addEventListener("resize", updateCategories);
-
         return () => window.removeEventListener("resize", updateCategories);
     }, []);
 

@@ -43,7 +43,6 @@ export function Featured_Profiles() {
                         />
                     ))}
                 </div>
-
             </div>
         </>
     );
