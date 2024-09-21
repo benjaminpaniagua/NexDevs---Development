@@ -2,7 +2,7 @@ export function CardPost({title, imageUrl, description, user, profilepicture, on
     return (
         <>
             {/* Post Card */}
-            <div className='h-auto flex flex-col gap-2 transition-all hover:scale-105' onClick={onClick}>
+            <div className='h-auto flex flex-col gap-2 transition-all hover:scale-95' onClick={onClick}>
 
                 {/* Post Picture */}
                 <div className='rounded-lg overflow-hidden'>

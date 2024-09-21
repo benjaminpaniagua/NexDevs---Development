@@ -1,17 +1,22 @@
 import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
-export function Categories() {
+import { useFetchWorkProfileCategories } from '../../hooks/WorkProfile/useFetchWorkProfileCategory';
+export function Categories({workId}) {
+    const { categories, loading, error } = useFetchWorkProfileCategories({categoryID: workId});
+
     return (
         <>
             <div className="w-1/2 md:w-full">
                 <h3 className="font-clash font-medium md:text-[1.5rem]">Categorias</h3>
-                <div className='flex flex-wrap gap-2 py-2'>
-                <Tags text="Soy un texto" />
-                <Tags text="adsad" />
-                <Tags text="aaaaaaaaaaaa" />
-                <Tags text="dqwdqdwq" />
-                <Tags text="dasdadwqdwqdwqdwq" />
-                </div>
+                {loading ? (
+                    <div>
+                        <h5 className="text-center">Cargando categorias...</h5>
+                    </div>
+                ) : (
+                    <div className='flex flex-wrap gap-2 py-2'>
+                        <Tags text={categories.categoryName} />
+                    </div>
+                )}
             </div>
         </>
     );

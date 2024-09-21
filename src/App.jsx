@@ -19,6 +19,7 @@ const MainApp = () => {
           <Route path="/" element={<Landing_Page />} />
           <Route path="/Access_Panel/*" element={<Access_Panel />} />
           <Route path="/WorkProfile/" element={<Work_Profiles />} />
+          <Route path="/WorkProfile/:userId" element={<Work_Profiles />} />
           <Route path="/Community_Feed/" element={<Community_Feed />} />
         </Routes>
       </div>

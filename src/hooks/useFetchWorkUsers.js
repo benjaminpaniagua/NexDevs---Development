@@ -1,25 +1,44 @@
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
-export const useFetchUsers = () => {
-  /*const [data, setData] = useState([]);
-
-  const getData = async () => {
-    try {
-      const response = await fetch(``);
-      const data = await response.json();
-      setData(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export const useFetchWorkUsers = () => {  
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getData();
+    const source = axios.CancelToken.source();
+
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('https://localhost:7038/WorkProfile/Listado', {
+          cancelToken: source.token
+        });
+        setUsers(response.data);
+      } catch (err) {
+
+        if (axios.isCancel(err)) {
+          console.log('Solicitud Cancelada', err.message);
+        } else {
+          setError(err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+    return () => {
+      source.cancel('Solicitud Cancelada');
+    };
   }, []);
 
-  return {
-    data,
-  };*/
+  return { users, loading, error };
+
+};
+
+
+  /*
   const users = [
     {
       image: "/images/Profile_Placeholder.png",
@@ -73,5 +92,4 @@ export const useFetchUsers = () => {
     }
 
   ];
-  return users;
-};
+  return users;*/

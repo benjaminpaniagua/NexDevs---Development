@@ -18,12 +18,17 @@ export function CardProfiles({ image, name, category, biography, province, city,
                 </div>
                 {/* Profile Info */}
 
+                <div className='bg-clr-black w-[90%] h-0.5 mx-auto rounded-lg'/>
+
                 <div className='flex px-3 h-16 xs:-mb-5'>
                     {/* Contact Info */}
                     <div className='flex flex-col w-full gap-1'>
                         <div className='flex gap-2'>
                             <img className='w-5 sm:w-3' src="/images/icons/gps.svg" alt="" />
-                            <h5 className='text-black font-bold xs:text-[0.65rem] md:text-[0.8rem] text-[1.1rem]'>{city}, {province}</h5>
+                            <div className='flex flex-col gap-1'>
+                                <h5 className='text-black font-bold xs:text-[0.65rem] md:text-[0.8rem] text-[1.1rem]'>{city},</h5>
+                                <h5 className='text-black font-bold xs:text-[0.65rem] md:text-[0.8rem] text-[1.1rem]'>{province}</h5>
+                            </div>
                         </div>
                         <div className='flex gap-2'>
                             <img className='w-5 sm:w-3' src="/images/icons/phone.svg" alt="" />
@@ -64,7 +69,7 @@ export function CardProfiles({ image, name, category, biography, province, city,
                 </div>
 
                 {/* Button */}
-                <div>
+                <div className='mt-6'>
                     <MainButton text="Ver Perfil" extraStyles={"px-16 w-full"} onClick={onClick} />
                 </div>
                 {/* Button */}

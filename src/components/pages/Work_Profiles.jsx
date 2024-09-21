@@ -5,8 +5,10 @@ import { Categories } from '../work_profiles_components/Categories'
 import { Skills } from '../work_profiles_components/Skills'
 import { Posts } from '../work_profiles_components/Posts'
 import { Reviews } from '../work_profiles_components/Reviews'
-
+import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile';
 export function Work_Profiles() {
+    const { users, loading, error } = useFetchUserProfile();
+
     return (
         <>
             <div className=''>
@@ -30,7 +32,7 @@ export function Work_Profiles() {
                     <div className="flex md:flex-col gap-8 md:gap-0">
                         {/* Profile */}
                         <div className="w-[40%] md:w-full flex flex-col">
-                            <ProfileInfo />
+                            <ProfileInfo users={users} loading={loading} />
                         </div>
                         {/* Profile */}
                         <div className="w-[60%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
@@ -39,10 +41,10 @@ export function Work_Profiles() {
                             {/* Mi coleccion */}
                             <div className="pt-4 flex md:flex-col md:gap-5">
                                 {/* Categories */}
-                                <Categories />
+                                <Categories workId={users.categoryId} />
                                 {/* Categories */}
                                 {/* Habilidades */}
-                                <Skills />
+                                <Skills workId={users.workId}/>
                                 {/* Habilidades */}
                             </div>
                         </div>

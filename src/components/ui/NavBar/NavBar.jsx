@@ -73,7 +73,7 @@ const NavBar = ({ profile_picture }) => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-black text-clr-white ${isScrolled ? '-translate-y-36' : 'translate-y-0'}`}>
+      <nav className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-white ${isScrolled ? '-translate-y-36' : 'translate-y-0'}`}>
         <div className="flex items-center">
           <Link to="/">
             <img src="/logo/Logo.svg" alt="Logo" className="h-12 sm:h-9" />

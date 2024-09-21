@@ -7,7 +7,7 @@ import { SecondaryButtonOutline } from "../../ui/Buttons";
 import { useFetchCategories } from "../../../hooks/useFetchCategories";
 
 const Categories = () => {
-  const categories = useFetchCategories();
+  const { categories, loading } = useFetchCategories();
   const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const Categories = () => {
     window.addEventListener("resize", updateCategories);
 
     return () => window.removeEventListener("resize", updateCategories);
-  }, []);
+  }, [loading]);
 
   const handleCardClick = (title) => {
     console.log(`Categoría seleccionada: ${title}`);
@@ -34,12 +34,12 @@ const Categories = () => {
       <div className='h-auto flex flex-col gap-2 sm:gap-0'>
         <h2 className="font-clash">Categorías Principales</h2>
         <div className='grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4'>
-          {categoriesToShow.map((category, index) => (
+          {categoriesToShow.map((category) => (
             <Card
-              key={index}
-              title={category.title}
-              imageUrl={category.imageUrl}
-              onClick={() => handleCardClick(category.title)}
+            key={category.categoryId}
+            title={category.categoryName}
+            imageUrl="/images/categories/aire-acondicionado.jpg"
+            onClick={() => handleCardClick(category.categoryName)}
             />
           ))}
         </div>
