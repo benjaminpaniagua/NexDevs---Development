@@ -7,11 +7,11 @@ export function FormInput({ type, name, title, minLength, value, onChange, class
     );
 }
 
-export function FormTextArea({ name, title, minLength, value, onChange, className, id }) {
+export function FormTextArea({ name, title, minLength, maxLenght, value, onChange, className, id }) {
     return (
         <>
             <label className="text-fs-small">{title}</label>
-            <textarea id={id} name={name} minLength={minLength} value={value} onChange={onChange} required className={className} />
+            <textarea id={id} name={name} minLength={minLength} maxLength={maxLenght} value={value} onChange={onChange} required className={className} />
         </>
     );
 }

@@ -1,11 +1,17 @@
 import '../../index.css'
-import { Link } from 'react-router-dom'
 import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
-
+import { Collection } from '../work_profiles_components/Collection'
+import { Categories } from '../work_profiles_components/Categories'
+import { Skills } from '../work_profiles_components/Skills'
+import { Posts } from '../work_profiles_components/Posts'
+import { Reviews } from '../work_profiles_components/Reviews'
+import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile';
 export function Work_Profiles() {
+    const { users, loading, error } = useFetchUserProfile();
+
     return (
         <>
-            <div>
+            <div className=''>
                 {/* Upper Background */}
                 <div className="relative w-full h-80 -mt-40">
                     <svg className="h-full w-full fill-clr-blue opacity-20">
@@ -18,19 +24,55 @@ export function Work_Profiles() {
                     </svg>
                 </div>
                 {/* Upper Background */}
-                <div className="flex gap-8 mx-auto px-20 max-w-[100rem] bg-gray-100">
-                    {/* Profile */}
-                    <ProfileInfo />
-                    {/* Profile */}
-                    {/* Mi coleccion */}
-                    <div className="h-auto w-[60%] flex flex-col bg-gray-300">
-                        <div className="flex flex-col justify-center">
-                            <h3 className="font-clashDisplay font-medium"></h3>
-                            <h6 className="font-bold"></h6>
+
+                {/*Content*/}
+                <div className="flex flex-col mx-auto px-20 max-w-[100rem] md:px-10">
+
+                    {/*1st Half*/}
+                    <div className="flex md:flex-col gap-8 md:gap-0">
+                        {/* Profile */}
+                        <div className="w-[40%] md:w-full flex flex-col">
+                            <ProfileInfo users={users} loading={loading} />
+                        </div>
+                        {/* Profile */}
+                        <div className="w-[60%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
+                            {/* Mi coleccion */}
+                            <Collection />
+                            {/* Mi coleccion */}
+                            <div className="pt-4 flex md:flex-col md:gap-5">
+                                {/* Categories */}
+                                <Categories workId={users.categoryId} />
+                                {/* Categories */}
+                                {/* Habilidades */}
+                                <Skills workId={users.workId}/>
+                                {/* Habilidades */}
+                            </div>
                         </div>
                     </div>
-                    {/* Mi coleccion */}
+                    {/*1st Half*/}
+
+                    {/* Divisor */}
+                    <div className="w-[65%] h-[4px] bg-clr-black mx-auto my-10 rounded-2xl"></div>
+                    {/* Divisor */}
+
+                    {/*2nd Half*/}
+                    <div className="flex md:flex-col gap-8">
+                        {/* Posts */}
+                        <div className="w-[40%] md:w-full flex flex-col">
+                            <Posts/>
+                        </div>
+                        {/* Posts */}
+
+                        {/* Reviews */}
+                        <div className="w-[60%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
+                            <Reviews/>
+                        </div>
+                        {/* Reviews */}
+                    </div>
+                    {/*2nd Half*/}
+
                 </div>
+                {/*Content*/}
 
             </div>
         </>

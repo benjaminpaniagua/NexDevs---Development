@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import NavLinks from './NavLinks';
 import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
 import { Link } from 'react-router-dom';
+import { SecondaryButton } from '../Buttons';
 
 const NavBar = ({ profile_picture }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,7 @@ const NavBar = ({ profile_picture }) => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-black text-clr-white ${isScrolled ? '-translate-y-36' : 'translate-y-0'}`}>
+      <nav className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-white ${isScrolled ? '-translate-y-36' : 'translate-y-0'}`}>
         <div className="flex items-center">
           <Link to="/">
             <img src="/logo/Logo.svg" alt="Logo" className="h-12 sm:h-9" />
@@ -81,14 +82,20 @@ const NavBar = ({ profile_picture }) => {
         <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
           <NavLinks links={links} />
           <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-            <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+            {/* <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" /> */}
           </a>
+          <Link to="/Access_Panel/login">
+            <SecondaryButton text="Únete" extraStyles={"px-14"} />
+          </Link>
         </div>
 
         <div className='sm:flex items-center gap-10 hidden'>
           <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-            <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+            {/* <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" /> */}          
           </a>
+          <Link to="/Access_Panel/login">
+            <SecondaryButton text="Únete" extraStyles={"px-5"} />
+          </Link>
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
               id="menu-toggle"

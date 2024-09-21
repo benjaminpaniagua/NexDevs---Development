@@ -6,6 +6,7 @@ import { Landing_Page } from './components/pages/Landing_Page.jsx';
 import { Access_Panel } from './components/pages/Access_Panel.jsx';
 import { Work_Profiles } from './components/pages/Work_Profiles.jsx';
 import Categories_Page from './components/pages/Categories_Page.jsx';
+import { Community_Feed } from './components/pages/Community_Feed.jsx';
 
 const MainApp = () => {
   const location = useLocation();
@@ -20,6 +21,8 @@ const MainApp = () => {
           <Route path="/Access_Panel/*" element={<Access_Panel />} />
           <Route path="/WorkProfile/" element={<Work_Profiles />} />
           <Route path="/categories/" element={<Categories_Page />} />
+          <Route path="/WorkProfile/:userId" element={<Work_Profiles />} />
+          <Route path="/Community_Feed/" element={<Community_Feed />} />
         </Routes>
       </div>
       {showNavbar && <Footer/>}

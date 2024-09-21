@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Card from "../../ui/Categories/CardCategories";
+import Card from "../../ui/Cards/CardCategories";
 import SecondaryButton from "../../ui/SecondaryButton";
 import { Link } from "react-router-dom";
 import Categories_Page from "../../pages/Categories_Page";
@@ -29,8 +29,12 @@ const categories = [
   },
   { title: "Plomero", imageUrl: "/images/categories/aire-acondicionado.jpg" },
 ];
+import { SecondaryButtonOutline } from "../../ui/Buttons";
+
+import { useFetchCategories } from "../../../hooks/useFetchCategories";
 
 const Categories = () => {
+  const { categories, loading } = useFetchCategories();
   const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
   useEffect(() => {
@@ -38,7 +42,7 @@ const Categories = () => {
       if (window.innerWidth <= 768) {
         setCategoriesToShow(categories.slice(0, 4));
       } else {
-        setCategoriesToShow(categories);
+        setCategoriesToShow(categories.slice(0, 8));
       }
     };
 
@@ -46,23 +50,23 @@ const Categories = () => {
     window.addEventListener("resize", updateCategories);
 
     return () => window.removeEventListener("resize", updateCategories);
-  }, []);
+  }, [loading]);
 
   const handleCardClick = (title) => {
     console.log(`Categoría seleccionada: ${title}`);
   };
 
   return (
-    <div className="mt-10 grid gap-12 md:p-4 mx-auto max-w-[100rem]">
-      <h2 className="font-clashDisplay">Categorías Principales</h2>
-      <div className="grid gap-10">
-        <div className="grid grid-cols-auto-300 sm:grid-cols-auto-250 md:grid-cols-auto-300 lg:grid-cols-auto-350 gap-4">
-          {categoriesToShow.map((category, index) => (
+    <div className="mt-10 grid gap-12 mx-auto px-20 max-w-[100rem] md:flex-col sm:px-10">
+      <div className='h-auto flex flex-col gap-2 sm:gap-0'>
+        <h2 className="font-clash">Categorías Principales</h2>
+        <div className='grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4'>
+          {categoriesToShow.map((category) => (
             <Card
-              key={index}
-              title={category.title}
-              imageUrl={category.imageUrl}
-              onClick={() => handleCardClick(category.title)}
+            key={category.categoryId}
+            title={category.categoryName}
+            imageUrl="/images/categories/aire-acondicionado.jpg"
+            onClick={() => handleCardClick(category.categoryName)}
             />
           ))}
         </div>

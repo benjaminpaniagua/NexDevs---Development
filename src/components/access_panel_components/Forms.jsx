@@ -7,10 +7,18 @@ import AddIcon from '@mui/icons-material/Add';
 
 //Fromulario de LogIn
 export function LogIn() {
+    const navigate = useNavigate();
+    const [isAnimating, setIsAnimating] = useState(false);
+    useEffect(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 100);
+    }, []);
     //Guarda los datos de inicio de sesion
     const [formData, setFormData] = useState({
         email: "",
-        password:"",
+        password: "",
     });
 
     //Maneja los inputs ingresados
@@ -22,14 +30,28 @@ export function LogIn() {
         });
     };
 
+    const handleRegisterClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/register-1');
+        }, 100);
+    };
+
+    const handleRecovertClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/recover');
+        }, 100);
+    };
+
     //Realiza las acciones necesarias para iniciar sesion
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log( formData );
+        console.log(formData);
         setFormData({ ...formData, email: '', password: '' });
     };
     return (
-        <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Iniciar Sesión</h1>
             {/* Email y contraseña */}
             <div className="flex flex-col gap-2 mt-10 mb-5 sm:mt-5">
@@ -38,21 +60,29 @@ export function LogIn() {
             </div>
             {/* Olvide mi contraseña */}
             <div className="flex flex-col items-end mb-5">
-                <Link to="/Access_Panel/recover" className="text-clr-blue font-medium cursor-pointer">Olvidé mi contraseña</Link>
+                <a onClick={handleRecovertClick} className="text-clr-blue font-medium cursor-pointer">Olvidé mi contraseña</a>
             </div>
 
             {/* Boton de Login */}
             <button id="login_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Iniciar Sesión</button>
 
             {/* Registrarse */}
-            <div className="flex flex-col items-center">                
-                <p className="mt-10">¿Aún no tienes una cuenta? <Link to="/Access_Panel/register-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate</Link></p>
+            <div className="flex flex-col items-center">
+                <p className="mt-10">¿Aún no tienes una cuenta? <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate</a></p>
             </div>
         </form>
     );
 }
 
-export function SignIn_1({ onUserDataChange }) {
+export function SignIn_1({ onUserDataChange, handleRegisterContinue }) {
+    const [isAnimating, setIsAnimating] = useState(false);
+    useEffect(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 100);
+    }, []);
+
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
@@ -78,6 +108,20 @@ export function SignIn_1({ onUserDataChange }) {
         setConfirmPassword(e.target.value);
     };
 
+    const handeLoginClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/login');
+        }, 100);
+    };
+
+    const handleCompanyClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/company-1');
+        }, 100);
+    };
+
     //Realiza las acciones necesarias para registrar un usuario
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,12 +130,16 @@ export function SignIn_1({ onUserDataChange }) {
             return;
         }
         setError('');
-        onUserDataChange(formData);
-        navigate('/Access_Panel/register-2');
+        setIsAnimating(true);
+        setTimeout(() => {
+            onUserDataChange(formData);
+            handleRegisterContinue();
+            navigate('/Access_Panel/register-2');
+        }, 100);
     };
 
     return (
-        <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-5">Registrarse</h1>
 
             {/* Formulario */}
@@ -104,23 +152,35 @@ export function SignIn_1({ onUserDataChange }) {
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
 
-            {/* Boton de Siguiente */}            
+            {/* Boton de Siguiente */}
             <button id="user_next" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">
-            Siguiente
+                Siguiente
             </button>
 
             {/* Iniciar Sesión */}
-            <div className="flex flex-col items-center">                
-                <p className="mt-10 md:mt-5">¿Ya tienes una cuenta? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesión</Link></p>
+            <div className="flex flex-col items-center">
+                <p className="mt-10 md:mt-5">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesión</a></p>
             </div>
             {/* Registrar Empresa */}
-            <div className="flex flex-col items-center">                
-                <p className="mt-5">¿Quieres registrar tu empresa? <Link to="/Access_Panel/company-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrala aquí</Link></p>
+            <div className="flex flex-col items-center">
+                <p className="mt-5">¿Quieres registrar tu empresa? <a onClick={handleCompanyClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrala aquí</a></p>
             </div>
         </form>
     );
 }
-export function SignIn_2({ userData }) {
+export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
+    const [isAnimating, setIsAnimating] = useState(false);
+    useEffect(() => {
+        if (!isRegister2) {
+            navigate('/Access_Panel/register-1');
+        } else {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 100);
+        }
+    }, [isRegister2]);
+
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
@@ -186,6 +246,14 @@ export function SignIn_2({ userData }) {
         }
     };
 
+    const handleBack = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            handleRegisterBack();
+            navigate('/Access_Panel/register-1');
+        }, 100);
+    };
+
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -195,11 +263,15 @@ export function SignIn_2({ userData }) {
             profileImage
         };
         console.log(updatedUserData);
-        navigate('/Access_Panel/login');
+        setIsAnimating(true);
+        setTimeout(() => {
+            handleRegisterBack();
+            navigate('/Access_Panel/login');
+        }, 100);
     };
 
     return (
-        <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-5">Registrarse</h1>
 
             {/* Formulario */}
@@ -237,7 +309,7 @@ export function SignIn_2({ userData }) {
 
             {/* Boton de volver o confirmar */}
             <div className="flex justify-between">
-                <button id="user_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={() => navigate('/Access_Panel/register-1')}>Volver</button>
+                <button id="user_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={handleBack}>Volver</button>
                 <button id="user_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
             </div>
         </form>
@@ -245,18 +317,38 @@ export function SignIn_2({ userData }) {
 }
 
 export function Recovery_EmailVerification() {
+    const [isAnimating, setIsAnimating] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 100);
+    }, []);
+
     const [email, setEmail] = useState('');
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
+
+    const handleBack = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/login');
+        }, 100);
+    }
+
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        navigate('/Access_Panel/password');
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/password');
+        }, 100);
     };
     return (
-        <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Recuperar contraseña</h1>
             <p className="mt-2">Ingresa tu correo electrónico y te enviaremos un enlace para recuperar tu contraseña.</p>
             <div className="flex flex-col gap-2 my-10 sm:my-5">
@@ -267,17 +359,26 @@ export function Recovery_EmailVerification() {
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿No quieres recuperar tu contraseña? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Inicia Sesión</Link></p>
+                <p className="mt-10">¿No quieres recuperar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Inicia Sesión</a></p>
             </div>
         </form>
     );
 }
 
 export function Recovery_Password({ }) {
+    const [isAnimating, setIsAnimating] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 100);
+    }, []);
+
     const [formData, setFormData] = useState({
         password: "",
-        confirmPassword:"",
+        confirmPassword: "",
     });
     const [error, setError] = useState('');
 
@@ -290,6 +391,13 @@ export function Recovery_Password({ }) {
         });
     };
 
+    const handleBack = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/login');
+        }, 100);
+    }
+
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -300,10 +408,13 @@ export function Recovery_Password({ }) {
         console.log(formData);
         setFormData({ ...formData, password: '', confirmPassword: '' });
         setError('');
-        navigate('/Access_Panel/login');
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/login');
+        }, 100);
     };
     return (
-        <form className="w-1/2 md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Nueva Contraseña</h1>
             <div className="flex flex-col gap-2 my-10 sm:my-5">
                 <FormInput id="recovery_password" type="password" name="password" title="Contraseña" minLength={8} value={formData.password} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
@@ -314,14 +425,21 @@ export function Recovery_Password({ }) {
             <button id="password_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Cambiar contraseña</button>
 
             {/* Iniciar Sesion */}
-            <div className="flex flex-col items-center">                
-                <p className="mt-10">¿No quieres cambiar tu contraseña? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</Link></p>
+            <div className="flex flex-col items-center">
+                <p className="mt-10">¿No quieres cambiar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
             </div>
         </form>
     );
 }
 
-export function Company_SignIn_1({ onUserDataChange }) {
+export function Company_SignIn_1({ onUserDataChange, handleCompanyContinue }) {
+    const [isAnimating, setIsAnimating] = useState(false);
+    useEffect(() => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            setIsAnimating(false);
+        }, 100);
+    }, []);
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
@@ -346,6 +464,20 @@ export function Company_SignIn_1({ onUserDataChange }) {
         setConfirmPassword(e.target.value);
     };
 
+    const handeLoginClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/login');
+        }, 100);
+    };
+
+    const handleRegisterClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/register-1');
+        }, 100);
+    };
+
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -354,12 +486,16 @@ export function Company_SignIn_1({ onUserDataChange }) {
             return;
         }
         setError('');
-        onCompanyDataChange(formData);
-        navigate('/Access_Panel/company-2');
+        setIsAnimating(true);
+        setTimeout(() => {
+            onUserDataChange(formData);
+            handleCompanyContinue();
+            navigate('/Access_Panel/company-2');
+        }, 100);
     };
 
     return (
-        <form className="relative w-1/2 items-center justify-center md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`relative w-1/2 items-center justify-center md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Registrar Empresa</h1>
 
             {/* Formulario */}
@@ -375,18 +511,30 @@ export function Company_SignIn_1({ onUserDataChange }) {
             <button id="company_next" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Siguiente</button>
 
             {/* Iniciar Sesion */}
-            <div className="flex flex-col items-center">                
-                <p className="mt-10">¿Ya tienes una cuenta? <Link to="/Access_Panel/login" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</Link></p>
+            <div className="flex flex-col items-center">
+                <p className="mt-10">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
             </div>
             {/* Registrar Usuario */}
             <div className="flex flex-col items-center">
-                <p className="mt-5">¿Quieres registrar un usuario normal? <Link to="/Access_Panel/register-1" className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate aquí</Link></p>
+                <p className="mt-5">¿Quieres registrar un usuario normal? <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate aquí</a></p>
             </div>
         </form>
     );
 }
 
-export function Company_SignIn_2({ userData }) {
+export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
+    const [isAnimating, setIsAnimating] = useState(false);
+    useEffect(() => {
+        if (!isCompany2) {
+            navigate('/Access_Panel/company-1');
+        }else {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setIsAnimating(false);
+            }, 100);
+        }
+    }, [isCompany2]);
+
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
@@ -455,20 +603,32 @@ export function Company_SignIn_2({ userData }) {
         }
     };
 
+    const handleBack = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            handleCompanyBack();
+            navigate('/Access_Panel/company-1');
+        }, 100);
+    };
+
     //Handle Submit
     const handleSubmit = (e) => {
         e.preventDefault();
-        const updatedCompanyData = {
-            ...companyData,
+        const updatedUserData = {
+            ...userData,
             ...formData,
             profileImage
         };
-        console.log(updatedCompanyData);
-        navigate('/Access_Panel/login');
+        console.log(updatedUserData);
+        setIsAnimating(true);
+        setTimeout(() => {
+            handleCompanyBack();
+            navigate('/Access_Panel/login');
+        }, 100);
     };
 
     return (
-        <form className="relative w-1/2 items-center justify-center md:w-[70%]" onSubmit={handleSubmit}>
+        <form className={`relative w-1/2 items-center justify-center md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Registrar Empresa</h1>
 
             {/* Formulario */}
@@ -503,12 +663,12 @@ export function Company_SignIn_2({ userData }) {
 
                 </div>
                 <FormSelect id="company_category" name="category" title="Categoría" value={formData.category} onChange={handleSelectChange} options={categoryOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                <FormTextArea id="company_description" name="description" title="Descripción" minLength={0} value={formData.description} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <FormTextArea id="company_description" name="description" title="Descripción" minLength={0} maxLength={450} value={formData.description} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
             </div>
 
             {/* Boton de volver o confirmar */}
             <div className="flex justify-between">
-                <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={() => navigate('/Access_Panel/register-1')}>Volver</button>
+                <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={handleBack}>Volver</button>
                 <button id="company_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
             </div>
         </form>
