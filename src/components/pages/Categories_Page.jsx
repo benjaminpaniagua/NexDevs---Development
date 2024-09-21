@@ -1,4 +1,4 @@
-import CardCategories from "../ui/Categories/CardCategories";
+import CardCategories from "../ui/Cards/CardCategories";
 import SecondaryButton from "../ui/SecondaryButton";
 import { useState, useEffect } from "react";
 import { Search_Input } from "../ui/Search_Input";
@@ -72,7 +72,7 @@ const Categories_Page = () => {
   useEffect(() => {
     const updateCategories = () => {
       if (window.innerWidth <= 768) {
-        setCategoriesToShow(categories.slice(0, 4));
+        setCategoriesToShow(categories);
       } else {
         setCategoriesToShow(categories);
       }
