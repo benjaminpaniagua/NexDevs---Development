@@ -6,7 +6,7 @@ export function CardPost({title, imageUrl, description, user, profilepicture, on
 
                 {/* Post Picture */}
                 <div className='rounded-lg overflow-hidden'>
-                    <img src='/images/Post_Image_Placeholder.png' alt="Profile_Picture" />
+                    <img src={imageUrl} alt="Profile_Picture" />
                 </div>
                 {/* Post Picture */}
 

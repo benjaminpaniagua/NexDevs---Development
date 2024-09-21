@@ -3,7 +3,7 @@ export function MainButton({ text, extraStyles, onClick, disabled, type, id }) {
     if (disabled) {
         return (
             <>
-                <button className={`text-clr-white bg-clr-grey rounded-lg border-2 border-clr-grey transition-all duration-300 py-2 brightness-[1.5] ${extraStyles}`}>{text}</button>
+                <button className={`text-clr-white bg-clr-grey rounded-lg border-2 border-clr-grey transition-all duration-300 py-2 brightness-[1.5] cursor-default ${extraStyles}`}>{text}</button>
             </>
         );
     } else {
@@ -19,7 +19,7 @@ export function SecondaryButton({ text, extraStyles, onClick, disabled, type, id
     if (disabled) {
         return (
             <>
-                <button className={`text-clr-black bg-clr-green-light rounded-lg border-2 border-clr-green-light transition-all duration-300 py-2 saturate-50 ${extraStyles}`}>{text}</button>
+                <button className={`text-clr-black bg-clr-green-light rounded-lg border-2 border-clr-green-light transition-all duration-300 py-2 saturate-50 cursor-default ${extraStyles}`}>{text}</button>
             </>
         );
     } else {
@@ -35,7 +35,7 @@ export function SecondaryButtonOutline({ text, extraStyles, onClick, disabled, t
     if (disabled) {
         return (
             <>
-                <button className={`text-clr-black bg-clr-white rounded-lg border-2 border-clr-black transition-all duration-300 py-2 opacity-50 ${extraStyles}`}>{text}</button>
+                <button className={`text-clr-black bg-clr-white rounded-lg border-2 border-clr-black transition-all duration-300 py-2 opacity-50 cursor-default ${extraStyles}`}>{text}</button>
             </>
         );
     } else {

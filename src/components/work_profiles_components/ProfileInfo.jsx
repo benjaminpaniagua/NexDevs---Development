@@ -36,7 +36,7 @@ export function ProfileInfo() {
                 {/* Stars */}
                 {/* Botones */}
                 <div className="flex gap-5 justify-center items-center my-2">
-                    <SecondaryButtonOutline text={"Dejar una Reseña"} extraStyles={"w-full"} />
+                    <SecondaryButtonOutline text={"Dejar una Reseña"} extraStyles={"w-full"} disabled />
                 </div>
                 {/* Botones */}
                 {/*About me*/}
