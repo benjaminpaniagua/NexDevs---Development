@@ -1,5 +1,5 @@
 import '../../index.css'
-import { useFetchReviews } from '../../hooks/useFetchReviews';
+import { useFetchReviews } from '../../hooks/WorkProfile/useFetchWorkProfileReviews';
 import { CardReviews } from '../ui/Cards/CardReviews';
 import { SecondaryButtonOutline } from '../ui/Buttons';
 
