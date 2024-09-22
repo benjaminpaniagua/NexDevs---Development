@@ -43,7 +43,7 @@ export function ProfileInfo({users, loading}) {
                             {/* Stars */}
                             {/* Botones */}
                             <div className="flex gap-5 justify-center items-center my-2">
-                                <SecondaryButtonOutline text={"Dejar una Reseña"} extraStyles={"w-full"} disabled />
+                                <SecondaryButtonOutline text={"Dejar una Reseña"} extraStyles={"w-full py-2"} disabled />
                             </div>
                             {/* Botones */}
                             {/*About me*/}
@@ -63,7 +63,7 @@ export function ProfileInfo({users, loading}) {
                                     <img src="/images/icons/email.svg" alt="" />
                                     <h4>{users.email}</h4>
                                 </div>
-                                <MainButton text={"Contactar"} extraStyles={'mt-2'} />
+                                <MainButton text={"Contactar"} extraStyles={'mt-2 py-2'} />
                             </div>
                             {/*Contact*/}
                         </div>

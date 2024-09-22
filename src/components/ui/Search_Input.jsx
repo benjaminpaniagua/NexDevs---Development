@@ -1,18 +1,24 @@
+import { useState } from "react";
 
+export function Search_Input({ search }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
-export function Search_Input() {
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    search(value);
+  };
+  
   return (
     <div>
-      <form className="flex" action="#">
+      <form className="flex">
         <input
           type="text"
-          placeholder="Buscar servicios"
-          className="font-montserrat font-semibold text-sm w-full px-4 py-2 border md:hidden border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+          placeholder="Buscar"
+          value={searchTerm}
+          onChange={handleInputChange}
+          className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full px-4 py-2"
         />
-        <button className="bg-[#A9CC63] px-4 py-2 md:rounded-full md:py-4 md:px-4 rounded-r-md w-fit" type="submit">
-            <p className="md:hidden font-montserrat font-bold text-clr-black">Buscar</p>
-            {/* <img className="max-md:hidden" src="./images/search_icon.svg" alt="search icon" /> */}
-        </button>
       </form>
     </div>
   );

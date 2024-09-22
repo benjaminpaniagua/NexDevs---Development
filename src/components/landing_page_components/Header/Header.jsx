@@ -1,5 +1,5 @@
 import backgroundImage from "/images/header.png";
-import MainButton from "../../ui/MainButton";
+import { MainButton } from "../../ui/Buttons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -14,7 +14,7 @@ const Header = () => {
         </h1>
         <div className="flex gap-6">
           <Link to="/Access_Panel/login">
-            <MainButton text="Comenzar" />
+            <MainButton text="Comenzar" extraStyles={"px-14 py-4"} />
           </Link>
         </div>
       </div>

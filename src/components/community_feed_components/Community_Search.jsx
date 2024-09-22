@@ -36,7 +36,7 @@ export function Community_Search() {
                             </div>
 
                             <div className='flex'>
-                                <SecondaryButton text={"Buscar"} extraStyles={"px-10 sm:text-[0.8rem] sm:px-2"} onClick={handleSubmit} />
+                                <SecondaryButton text={"Buscar"} extraStyles={"px-10 py-2 sm:text-[0.8rem] sm:px-2"} onClick={handleSubmit} />
                             </div>
 
                         </div>

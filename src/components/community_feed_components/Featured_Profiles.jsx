@@ -1,15 +1,16 @@
 import '../../index.css'
+import { SecondaryButtonOutline } from '../ui/Buttons';
 import { useNavigate } from 'react-router-dom';
 import { CardProfiles } from '../ui/Cards/CardProfiles';
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay, Mousewheel } from 'swiper/modules';
+import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import 'swiper/css/mousewheel';
 import 'swiper/css/autoplay';
+import { useEffect } from 'react';
 
-export function Featured_Profiles() {
+export function Featured_Profiles({setIsLoading}) {
     const navigate = useNavigate();
     const { users, loading, error } = useFetchWorkUsers();
 
@@ -17,6 +18,10 @@ export function Featured_Profiles() {
         console.log(`Usuario seleccionada: ${title}`);
         navigate(`/workprofile/${title}`);
     };
+
+    useEffect (() => {
+        setIsLoading(loading);
+    }, [loading]);
 
     /*if (error) {
         navigate('/');
@@ -37,7 +42,7 @@ export function Featured_Profiles() {
                         {/* Cards */}
                         <div>
                             <Swiper
-                                modules={[Pagination, Autoplay, Mousewheel]}
+                                modules={[Pagination, Autoplay]}
                                 spaceBetween={50}
                                 breakpoints={{
                                     640: {
@@ -56,7 +61,6 @@ export function Featured_Profiles() {
                                     disableOnInteraction: false,
                                 }}
                                 loop
-                                mousewheel
                                 style={{ paddingBottom: '69px' }}
                             >
                                 {users.map((user) => (
@@ -78,6 +82,9 @@ export function Featured_Profiles() {
                         {/* Cards */}
                     </div>
                     )}
+                    <div className='flex justify-center'>
+                    <SecondaryButtonOutline text="Ver Todos" extraStyles={"px-16 py-2 mt-5"} onClick={() => navigate('/Profiles')}/>
+                    </div>
             </div>
         </>
     );

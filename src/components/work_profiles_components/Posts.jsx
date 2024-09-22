@@ -18,7 +18,7 @@ export function Posts() {
                 <h3 className="font-clash font-medium md:text-[1.5rem]">Post destacado</h3>
                 <CardPost title={posts[0].title} imageUrl={posts[0].imageUrl} description={posts[0].description} user={posts[0].user} profilepicture={posts[0].profilepicture} />
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver más" extraStyles={"px-16 mt-5"} />
+                    <SecondaryButtonOutline text="Ver más" extraStyles={"px-16 py-2 mt-5"} />
                 </div>
             </div>
         </>

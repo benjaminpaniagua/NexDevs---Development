@@ -24,7 +24,7 @@ export function Reviews() {
                 </div>
                 
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver más" extraStyles={"px-16 mt-5"} />
+                    <SecondaryButtonOutline text="Ver más" extraStyles={"px-16 py-2 mt-5"} />
                 </div>
 
             </div>

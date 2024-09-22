@@ -1,33 +1,52 @@
 import CardCategories from "../ui/Cards/CardCategories";
-import SecondaryButton from "../ui/SecondaryButton";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Search_Input } from "../ui/Search_Input";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useNavigate } from "react-router-dom";
 
 const Categories_Page = () => {
+  const navigate = useNavigate();
   const { categories, loading } = useFetchCategories();
-  const [categoriesToShow, setCategoriesToShow] = useState(categories);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleCardClick = (title) => {
+    console.log(`Categoría seleccionada: ${title}`);
+  };
+
+  const handleSearch = (search) => {
+    setSearchTerm(search.toLowerCase());
+  };
+
+  const filteredCategories = categories.filter((category) =>
+    category.categoryName.toLowerCase().includes(searchTerm)
+  );
 
   return (
-    <div className="h-auto mt-10 grid md:p-4 mx-auto max-w-[100rem] min-w-[10rem]">
-      <div className="flex mt-20 mb-4 items-center justify-between">
+    <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+      <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-20 mb-4 items-center justify-between">
         <h2 className="font-clash">Categorías</h2>
-        <Search_Input />
+        <Search_Input search={handleSearch} />
       </div>
       {loading ? (
-        <h3 className="text-center">Cargando categorias...</h3>
+        <h3 className="text-center">Cargando Categorias...</h3>
       ) : (
         <div className="grid gap-10">
-          <div className="grid grid-cols-auto-300 sm:grid-cols-auto-250 md:grid-cols-auto-300 lg:grid-cols-auto-350 gap-4">
-            {categories.map((category, index) => (
-              <CardCategories
-                key={category.categoryId}
-                title={category.categoryName}
-                imageUrl="/images/categories/aire-acondicionado.jpg"
-                onClick={() => handleCardClick(category.categoryName)}
-              />
-            ))}
-          </div>
+          {filteredCategories.length > 0 ? (
+            <div className="grid grid-cols-4 md:grid-cols-2 xs:grid-cols-1 gap-8">
+              {filteredCategories.map((category) => (
+                <CardCategories
+                  key={category.categoryId}
+                  title={category.categoryName}
+                  imageUrl="/images/categories/aire-acondicionado.jpg"
+                  onClick={() => handleCardClick(category.categoryName)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="h-24 flex items-center justify-center">
+              <h3 className="text-center text-gray-500">No se encontraron resultados para "{searchTerm}".</h3>
+            </div>
+          )}
         </div>
       )}
     </div>

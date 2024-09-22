@@ -70,7 +70,7 @@ export function CardProfiles({ image, name, category, biography, province, city,
 
                 {/* Button */}
                 <div className='mt-6'>
-                    <MainButton text="Ver Perfil" extraStyles={"px-16 w-full"} onClick={onClick} />
+                    <MainButton text="Ver Perfil" extraStyles={"px-16 py-2 w-full"} onClick={onClick} />
                 </div>
                 {/* Button */}
             </div>

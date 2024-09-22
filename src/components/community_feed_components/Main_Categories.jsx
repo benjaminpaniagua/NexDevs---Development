@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import Card from "../ui/Cards/CardCategories";
 import { SecondaryButtonOutline } from '../ui/Buttons'
 import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useNavigate } from 'react-router-dom';
 
 export function Main_Categories() {
+    const navigate = useNavigate();
     const { categories, loading } = useFetchCategories();
     const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
@@ -51,7 +53,7 @@ export function Main_Categories() {
                     )}
 
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 mt-5"} />
+                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-5"} onClick={() => navigate('/Categories')}/>
                 </div>
             </div>
         </>

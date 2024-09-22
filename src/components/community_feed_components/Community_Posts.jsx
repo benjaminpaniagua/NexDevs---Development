@@ -45,7 +45,7 @@ export function Community_Posts() {
 
                     </div>
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 mt-7"} />
+                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-7"} />
                 </div>
             </div>
         </>

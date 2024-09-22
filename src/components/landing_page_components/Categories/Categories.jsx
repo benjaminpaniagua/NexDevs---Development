@@ -1,36 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Card from "../../ui/Cards/CardCategories";
-import SecondaryButton from "../../ui/SecondaryButton";
 import { Link } from "react-router-dom";
-import Categories_Page from "../../pages/Categories_Page";
-
-const categories = [
-  {
-    title: "Aire Acondicionado",
-    imageUrl: "/images/categories/aire-acondicionado.jpg",
-  },
-  {
-    title: "Mecánica Automotriz",
-    imageUrl: "/images/categories/aire-acondicionado.jpg",
-  },
-  {
-    title: "Jardinería",
-    imageUrl: "/images/categories/aire-acondicionado.jpg",
-  },
-  {
-    title: "Fotografía",
-    imageUrl: "/images/categories/aire-acondicionado.jpg",
-  },
-  { title: "Limpieza", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  { title: "Cocina", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-  {
-    title: "Repartidor",
-    imageUrl: "/images/categories/aire-acondicionado.jpg",
-  },
-  { title: "Plomero", imageUrl: "/images/categories/aire-acondicionado.jpg" },
-];
 import { SecondaryButtonOutline } from "../../ui/Buttons";
-
 import { useFetchCategories } from "../../../hooks/useFetchCategories";
 
 const Categories = () => {
@@ -70,9 +41,9 @@ const Categories = () => {
             />
           ))}
         </div>
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center mt-5 mb-10">
           <Link to="/categories">
-            <SecondaryButton text="Ver Más" sizeX="S" sizeY="S" />
+            <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-4"}/>
           </Link>
         </div>
       </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from "prop-types";
 import NavLinks from './NavLinks';
 import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { SecondaryButton } from '../Buttons';
 
 const NavBar = ({ profile_picture }) => {
@@ -65,8 +65,8 @@ const NavBar = ({ profile_picture }) => {
   }, [scrollPosition]);
 
   const links = [
-    { href: "#home", label: "Inicio" },
-    { href: "#empresas", label: "Empresas" },
+    { href: "#home", label: "Inicio", route: "/Community_Feed/" },
+    { href: "#empresas", label: "Empresas", route: "/profiles/" },
     { href: "#freelance", label: "Freelance" },
     { href: "#contacto", label: "Contacto" },
   ];
@@ -85,7 +85,7 @@ const NavBar = ({ profile_picture }) => {
             {/* <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" /> */}
           </a>
           <Link to="/Access_Panel/login">
-            <SecondaryButton text="Únete" extraStyles={"px-14"} />
+            <SecondaryButton text="Únete" extraStyles={"px-14 py-2"} />
           </Link>
         </div>
 
@@ -94,7 +94,7 @@ const NavBar = ({ profile_picture }) => {
             {/* <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" /> */}          
           </a>
           <Link to="/Access_Panel/login">
-            <SecondaryButton text="Únete" extraStyles={"px-5"} />
+            <SecondaryButton text="Únete" extraStyles={"px-5 py-2"} />
           </Link>
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
@@ -103,14 +103,14 @@ const NavBar = ({ profile_picture }) => {
               type="checkbox"
               onClick={toggleMenu}
             />
-            <div className="rounded-2xl h-[3px] w-1/2 bg-clr-white duration-500 peer-checked:rotate-[225deg] origin-right peer-checked:-translate-x-[12px] peer-checked:-translate-y-[1px]"></div>
-            <div className="rounded-2xl h-[3px] w-full bg-clr-white duration-500 peer-checked:-rotate-45"></div>
-            <div className="rounded-2xl h-[3px] w-1/2 bg-clr-white duration-500 place-self-end peer-checked:rotate-[225deg] origin-left peer-checked:translate-x-[12px] peer-checked:translate-y-[1px]"></div>
+            <div className="rounded-2xl h-[3px] w-1/2 bg-clr-black duration-500 peer-checked:rotate-[225deg] origin-right peer-checked:-translate-x-[12px] peer-checked:-translate-y-[1px]"></div>
+            <div className="rounded-2xl h-[3px] w-full bg-clr-black duration-500 peer-checked:-rotate-45"></div>
+            <div className="rounded-2xl h-[3px] w-1/2 bg-clr-black duration-500 place-self-end peer-checked:rotate-[225deg] origin-left peer-checked:translate-x-[12px] peer-checked:translate-y-[1px]"></div>
           </label>
         </div>
 
         {isOpen && (
-          <div className={`absolute top-full left-0 z-10 right-0 bg-clr-black p-4 sm:flex hidden md:justify-start md:items-start transition-all shadow-lg duration-300 ${isMenuAnimating ? 'animate-menu-open' : 'animate-menu-close'}`}>
+          <div className={`absolute top-full left-0 z-10 right-0 bg-clr-white p-4 sm:flex hidden md:justify-start md:items-start transition-all shadow-lg duration-300 ${isMenuAnimating ? 'animate-menu-open' : 'animate-menu-close'}`}>
             <NavLinks links={links} />
           </div>
         )}
