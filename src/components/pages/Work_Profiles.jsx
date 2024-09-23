@@ -6,6 +6,8 @@ import { Skills } from '../work_profiles_components/Skills'
 import { Posts } from '../work_profiles_components/Posts'
 import { Reviews } from '../work_profiles_components/Reviews'
 import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile';
+import { Loading_Screen } from '../ui/Loading_Screen.jsx'
+
 export function Work_Profiles() {
     const { users, loading, error } = useFetchUserProfile();
 
@@ -24,6 +26,11 @@ export function Work_Profiles() {
                     </svg>
                 </div>
                 {/* Upper Background */}
+
+
+                {/* Loading Screen */}
+                <Loading_Screen Loading={loading} />
+                {/* Loading Screen */}
 
                 {/*Content*/}
                 <div className="flex flex-col mx-auto px-20 max-w-[100rem] md:px-10">
@@ -44,7 +51,7 @@ export function Work_Profiles() {
                                 <Categories workId={users.categoryId} />
                                 {/* Categories */}
                                 {/* Habilidades */}
-                                <Skills workId={users.workId}/>
+                                <Skills workId={users.workId} />
                                 {/* Habilidades */}
                             </div>
                         </div>
@@ -59,13 +66,13 @@ export function Work_Profiles() {
                     <div className="flex md:flex-col gap-8">
                         {/* Posts */}
                         <div className="w-[40%] md:w-full flex flex-col">
-                            <Posts/>
+                            <Posts />
                         </div>
                         {/* Posts */}
 
                         {/* Reviews */}
                         <div className="w-[60%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
-                            <Reviews/>
+                            <Reviews />
                         </div>
                         {/* Reviews */}
                     </div>

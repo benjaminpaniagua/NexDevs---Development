@@ -3,6 +3,7 @@ import { Search_Input } from "../ui/Search_Input";
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { CardProfiles } from "../ui/Cards/CardProfiles";
 import { useNavigate } from "react-router-dom";
+import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 export function Profiles_List() {
     const navigate = useNavigate();
@@ -28,6 +29,11 @@ export function Profiles_List() {
     return (
         <>
             <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+
+                {/* Loading Screen */}
+                <Loading_Screen Loading={loading} />
+                {/* Loading Screen */}
+
                 <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-20 mb-4 items-center justify-between">
                     <h2 className="font-clash">Perfiles</h2>
                     <Search_Input search={handleSearch} />

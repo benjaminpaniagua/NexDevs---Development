@@ -65,10 +65,10 @@ const NavBar = ({ profile_picture }) => {
   }, [scrollPosition]);
 
   const links = [
-    { href: "#home", label: "Inicio", route: "/Community_Feed/" },
-    { href: "#empresas", label: "Empresas", route: "/profiles/" },
-    { href: "#freelance", label: "Freelance" },
-    { href: "#contacto", label: "Contacto" },
+    { label: "Inicio", route: "/Community_Feed/" },
+    { label: "Empresas", route: "/profiles/" },
+    { label: "Freelance" },
+    { label: "Contacto" },
   ];
 
   return (

@@ -4,6 +4,7 @@ import { Featured_Profiles } from '../community_feed_components/Featured_Profile
 import { Main_Categories } from '../community_feed_components/Main_Categories.jsx'
 import { Community_Posts } from '../community_feed_components/Community_Posts.jsx'
 import { useState } from 'react';
+import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 export function Community_Feed() {
   const [isLoading, setIsLoading] = useState(true);
@@ -11,9 +12,9 @@ export function Community_Feed() {
     <>
       <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] xs:px-7 md:px-10">
 
-        <div className={`fixed inset-0 z-10 bg-clr-white h-screen flex items-center justify-center ${isLoading ? 'flex' : 'hidden'}`}>
-          <h1 className='font-semibold'>Cargando</h1>
-        </div>
+        {/* Loading Screen */}
+        <Loading_Screen Loading={isLoading} />
+        {/* Loading Screen */}
 
         {/* Community Search */}
         <div className='h-auto '>
