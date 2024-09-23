@@ -7,7 +7,7 @@ import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 export function Profiles_List() {
     const navigate = useNavigate();
-    const { users, loading } = useFetchWorkUsers();
+    const { users, loading, error } = useFetchWorkUsers();
     const [searchTerm, setSearchTerm] = useState("");
 
     const handleCardClick = (title) => {
@@ -25,6 +25,10 @@ export function Profiles_List() {
         user.province.toLowerCase().includes(searchTerm) ||
         user.city.toLowerCase().includes(searchTerm)
     );
+
+    if (error) {
+        navigate('/error503');
+    }
 
     return (
         <>

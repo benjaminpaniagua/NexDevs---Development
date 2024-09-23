@@ -1,4 +1,5 @@
 import '../../index.css'
+import { useNavigate } from 'react-router-dom';
 import { ProfileInfo } from '../work_profiles_components/ProfileInfo'
 import { Collection } from '../work_profiles_components/Collection'
 import { Categories } from '../work_profiles_components/Categories'
@@ -9,7 +10,12 @@ import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile
 import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 export function Work_Profiles() {
+    const navigate = useNavigate();
     const { users, loading, error } = useFetchUserProfile();
+
+    if (error) {
+        navigate('/error503');
+    }
 
     return (
         <>

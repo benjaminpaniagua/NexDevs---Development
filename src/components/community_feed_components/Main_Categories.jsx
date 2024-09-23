@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 export function Main_Categories() {
     const navigate = useNavigate();
-    const { categories, loading } = useFetchCategories();
+    const { categories, loading, error } = useFetchCategories();
     const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
     useEffect(() => {
@@ -26,6 +26,10 @@ export function Main_Categories() {
     const handleCardClick = (title) => {
         console.log(`Categoría seleccionada: ${title}`);
     };
+
+    if (error) {
+        navigate('/error503');
+    }
 
     return (
         <>

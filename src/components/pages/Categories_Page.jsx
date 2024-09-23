@@ -7,7 +7,7 @@ import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 const Categories_Page = () => {
   const navigate = useNavigate();
-  const { categories, loading } = useFetchCategories();
+  const { categories, loading, error } = useFetchCategories();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleCardClick = (title) => {
@@ -21,6 +21,10 @@ const Categories_Page = () => {
   const filteredCategories = categories.filter((category) =>
     category.categoryName.toLowerCase().includes(searchTerm)
   );
+
+  if (error) {
+    navigate('/error503');
+}
 
   return (
     <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">

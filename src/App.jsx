@@ -7,7 +7,8 @@ import { Access_Panel } from './components/pages/Access_Panel.jsx';
 import { Work_Profiles } from './components/pages/Work_Profiles.jsx';
 import Categories_Page from './components/pages/Categories_Page.jsx';
 import { Community_Feed } from './components/pages/Community_Feed.jsx';
-import { Error_404 } from './components/pages/Error_404.jsx';
+import { Error_404, Error_503 } from './components/pages/Errors.jsx';
+
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
 
 const MainApp = () => {
@@ -26,6 +27,7 @@ const MainApp = () => {
           <Route path="/workProfile/:userId" element={<Work_Profiles />} />
           <Route path="/community_feed/" element={<Community_Feed />} />
           <Route path="*" element={<Error_404 />} />
+          <Route path="/error503" element={<Error_503 />} />
         </Routes>
       </div>
       {showNavbar && <Footer/>}

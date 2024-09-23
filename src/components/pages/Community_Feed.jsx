@@ -8,6 +8,7 @@ import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 
 export function Community_Feed() {
   const [isLoading, setIsLoading] = useState(true);
+
   return (
     <>
       <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] xs:px-7 md:px-10">
