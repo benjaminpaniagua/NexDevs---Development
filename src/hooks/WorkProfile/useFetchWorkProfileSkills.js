@@ -16,7 +16,6 @@ export const useFetchWorkProfileSkills = ({ workID }) => {
                 });
                 setSkills(response.data);
             } catch (err) {
-
                 if (axios.isCancel(err)) {
                     console.log('Solicitud Cancelada', err.message);
                 } else {
