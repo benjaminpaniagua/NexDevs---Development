@@ -11,7 +11,7 @@ export const useFetchWorkProfileCategories = ({ categoryID }) => {
 
         const fetchCategories = async () => {
             try {
-                const response = await axios.get(`https://localhost:7038/WorkCategories/Consultar?categoryId=${categoryID}`, {
+                const response = await axios.get(`https://localhost:7038/Categories/Consultar?categoryId=${categoryID}`, {
                     cancelToken: source.token
                 });
                 setCategories(response.data);
