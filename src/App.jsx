@@ -1,5 +1,6 @@
 import './index.css'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AuthProvider } from './utils/AuthProvider.jsx';
 import NavBar from './components/ui/NavBar/NavBar.jsx';
 import Footer from './components/ui/Footer/Footer.jsx'
 import { Landing_Page } from './components/pages/Landing_Page.jsx';
@@ -11,8 +12,11 @@ import { Error_404, Error_503 } from './components/pages/Errors.jsx';
 import { Modal_Post } from './components/ui/Modal_Post/Modal_Post.jsx';
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
 import { Community_Posts } from './components/community_feed_components/Community_Posts.jsx';
+import { Profiles_List } from './components/pages/Profiles_List.jsx';
+import { useScrollToTop } from './hooks/useScrollToTop.js';
 
 const MainApp = () => {
+  useScrollToTop();
   const location = useLocation();
   const showNavbar = !location.pathname.startsWith('/Access_Panel');
 
@@ -33,15 +37,17 @@ const MainApp = () => {
           <Route path="/posts" element={<Community_Posts />} />
         </Routes>
       </div>
-      {showNavbar && <Footer/>}
+      {showNavbar && <Footer />}
     </div>
   );
 };
 
 const App = () => (
-  <Router>
-    <MainApp />
-  </Router>
+  <AuthProvider>
+    <Router>
+      <MainApp />
+    </Router>
+  </AuthProvider>
 );
 
 export default App;

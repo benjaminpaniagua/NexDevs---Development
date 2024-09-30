@@ -1,8 +1,23 @@
 import React from "react";
 import '../../../index.css';
 import PropTypes from "prop-types";
+import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../utils/AuthProvider";
+import { MainButton } from "../Buttons";
+import { Link } from "react-router-dom";
 
-export function Modal_Profile({ name, state, city, bio, picture, onClose }) {
+export function Modal_Profile({ onClose }) {
+    const navigate = useNavigate();
+    const { userData } = useFetchWorkUserData();
+    const { logout } = useAuth();
+
+    const handleLogout = () => {
+        onClose();
+        logout();
+        navigate('/');
+    };
+
     return (
         <>
             <div className="relative h-screen w-full">
@@ -11,7 +26,7 @@ export function Modal_Profile({ name, state, city, bio, picture, onClose }) {
                     <div className="relative w-full h-36">
                         {/* Botón de cerrar */}
                         <div className="absolute top-0 right-0 z-10 m-2" onClick={onClose}>
-                            <img src="/images/close_window.svg" alt="Cerrar" className="h-12 cursor-pointer transition-transform duration-300 transform hover:scale-125 transform-origin-center"/>
+                            <img src="/images/close_window.svg" alt="Cerrar" className="h-12 cursor-pointer transition-transform duration-300 transform hover:scale-125 transform-origin-center" />
                         </div>
                         {/* Botón de cerrar */}
                         <svg className="h-full w-full fill-clr-blue opacity-20">
@@ -27,24 +42,22 @@ export function Modal_Profile({ name, state, city, bio, picture, onClose }) {
                     <div className="mx-10 mb-5 mt-16">
                         {/* Profile Picture */}
                         <div className="absolute top-10 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-                            <img src={picture} alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
+                            <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
                         </div>
                         {/* Profile Picture */}
                         {/* Profile */}
                         <div className="flex flex-col justify-center items-center">
-                            <h3 className="font-clashDisplay font-medium">{name}</h3>
-                            <h6 className="font-bold">{state}, {city}</h6>
+                            <h3 className="font-clashDisplay font-medium">{userData.name}</h3>
+                            <h6 className="font-bold">{userData.province}, {userData.city}</h6>
                         </div>
                         {/* Profile */}
 
                         {/* Botones */}
                         <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
-                            <button className='text-white text-fs-xsmall bg-clr-black rounded transition-all duration-500 hover:text-clr-green-light px-3 py-2'>
-                                Editar perfil
-                            </button>
-                            <button className='text-white text-fs-xsmall bg-clr-black rounded transition-all duration-500 hover:text-clr-green-light px-3 py-2'>
-                                Registrar Empresa
-                            </button>
+                            <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" />
+                            <Link to={`/workprofile/${userData.workId}`}>
+                                <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose}/>
+                            </Link>
                         </div>
                         {/* Botones */}
 
@@ -54,14 +67,14 @@ export function Modal_Profile({ name, state, city, bio, picture, onClose }) {
                             {/* Bio */}
                             <div className="flex flex-col justify-center items-center text-center">
                                 <h4 className="font-bold">Acerca de mi</h4>
-                                <p className="font-bold text-fs-xsmall">{bio}</p>
+                                <p className="font-bold text-fs-xsmall">{userData.workDescription}</p>
                             </div>
                             {/* Bio */}
 
                             {/* Log Out */}
                             <div className="flex justify-center items-center text-center mt-8">
                                 <div className="border-b border-gray-300 my-4"></div>
-                                <button className='text-fs-xsmall text-clr-grey transition-all hover:scale-110'>
+                                <button className='text-fs-xsmall text-clr-grey transition-all hover:scale-110' onClick={handleLogout}>
                                     Cerrar sesión
                                 </button>
                             </div>

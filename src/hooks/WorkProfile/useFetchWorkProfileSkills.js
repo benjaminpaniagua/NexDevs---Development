@@ -11,12 +11,11 @@ export const useFetchWorkProfileSkills = ({ workID }) => {
 
         const fetchSkills = async () => {
             try {
-                const response = await axios.get(`https://localhost:7038/WorkSkills/ConsultarID?workId=${workID}`, {
+                const response = await axios.get(`https://localhost:7038/WorkSkills/Consultar?workId=${workID}`, {
                     cancelToken: source.token
                 });
                 setSkills(response.data);
             } catch (err) {
-
                 if (axios.isCancel(err)) {
                     console.log('Solicitud Cancelada', err.message);
                 } else {
