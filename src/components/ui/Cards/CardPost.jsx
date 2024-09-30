@@ -1,3 +1,5 @@
+import React from "react";
+import { SecondaryButton } from "../Buttons";
 export function CardPost({
   title,
   imageUrl,
@@ -10,7 +12,7 @@ export function CardPost({
     <>
       {/* Post Card */}
       <div
-        className="h-auto flex flex-col gap-2 transition-all hover:scale-95"
+        className="h-auto flex flex-col gap-2 transition-all"
         onClick={onClick}
       >
         {/* Post Picture */}
@@ -90,11 +92,10 @@ export function CardPost({
           {/* Bottom */}
         </div>
         {/* Content */}
-        {/* Ver Publicación Button */}
-        <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded transition-all hover:bg-blue-600">
-          Ver Publicación
-        </button>
-        {/* Ver Publicación Button */}
+       
+        {/*text, extraStyles, onClick, disabled, type, id */}
+        <SecondaryButton text="Ver Publicación" extraStyles={`p-1 mt-5`} onClick={onClick}/>
+       
       </div>
       {/* Post Card */}
     </>

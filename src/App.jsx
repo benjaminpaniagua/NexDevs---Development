@@ -10,7 +10,6 @@ import Categories_Page from './components/pages/Categories_Page.jsx';
 import { Community_Feed } from './components/pages/Community_Feed.jsx';
 import { Error_404, Error_503 } from './components/pages/Errors.jsx';
 import { Modal_Post } from './components/ui/Modal_Post/Modal_Post.jsx';
-import { Profiles_List } from './components/pages/Profiles_List.jsx';
 import { Community_Posts } from './components/community_feed_components/Community_Posts.jsx';
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
 import { useScrollToTop } from './hooks/useScrollToTop.js';
