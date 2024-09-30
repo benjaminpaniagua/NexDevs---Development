@@ -1,12 +1,15 @@
 import '../../index.css'
 import { useState, useEffect } from "react";
 import { CardPost } from '../ui/Cards/CardPost';
+import { Modal_Post } from '../ui/Modal_Post/Modal_Post';
 import { SecondaryButtonOutline } from '../ui/Buttons'
 import { useFetchPosts} from "../../hooks/useFetchPosts";
 
 export function Community_Posts() {
     const posts = useFetchPosts();
-    const [ postsToShow, setPostsToShow] = useState(posts);
+    const [postsToShow, setPostsToShow] = useState(posts);
+    const [selectedPost, setSelectedPost] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const updatePosts = () => {
@@ -21,9 +24,18 @@ export function Community_Posts() {
         return () => window.removeEventListener("resize", updatePosts);
     }, []);
 
-    const handleCardClick = (title) => {
-        console.log(`Post seleccionada: ${title}`);
+    const handleCardClick = (post) => {
+        setSelectedPost(post);
+        setIsModalOpen(true);
+        console.log(`Post seleccionada: ${post.title}`);
     };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedPost(null);
+    };
+
+    console.log(postsToShow);
 
     return (
         <>
@@ -39,7 +51,7 @@ export function Community_Posts() {
                                 description={post.description}
                                 user={post.user}
                                 profilepicture={post.profilepicture}
-                                onClick={() => handleCardClick(post.title)}
+                                onClick={() => handleCardClick(post)}
                             />
                         ))}
 
@@ -48,6 +60,9 @@ export function Community_Posts() {
                     <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-7"} />
                 </div>
             </div>
+            {isModalOpen && selectedPost && (
+                <Modal_Post post={selectedPost} onClose={closeModal} />
+            )}
         </>
     );
 }
