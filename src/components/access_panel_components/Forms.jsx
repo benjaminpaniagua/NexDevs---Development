@@ -4,9 +4,13 @@ import '../../index.css'
 import { FormInput, FormSelect, FormTextArea } from "./FormInput";
 import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
+import { useLogin } from "../../hooks/Access_Panel/useLogin";
+import { MainButton } from "../ui/Buttons";
 
 //Fromulario de LogIn
 export function LogIn() {
+    const { login, loading, error } = useLogin()
+
     const navigate = useNavigate();
     const [isAnimating, setIsAnimating] = useState(false);
     useEffect(() => {
@@ -45,10 +49,15 @@ export function LogIn() {
     };
 
     //Realiza las acciones necesarias para iniciar sesion
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData);
-        setFormData({ ...formData, email: '', password: '' });
+        const result = await login(formData.email, formData.password);
+
+        if (result.success) {            
+            setFormData({ ...formData, email: '', password: '' });
+            window.location.href = '/Community_Feed/';
+        }
+
     };
     return (
         <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
@@ -64,7 +73,15 @@ export function LogIn() {
             </div>
 
             {/* Boton de Login */}
-            <button id="login_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Iniciar Sesión</button>
+            <div>
+                {loading && <MainButton id="login_confirm" text="Iniciar Sesión" extraStyles="h-12 w-full" disabled/>}
+                {!loading && <MainButton id="login_confirm" type="submit" text="Iniciar Sesión" extraStyles="h-12 w-full"/>}
+            </div>
+
+            {/* Cargando */}            
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {error && <p className="text-red-500 font-bold mt-5">{error}</p>}
 
             {/* Registrarse */}
             <div className="flex flex-col items-center">
@@ -527,7 +544,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     useEffect(() => {
         if (!isCompany2) {
             navigate('/Access_Panel/company-1');
-        }else {
+        } else {
             setIsAnimating(true);
             setTimeout(() => {
                 setIsAnimating(false);

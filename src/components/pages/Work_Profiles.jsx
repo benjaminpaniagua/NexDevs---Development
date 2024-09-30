@@ -8,14 +8,26 @@ import { Posts } from '../work_profiles_components/Posts'
 import { Reviews } from '../work_profiles_components/Reviews'
 import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile';
 import { Loading_Screen } from '../ui/Loading_Screen.jsx'
+import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 export function Work_Profiles() {
     const navigate = useNavigate();
-    const { users, loading, error } = useFetchUserProfile();
+    const { users, loading, error } = useFetchUserProfile(); 
+    const [ isOwner, setIsOwner ] = useState(false);
+    const { userData } = useFetchWorkUserData();
+    const { userId } = useParams();
 
     if (error) {
         navigate('/error503');
     }
+
+    useEffect(() => {
+        if (userData.workId == userId) {
+            setIsOwner(true);
+        }
+    }, [userData]);
 
     return (
         <>
@@ -45,7 +57,7 @@ export function Work_Profiles() {
                     <div className="flex md:flex-col gap-8 md:gap-0">
                         {/* Profile */}
                         <div className="w-[40%] md:w-full flex flex-col">
-                            <ProfileInfo users={users} loading={loading} />
+                            <ProfileInfo users={users} loading={loading} isOwner={isOwner} />
                         </div>
                         {/* Profile */}
                         <div className="w-[60%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">

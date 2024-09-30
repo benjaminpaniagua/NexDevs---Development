@@ -11,7 +11,7 @@ export const useFetchCategories = () => {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://localhost:7038/WorkCategories/Listado', {
+        const response = await axios.get('https://localhost:7038/Categories/Listado', {
           cancelToken: source.token
         });
         setCategories(response.data);

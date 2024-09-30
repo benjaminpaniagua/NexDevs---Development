@@ -4,8 +4,10 @@ import NavLinks from './NavLinks';
 import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
 import { Link, Route } from 'react-router-dom';
 import { SecondaryButton } from '../Buttons';
+import { useAuth } from '../../../utils/AuthProvider';
 
-const NavBar = ({ profile_picture }) => {
+const NavBar = () => {
+  const { token } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuAnimating, setIsMenuAnimating] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -26,7 +28,7 @@ const NavBar = ({ profile_picture }) => {
 
   const toggleMenu = (event) => {
     const isChecked = event.target.checked;
-    if (isChecked) {      
+    if (isChecked) {
       setIsMenuAnimating(true);
       setIsOpen(true);
     } else {
@@ -37,7 +39,7 @@ const NavBar = ({ profile_picture }) => {
 
   const handleMenuClose = () => {
     const checkbox = document.getElementById('menu-toggle');
-    if (checkbox.checked) {     
+    if (checkbox.checked) {
       checkbox.checked = false;
       setIsMenuAnimating(false);
       setTimeout(() => setIsOpen(false), 305);
@@ -81,21 +83,29 @@ const NavBar = ({ profile_picture }) => {
         </div>
         <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
           <NavLinks links={links} />
-          <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-            {/* <img src={profile_picture} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" /> */}
-          </a>
-          <Link to="/Access_Panel/login">
-            <SecondaryButton text="Únete" extraStyles={"px-14 py-2"} />
-          </Link>
+          {token &&
+            <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
+              <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+            </a>
+          }
+          {!token &&
+            <Link to="/Access_Panel/login">
+              <SecondaryButton text="Únete" extraStyles={"px-14 py-2"} />
+            </Link>
+          }
         </div>
 
         <div className='sm:flex items-center gap-10 hidden'>
-          <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-            {/* <img src={profile_picture} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" /> */}          
-          </a>
-          <Link to="/Access_Panel/login">
-            <SecondaryButton text="Únete" extraStyles={"px-5 py-2"} />
-          </Link>
+          {token &&
+            <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
+              <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+            </a>
+          }
+          {!token &&
+            <Link to="/Access_Panel/login">
+              <SecondaryButton text="Únete" extraStyles={"px-5 py-2"} />
+            </Link>
+          }
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
               id="menu-toggle"
@@ -121,7 +131,7 @@ const NavBar = ({ profile_picture }) => {
             <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal} ></div>
             {/* Modal de la esquina */}
             <div className={`mt-5 mr-5 w-[22rem] sm:mx-3 transform transition-transform duration-300 ease-out scale-0 origin-center ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
-              <Modal_Profile name="John Doe" state="California" city="Los Angeles" bio="Web Developer" picture={profile_picture} onClose={handleCloseModal} />
+              <Modal_Profile onClose={handleCloseModal} />
             </div>
           </div>
         )}
@@ -131,11 +141,3 @@ const NavBar = ({ profile_picture }) => {
 };
 
 export default NavBar;
-
-NavBar.propTypes = {
-  profile_picture: PropTypes.string.isRequired
-};
-
-NavBar.defaultProps = {
-  profile_picture: "/images/default_profile_picture.jpg"
-};

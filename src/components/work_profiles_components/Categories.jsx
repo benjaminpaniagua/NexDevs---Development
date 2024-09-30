@@ -2,7 +2,7 @@ import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
 import { useFetchWorkProfileCategories } from '../../hooks/WorkProfile/useFetchWorkProfileCategory';
 export function Categories({workId}) {
-    const { categories, loading, error } = useFetchWorkProfileCategories({categoryID: workId});
+    const { categories, loading } = useFetchWorkProfileCategories({categoryID: workId});
 
     return (
         <>

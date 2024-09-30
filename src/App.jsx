@@ -1,5 +1,6 @@
 import './index.css'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AuthProvider } from './utils/AuthProvider.jsx';
 import NavBar from './components/ui/NavBar/NavBar.jsx';
 import Footer from './components/ui/Footer/Footer.jsx'
 import { Landing_Page } from './components/pages/Landing_Page.jsx';
@@ -8,10 +9,11 @@ import { Work_Profiles } from './components/pages/Work_Profiles.jsx';
 import Categories_Page from './components/pages/Categories_Page.jsx';
 import { Community_Feed } from './components/pages/Community_Feed.jsx';
 import { Error_404, Error_503 } from './components/pages/Errors.jsx';
-
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
+import { useScrollToTop } from './hooks/useScrollToTop.js';
 
 const MainApp = () => {
+  useScrollToTop();
   const location = useLocation();
   const showNavbar = !location.pathname.startsWith('/Access_Panel');
 
@@ -30,15 +32,17 @@ const MainApp = () => {
           <Route path="/error503" element={<Error_503 />} />
         </Routes>
       </div>
-      {showNavbar && <Footer/>}
+      {showNavbar && <Footer />}
     </div>
   );
 };
 
 const App = () => (
-  <Router>
-    <MainApp />
-  </Router>
+  <AuthProvider>
+    <Router>
+      <MainApp />
+    </Router>
+  </AuthProvider>
 );
 
 export default App;
