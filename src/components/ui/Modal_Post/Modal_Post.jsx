@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { HeartIcon, MessageCircleIcon } from "lucide-react";
+import { ICONS } from "../Icons";
 import { SecondaryButton } from "../Buttons";
 
 export function Modal_Post({ post, onClose }) {
@@ -39,7 +39,7 @@ export function Modal_Post({ post, onClose }) {
 
           {/* Botón para cerrar el modal */}
           <button onClick={onClose} className="text-black">
-            Cerrar
+            {ICONS.close}
           </button>
         </div>
 
@@ -53,11 +53,11 @@ export function Modal_Post({ post, onClose }) {
         {/* Iconos de interacción */}
         <div className="flex items-center gap-4 mb-4">
           <button className="flex items-center gap-1">
-            <HeartIcon className="h-5 w-5" />
+            {ICONS.heart}
             <span>3</span>
           </button>
           <button className="flex items-center gap-1">
-            <MessageCircleIcon className="h-5 w-5" />
+            {ICONS.comment}
             <span>0</span>
           </button>
         </div>
