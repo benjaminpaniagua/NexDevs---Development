@@ -5,6 +5,7 @@ import { FormInput, FormSelect, FormTextArea } from "./FormInput";
 import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
+import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWorkProfile";
 import { MainButton } from "../ui/Buttons";
 
 //Fromulario de LogIn
@@ -53,7 +54,7 @@ export function LogIn() {
         e.preventDefault();
         const result = await login(formData.email, formData.password);
 
-        if (result.success) {            
+        if (result.success) {
             setFormData({ ...formData, email: '', password: '' });
             window.location.href = '/Community_Feed/';
         }
@@ -74,11 +75,11 @@ export function LogIn() {
 
             {/* Boton de Login */}
             <div>
-                {loading && <MainButton id="login_confirm" text="Iniciar Sesión" extraStyles="h-12 w-full" disabled/>}
-                {!loading && <MainButton id="login_confirm" type="submit" text="Iniciar Sesión" extraStyles="h-12 w-full"/>}
+                {loading && <MainButton id="login_confirm" text="Iniciar Sesión" extraStyles="h-12 w-full" disabled />}
+                {!loading && <MainButton id="login_confirm" type="submit" text="Iniciar Sesión" extraStyles="h-12 w-full" />}
             </div>
 
-            {/* Cargando */}            
+            {/* Cargando */}
             {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
             {/* Error */}
             {error && <p className="text-red-500 font-bold mt-5">{error}</p>}
@@ -460,7 +461,7 @@ export function Company_SignIn_1({ onUserDataChange, handleCompanyContinue }) {
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        companyName: '',
+        name: '',
         email: '',
         password: ''
     });
@@ -517,7 +518,7 @@ export function Company_SignIn_1({ onUserDataChange, handleCompanyContinue }) {
 
             {/* Formulario */}
             <div className="flex flex-col gap-2 my-10 sm:my-5">
-                <FormInput id="company_name" type="text" name="companyName" title="Nombre de la Empresa" minLength={0} value={formData.companyName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
+                <FormInput id="company_name" type="text" name="name" title="Nombre de la Empresa" minLength={0} value={formData.name} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id="company_email" type="email" name="email" title="Email" minLength={0} value={formData.email} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id="company_password" type="password" name="password" title="Contraseña" minLength={8} value={formData.password} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id="company_confirmpassword" type="password" name="confirmPassword" value={confirmPassword} title="Confirmar contraseña" onChange={handleConfirmPasswordChange} minLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
@@ -541,6 +542,11 @@ export function Company_SignIn_1({ onUserDataChange, handleCompanyContinue }) {
 
 export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const [isAnimating, setIsAnimating] = useState(false);
+    const navigate = useNavigate();
+    const { registerWorkProfile, loading, error, message } = useRegisterWorkProfile();
+    const { login } = useLogin()
+
+
     useEffect(() => {
         if (!isCompany2) {
             navigate('/Access_Panel/company-1');
@@ -552,19 +558,15 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         }
     }, [isCompany2]);
 
-    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        state: '',
+        province: '',
         city: '',
-        category: '',
-        description: ''
+        number: '',
+        workDescription: ''
     });
 
     //Lista de opciones de los selects
-    const categoryOptions = [
-        'Fontanería', 'Jardinería', 'Electricidad', 'Carpintería', 'Reparación de Electrodomésticos', 'Limpieza de Hogares', 'Servicio de Mudanzas', 'Cuidado de Mascotas'
-    ];
     const stateOptions = [
         'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
     ];
@@ -577,7 +579,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         'Puntarenas': ['Puntarenas', 'Esparza'],
         'Limón': ['Limón', 'Guápiles']
     };
-    const [selectedProvince, setSelectedProvince] = useState(formData.state);
+    const [selectedProvince, setSelectedProvince] = useState(formData.province);
     const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
@@ -587,7 +589,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             ...formData,
             [name]: value
         });
-        if (name === 'state') {
+        if (name === 'province') {
             setSelectedProvince(value);
             setAvailableCities(cityOptions[value] || []);
         }
@@ -601,6 +603,16 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             [name]: value
         });
     };
+
+    const handleNumberChange = (e) => {
+        const { name, value } = e.target;
+        if (/^\d*$/.test(value)) {
+            setFormData({
+                ...formData,
+                [name]: value
+            });
+        }
+    }
 
     //Foto de Perfil
     const [profileImage, setProfileImage] = useState(null);
@@ -629,19 +641,20 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     };
 
     //Handle Submit
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const updatedUserData = {
             ...userData,
             ...formData,
-            profileImage
+            profilePictureUrl: profileImage || 'default_image_url',
+            profileType: 'W',
         };
-        console.log(updatedUserData);
-        setIsAnimating(true);
-        setTimeout(() => {
-            handleCompanyBack();
-            navigate('/Access_Panel/login');
-        }, 100);
+        const response = await registerWorkProfile(updatedUserData);
+        const result = await login(response.email, response.password);
+        if (result.success) {
+            window.location.href = (`/workProfile/${response.workId}`);
+        }
+
     };
 
     return (
@@ -674,13 +687,13 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                     </div>
 
                     <div className="flex flex-col  w-1/2 gap-2 sm:gap-1">
-                        <FormSelect id="company_state" name="state" title="Provincia" value={formData.state} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="company_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
 
                 </div>
-                <FormSelect id="company_category" name="category" title="Categoría" value={formData.category} onChange={handleSelectChange} options={categoryOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                <FormTextArea id="company_description" name="description" title="Descripción" minLength={0} maxLength={450} value={formData.description} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
+                <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
             </div>
 
             {/* Boton de volver o confirmar */}
@@ -688,6 +701,12 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                 <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={handleBack}>Volver</button>
                 <button id="company_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
             </div>
+
+            {/* Cargando */}
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {error && <p className="text-red-500 font-bold mt-5">{message}</p>}
+
         </form>
     );
 }
