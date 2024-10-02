@@ -4,27 +4,12 @@ import { CardPost } from '../ui/Cards/CardPost';
 import { Modal_Post } from '../ui/Modal_Post/Modal_Post';
 import { SecondaryButtonOutline } from '../ui/Buttons'
 import { useFetchPosts} from "../../hooks/useFetchPosts";
-import { useNavigate } from 'react-router-dom';
 
-export function Community_Posts() {
+export function Posts_List() {
     const posts = useFetchPosts();
-    const navigate = useNavigate();
     const [postsToShow, setPostsToShow] = useState(posts);
     const [selectedPost, setSelectedPost] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    useEffect(() => {
-        const updatePosts = () => {
-            if (window.innerWidth <= 768) {
-                setPostsToShow(posts.slice(0, 4));
-            } else {
-                setPostsToShow(posts.slice(0, 8));
-            }
-        };
-        updatePosts();
-        window.addEventListener("resize", updatePosts);
-        return () => window.removeEventListener("resize", updatePosts);
-    }, []);
 
     const handleCardClick = (post) => {
         setSelectedPost(post);
@@ -41,7 +26,7 @@ export function Community_Posts() {
 
     return (
         <>
-            <div className='h-auto flex flex-col gap-2 sm:gap-0 max-w-[100rem] m-auto'>
+            <div className='flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10'>
                 <h2 className="font-clash sm:text-center">Publicaciones</h2>
                     <div className='grid grid-cols-3 md:grid-cols-2 xs:grid-cols-1 gap-12 md:gap-8 xs:gap-10'>
 
@@ -59,7 +44,7 @@ export function Community_Posts() {
 
                     </div>
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-7"} onClick={() => navigate('/posts')} />
+                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-7"}  />
                 </div>
             </div>
             {isModalOpen && selectedPost && (
