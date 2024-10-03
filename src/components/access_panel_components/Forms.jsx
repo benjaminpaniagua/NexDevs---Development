@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
 import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWorkProfile";
-import { MainButton } from "../ui/Buttons";
+import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
+import { Terms } from "./Terms_Modal";
 
 //Fromulario de LogIn
 export function LogIn() {
@@ -545,7 +546,8 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const navigate = useNavigate();
     const { registerWorkProfile, loading, error, message } = useRegisterWorkProfile();
     const { login } = useLogin()
-
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (!isCompany2) {
@@ -640,9 +642,17 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         }, 100);
     };
 
+    const handleCheckboxChange = (e) => {
+        setTermsAccepted(e.target.checked);
+    };
+
     //Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!termsAccepted) {
+            alert("Debes aceptar los términos y condiciones");
+            return;
+        }
         const updatedUserData = {
             ...userData,
             ...formData,
@@ -654,7 +664,14 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
         }
+    };
 
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
     };
 
     return (
@@ -694,18 +711,32 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                 </div>
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <div className="flex items-center gap-3">
+                    <input id="terms" type="checkbox" checked={termsAccepted} onChange={handleCheckboxChange} className="focus:ring-clr-blue h-4 w-4 border-gray-300 rounded" />
+                    <label className="font-medium text-gray-700">
+                        Acepto los{" "}
+                        <a className="text-clr-blue hover:underline" onClick={openModal}>
+                            Términos y Condiciones
+                        </a>
+                    </label>
+                </div>
             </div>
 
             {/* Boton de volver o confirmar */}
-            <div className="flex justify-between">
-                <button id="company_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={handleBack}>Volver</button>
-                <button id="company_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
+            <div className="flex justify-between h-12">
+                <SecondaryButtonOutline id="company_back" text="Volver" type="button" onClick={handleBack} extraStyles="w-[47%] font-medium" />
+                <MainButton id="company_confirm" text="Confirmar" type="submit" extraStyles="w-[47%]" disabled={!termsAccepted} />
             </div>
 
             {/* Cargando */}
             {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
             {/* Error */}
             {error && <p className="text-red-500 font-bold mt-5">{message}</p>}
+
+            {/* Modal de terminos y condiciones */}
+            {showModal && (
+                <Terms closeModal={closeModal} />
+            )}
 
         </form>
     );
