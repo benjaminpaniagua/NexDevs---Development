@@ -3,397 +3,44 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style: none;
   text-decoration: none;
-  font-family: 'ClashDisplay-Variable', sans-serif;
 }
 
-html,body{
-  height: 100%;
-  background-color: hsla(0, 0%, 98%, 1); 
-  /* font-size: 12px; */
+body {
+  font-family: 'Montserrat', sans-serif;
 }
 
-/* Base styles for larger screens (min-width: 1536px) */
-@media (min-width: 1536px) {
-  h1 {
-    font-size: 64px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 48px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 28px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 22px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 18px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 16px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 14px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
+h1, h2, h3, h4, h5, h6, p {
+  color: hsla(20, 8%, 7%, 1);
 }
 
-/* Styles for xl screens (max-width: 1535px) */
-@media (max-width: 1535px) {
-  h1 {
-    font-size: 56px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 42px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 24px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 20px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 16px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 14px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
+h1 {
+  font-size: 72px;
+  font-weight: 600;
+  font-family: 'Clash Display', sans-serif;
 }
 
-/* Styles for lg screens (max-width: 1279px) */
-@media (max-width: 1279px) {
-  h1 {
-    font-size: 48px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 40px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 22px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 18px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 14px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-}
+/* Styles for md screens (max-width: 1360px) */
+@media (max-width: 1360px) {
 
-/* Styles for md screens (max-width: 1023px) */
-@media (max-width: 1023px) {
-  h1 {
-    font-size: 40px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 36px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 20px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 16px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 14px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
 }
 
 /* Styles for sm screens (max-width: 767px) */
 @media (max-width: 767px) {
-  h1 {
-    font-size: 32px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 28px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 18px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 14px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 10px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 10px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
+
+
 }
 
 /* Styles for xs screens (max-width: 479px) */
 @media (max-width: 479px) {
-  h1 {
-    font-size: 28px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 24px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 16px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 14px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 10px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 10px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-}
 
-/* Styles for tablets (min-width: 1024px and max-width: 1200px) */
-@media (min-width: 1024px) and (max-width: 1200px) {
-  h1 {
-    font-size: 48px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Clash Display', sans-serif;
-  }
-  h2 {
-    font-size: 40px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 500; /* Medium */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h3 {
-    font-size: 24px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h4 {
-    font-size: 20px;
-    color: hsla(20, 8%, 7%, 1);
-    font-weight: 600; /* Semibold */
-    font-family: 'Montserrat', sans-serif;
-  }
-  h5 {
-    font-size: 16px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  h6 {
-    font-size: 14px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  p {
-    font-size: 12px;
-    color: hsla(0, 0%, 24%, 0.75); /* 75% opacity */
-    font-weight: 400; /* Regular */
-    font-family: 'Montserrat', sans-serif;
-    opacity: 0.75;
-  }
-  button {
-    font-size: 16px;
-    font-weight: 700; /* Bold */
-    font-family: 'Montserrat', sans-serif;
-  }
+
+
 }
 
 @font-face {
@@ -419,13 +66,13 @@ html,body{
 .form-wrapper {
   position: absolute;
   height: 100%;
-  opacity: 0; 
+  opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s;
 }
 
 .step-visible {
-  opacity: 1; 
+  opacity: 1;
   visibility: visible;
   transition: opacity 0.5s ease-in-out;
 }
@@ -435,6 +82,7 @@ html,body{
   visibility: hidden;
   transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out 0.5s;
 }
+
 /*Transiciones y Animaciones de los Access Panel*/
 
 .underline-animated {
@@ -460,6 +108,7 @@ html,body{
 .scale-x-2 {
   transform: scaleX(2);
 }
+
 .hover\\:scale-x-2:hover {
   transform: scaleX(2);
 }
@@ -509,6 +158,7 @@ html,body{
 .animate-menu-close {
   animation: menuExit 0.3s ease-out forwards;
 }
+
 /*Menu Hamburguesa*/
 
 /*Profile Moda*/
@@ -558,9 +208,10 @@ html,body{
 .animate-modal-close {
   animation: modalExit 0.3s ease-out forwards;
 }
+
 /*Profile Modal*/
 
-.swiper-button-next{
+.swiper-button-next {
   top: 50%;
   transform: translateY(-100%);
   overflow: visible;
@@ -569,6 +220,6 @@ html,body{
 
 .swiper-button-prev {
   top: 50%;
-  transform: translateY(-100%);  
+  transform: translateY(-100%);
   z-index: 10;
 }

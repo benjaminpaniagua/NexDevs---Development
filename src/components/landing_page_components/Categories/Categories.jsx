@@ -28,10 +28,10 @@ const Categories = () => {
   };
 
   return (
-    <div className="mt-10 grid gap-12 mx-auto px-20 max-w-[100rem] md:flex-col sm:px-10">
-      <div className='h-auto flex flex-col gap-2 sm:gap-0'>
-        <h2 className="font-clash">Categorías Principales</h2>
-        <div className='grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4'>
+    <div className="mt-10 grid gap-12 mx-auto px-20 max-w-[100rem] md:flex-col md:p-4">
+      <div className='h-auto flex flex-col gap-2 sm:gap-0 md:px-4'>
+        <h2 className="text-4xl sm:text-fs-xlarge font-bold">Categorías Principales</h2>
+        <div className='grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4 mt-3'>
           {categoriesToShow.map((category) => (
             <Card
             key={category.categoryId}

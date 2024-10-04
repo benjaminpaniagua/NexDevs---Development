@@ -8,7 +8,7 @@ const NavLinks = ({ links }) => {
       {links.map((link) => (
         <Link to={link.route} key={link.label}>
             <p
-              className="font-clash text-clr-black underline-animated hover:text-clr-blue-hover text-sm font-medium"
+              className="font-montserrat text-clr-black underline-animated hover:text-clr-blue-hover text-sm font-bold"
             >
               {link.label}
             </p>

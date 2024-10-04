@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ICONS } from "../ICONS";
+import { ICONS } from "../Icons";
 import { SecondaryButton } from "../Buttons";
 
 export function CardPost({
@@ -54,7 +54,7 @@ export function CardPost({
       >
         {/* Post Picture */}
         <div className="rounded-lg overflow-hidden">
-          <img src={profilePictureUrl} alt="Post_Image" />
+          <img className="w-[30rem]" src="/images/Post_Image_Placeholder.png" alt="Post_Image" />
         </div>
 
         {/* Content */}
@@ -63,7 +63,7 @@ export function CardPost({
           <h4>{title}</h4>
 
           {/* Post Description */}
-          <p className="font-bold h-20 xs:h-14 mt-2 mb-4 xs:text-[0.65rem]">
+          <p className="font-normal h-20 xs:h-14 mt-2 mb-4 sm:text-fs-small">
             {description}
           </p>
 
@@ -72,11 +72,11 @@ export function CardPost({
             {/* Autor */}
             <div className="flex cursor-pointer">
               <img
-                src={profilePictureUrl}
+                src="/images/Profile_Placeholder.png"
                 alt="Foto de perfil"
-                className="w-10 xs:w-8 rounded-full border-2 border-white object-cover"
+                className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
               />
-              <h5 className="ml-2 text-clr-black font-bold flex items-center xs:text-[0.5rem]">
+              <h5 className="ml-2 text-clr-black font-bold flex items-center sm:text-fs-small">
                 {userName}
               </h5>
             </div>

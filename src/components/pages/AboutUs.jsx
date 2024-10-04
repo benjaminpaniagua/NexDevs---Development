@@ -1,9 +1,9 @@
 export function AboutUs() {
   return (
     <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
-      <section>
-        <h3>Acerca de Nosotros</h3>
-        <p>
+      <section className="">
+        <h2>Acerca de Nosotros</h2>
+        <p className="">
           En Network, creemos en el poder de las conexiones para impulsar el
           éxito de los pequeños empresarios y trabajadores independientes.
           Nuestra misión es crear una plataforma accesible y amigable donde
@@ -13,7 +13,7 @@ export function AboutUs() {
         </p>
       </section>
       <section>
-        <h5>Misión</h5>
+        <h3>Misión</h3>
         <p>
           Facilitar a pequeños empresarios, PYMES y trabajadores independientes
           una plataforma dedicada exclusivamente a la promoción de sus servicios
@@ -24,7 +24,7 @@ export function AboutUs() {
           experiencia centrada en sus necesidades.
         </p>
         <br />
-        <h5>Visión</h5>
+        <h3>Visión</h3>
         <p>
           Convertirnos en la plataforma líder que empodere a pequeños
           empresarios y trabajadores independientes, ofreciendo un espacio
@@ -36,7 +36,7 @@ export function AboutUs() {
       </section>
 
       <section>
-        <h5>Valores</h5>
+        <h3>Valores</h3>
         <ul>
           <li>Accesibilidad</li>
           <li>Transparencia</li>
