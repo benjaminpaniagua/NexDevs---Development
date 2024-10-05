@@ -54,9 +54,11 @@ export function Modal_Profile({ onClose }) {
 
                         {/* Botones */}
                         <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
-                            <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" />
+                            <Link to={`/WorkUserEdit/${userData.workId}`}>
+                                <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
+                            </Link>
                             <Link to={`/workprofile/${userData.workId}`}>
-                                <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose}/>
+                                <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
                             </Link>
                         </div>
                         {/* Botones */}

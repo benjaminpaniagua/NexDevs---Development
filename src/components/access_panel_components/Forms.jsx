@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../index.css'
-import { FormInput, FormSelect, FormTextArea } from "./FormInput";
+import { FormInput, FormSelect, FormTextArea } from "../ui/FormInput";
 import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
