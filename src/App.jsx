@@ -13,7 +13,6 @@ import { Modal_Post } from './components/ui/Modal_Post/Modal_Post.jsx';
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
 import { useScrollToTop } from './hooks/useScrollToTop.js';
 import { Posts_List } from './components/pages/Posts_List.jsx';
-import { Terms } from './components/access_panel_components/Terms_Modal.jsx';
 
 const MainApp = () => {
   useScrollToTop();
@@ -35,7 +34,6 @@ const MainApp = () => {
           <Route path="/error503" element={<Error_503 />} />
           <Route path="/post" element={<Modal_Post />} />
           <Route path="/posts" element={<Posts_List />} />
-          <Route path="/terms" element={<Terms />} />
         </Routes>
       </div>
       {showNavbar && <Footer />}
