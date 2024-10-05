@@ -9,12 +9,12 @@ export default {
         montserrat: ['Montserrat', 'Arial', 'sans-serif'],
       },
       fontSize: {
+        "fs-headline": "3.5rem", //56px 
         "fs-xlarge": "1.625rem", //26px
-        "fs-large": "1.5rem", //24px
-        "fs-med": "1.25rem", //20px
-        "fs-normal": "1rem", //16px
-        "fs-small": "0.875rem", //14px
-        "fs-xsmall": "0.75rem", //12px
+        "fs-large": "1rem", //16px
+        "fs-med": ".875rem", //14px
+        "fs-small": ".75rem", //12px
+        "fs-xsmall": "0.6rem", //10px
       },
       fontWeight: {
         thin: "100",

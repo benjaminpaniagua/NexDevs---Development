@@ -90,7 +90,7 @@ const NavBar = () => {
           }
           {!token &&
             <Link to="/Access_Panel/login">
-              <SecondaryButton text="Únete" extraStyles={"px-14 py-2"} />
+              <SecondaryButton text="Únete" extraStyles={"px-6 py-2 text-fs-med font-bold"} />
             </Link>
           }
         </div>
@@ -103,7 +103,7 @@ const NavBar = () => {
           }
           {!token &&
             <Link to="/Access_Panel/login">
-              <SecondaryButton text="Únete" extraStyles={"px-5 py-2"} />
+              <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
             </Link>
           }
           <label className="flex-col gap-2 w-8 sm:flex hidden">

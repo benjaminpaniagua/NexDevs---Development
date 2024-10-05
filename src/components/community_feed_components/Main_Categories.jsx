@@ -34,7 +34,7 @@ export function Main_Categories() {
     return (
         <>
             <div className='h-auto flex flex-col gap-2 sm:gap-0'>
-                <h2 className="font-clash sm:text-center">Categorías Principales</h2>
+                <h2 className="font-bold text-2xl mb-2 sm:text-center">Categorías Principales</h2>
 
                 {loading ? (
                     <div>

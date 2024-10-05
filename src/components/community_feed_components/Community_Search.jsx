@@ -14,7 +14,7 @@ export function Community_Search() {
             <div className="flex md:flex-col justify-center rounded-xl gap-24 bg-clr-black p-24 xs:p-5 md:p-10">
                 {/* Texto */}
                 <div className='flex flex-col gap-10 my-auto'>
-                    <h2 className='text-white sm:text-center sm:text-[0.9rem] sm:mt-2 sm:-mb-2'>¿Qué servicio estás buscando hoy?</h2>
+                    <h2 className='text-white sm:text-center font-bold sm:text-fs-xlarge text-4xl sm:mt-2 sm:mb-2'>¿Qué servicio estás buscando hoy?</h2>
 
                     {/* Searchbar */}
                     <form onSubmit={handleSubmit}>
