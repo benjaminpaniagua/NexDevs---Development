@@ -1,9 +1,5 @@
 import "../../index.css";
-import {
-  MainButton,
-  SecondaryButtonOutline,
-  SecondaryButton,
-} from "../ui/Buttons";
+import { MainButton, SecondaryButtonOutline, SecondaryButton } from "../ui/Buttons";
 import { ICONS } from "../ui/Icons";
 import { useAuth } from "../../utils/AuthProvider";
 
@@ -60,11 +56,8 @@ export function ProfileInfo({ users, loading, isOwner }) {
     <div className="flex my-2 md:justify-center">
       {isOwner ? (
         <>
-          <SecondaryButtonOutline
-            text={"Editar Perfil"}
-            extraStyles={"w-1/3 md:w-full py-2"}
-          />
-          <SecondaryButton text={"Publicar"} extraStyles={"w-full py-2"} />
+          <SecondaryButtonOutline text={"Editar Perfil"} extraStyles={"w-1/3 md:w-full py-2 mr-2"} />
+          <SecondaryButton text={"Publicar"} extraStyles={"w-full py-2 ml-2"} />
         </>
       ) : (
         <SecondaryButtonOutline
@@ -84,7 +77,9 @@ export function ProfileInfo({ users, loading, isOwner }) {
     <div className="h-auto">
       {renderProfilePicture()}
       {renderUserInfo()}
-      <div className="flex my-2 md:justify-center">{ICONS.star}</div>
+      <div className="flex gap-2">
+        <div className="flex my-2 md:justify-center">{ICONS.star}</div>
+      </div>
       {renderButtons()}
       {renderAboutMe()}
       {renderContactInfo()}

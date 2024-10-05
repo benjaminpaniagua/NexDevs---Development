@@ -4,10 +4,12 @@ import '../../index.css'
 import { BackgroundPattern } from "../access_panel_components/BackgroundPattern";
 import { Link } from "react-router-dom";
 import { LogIn, SignIn_1, SignIn_2, Company_SignIn_1, Company_SignIn_2, Recovery_EmailVerification, Recovery_Password } from "../access_panel_components/Forms";
+import { useAuth } from "../../utils/AuthProvider";
 
 import useScreenWidth from '../../hooks/useScreenWidth';
 
 export function Access_Panel() {
+    const { token } = useAuth();
     const location = useLocation();
     const isRendering = useScreenWidth();  
 
@@ -57,6 +59,10 @@ export function Access_Panel() {
         location.pathname === '/Access_Panel/company-2' ? 'clr-black' :
         location.pathname === '/Access_Panel/recover' ? 'clr-white' :
         location.pathname === '/Access_Panel/password' ? 'clr-white' : 'clr-blue';
+
+    if (token) {
+        return <Navigate to={'/Community_Feed/'} />;
+    }
 
     return (
 
@@ -165,55 +171,3 @@ export function Access_Panel() {
         </div>
     );
 }
-
-
-/*  Antiguo, no borrar por ahora
-
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/login' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/login" element={<LogIn />} />
-                        </Routes>
-                    </div>
-
-                    {/* Formulario de SignIn 1}
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/register-1' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/register-1" element={<SignIn_1 onUserDataChange={handleUserDataChange} handleRegisterContinue={handleRegisterContinue} />} />
-                        </Routes>
-                    </div>
-
-                    {/* Formulario de SignIn 2}
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/register-2' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/register-2" element={<SignIn_2 userData={userData} isRegister2={isRegister2} handleRegisterBack={handleRegisterBack} />} />
-                        </Routes>
-                    </div>                    
-
-                    {/* Formulario de Company 1}
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/company-1' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/company-1" element={<Company_SignIn_1 onUserDataChange={handleUserDataChange} handleCompanyContinue={handleCompanyContinue} />} />
-                        </Routes>
-                    </div>
-
-                    {/* Formulario de Company 2}
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/company-2' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/company-2" element={<Company_SignIn_2 userData={userData} isCompany2={isCompany2} handleCompanyBack={handleCompanyBack} />} />
-                        </Routes>
-                    </div>
-
-                    {/* Formulario de Recovery}
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/recover' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>                       
-                        <Routes>
-                            <Route path="/recover" element={<Recovery_EmailVerification/>} />
-                        </Routes>
-                    </div>
-
-                    {/* Formulario de Password }
-                    <div className={`transition-opacity duration-500 absolute inset-0 flex items-center justify-center ${location.pathname === '/Access_Panel/password' ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                        <Routes>
-                            <Route path="/password" element={<Recovery_Password/>} />
-                        </Routes>
-                    </div>
-*/

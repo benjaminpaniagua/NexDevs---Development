@@ -15,9 +15,7 @@ export function MainButton({
 
   if (disabled) {
     return (
-      <button
-        className={`${baseStyles} bg-clr-grey border-clr-grey brightness-[1.5] cursor-default ${extraStyles}`}
-      >
+      <button type="button" className={`${baseStyles} bg-clr-grey border-clr-grey brightness-[1.5] cursor-default ${extraStyles}`}>
         {text}
       </button>
     );
