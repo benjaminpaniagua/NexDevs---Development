@@ -53,7 +53,7 @@ export function CardPost({
         onClick={onClick}
       >
         {/* Post Picture */}
-        <div className="rounded-lg overflow-hidden">
+        <div className="mx-auto rounded-lg overflow-hidden">
           <img className="w-[30rem]" src="/images/Post_Image_Placeholder.png" alt="Post_Image" />
         </div>
 

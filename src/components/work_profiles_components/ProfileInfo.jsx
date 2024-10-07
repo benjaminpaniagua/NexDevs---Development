@@ -2,6 +2,7 @@ import "../../index.css";
 import { MainButton, SecondaryButtonOutline, SecondaryButton } from "../ui/Buttons";
 import { ICONS } from "../ui/Icons";
 import { useAuth } from "../../utils/AuthProvider";
+import { Link } from "react-router-dom";
 
 export function ProfileInfo({ users, loading, isOwner }) {
   const { token } = useAuth();
@@ -56,7 +57,9 @@ export function ProfileInfo({ users, loading, isOwner }) {
     <div className="flex my-2 md:justify-center">
       {isOwner ? (
         <>
-          <SecondaryButtonOutline text={"Editar Perfil"} extraStyles={"w-1/3 md:w-full py-2 mr-2"} />
+          <Link to={`/WorkUserEdit/${users.workId}`} className="w-1/3 md:w-full">
+            <SecondaryButtonOutline text="Editar Perfil" extraStyles={"py-2 mr-2 px-2"} />
+          </Link>
           <SecondaryButton text={"Publicar"} extraStyles={"w-full py-2 ml-2"} />
         </>
       ) : (
