@@ -32,14 +32,14 @@ export function Profiles_List() {
 
     return (
         <>
-            <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+            <div className="flex flex-col gap-4 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
 
                 {/* Loading Screen */}
                 <Loading_Screen Loading={loading} />
                 {/* Loading Screen */}
 
-                <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-20 mb-4 items-center justify-between">
-                    <h2 className="font-clash">Perfiles</h2>
+                <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-16 mb-4 items-center justify-between">
+                    <h2 className="font-clash font-semibold text-4xl">Perfiles</h2>
                     <Search_Input search={handleSearch} />
                 </div>
                 {loading ? (
@@ -47,7 +47,7 @@ export function Profiles_List() {
                 ) : (
                     <div className="grid gap-10">
                         {filteredUsers.length > 0 ? (
-                            <div className="grid grid-cols-4 md:grid-cols-2 xs:grid-cols-1 gap-8">
+                            <div className="grid grid-cols-4 xl:grid-cols-auto-250 gap-8">
                                 {filteredUsers.map((user) => (
                                     <CardProfiles
                                         key={user.workId}

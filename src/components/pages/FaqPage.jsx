@@ -10,12 +10,12 @@ const FaqPage = () => {
 
   const faqs = [
     {
-      question: "¿Qué es Network?",
+      question: "¿Qué es network?",
       answer:
-        "Network es una plataforma diseñada para ayudar a pequeños empresarios, PYMES y freelancers a promocionar sus servicios y conectarse con clientes potenciales.",
+        "network es una plataforma diseñada para ayudar a pequeños empresarios, PYMES y freelancers a promocionar sus servicios y conectarse con clientes potenciales.",
     },
     {
-      question: "¿Cómo puedo registrarme en Network?",
+      question: "¿Cómo puedo registrarme en network?",
       answer:
         "Para registrarte, simplemente dirígete a la página de registro, proporciona tus datos personales y crea un perfil. Una vez registrado, podrás empezar a promocionar tus servicios.",
     },
@@ -37,8 +37,8 @@ const FaqPage = () => {
   ];
 
   return (
-    <div className="container mx-auto py-12 px-4 md:px-12">
-      <h1 className="text-3xl font-bold text-clr-black mb-6">
+    <div className="flex flex-col gap-8 py-10 h-auto mx-auto px-20 max-w-[100rem] xs:px-7 md:px-10">
+      <h1 className="text-4xl font-bold text-clr-black sm:text-center">
         Preguntas Frecuentes
       </h1>
       <div className="space-y-6">
@@ -46,7 +46,7 @@ const FaqPage = () => {
           <div key={index} className="bg-gray-100 p-6 rounded-lg shadow-md">
             <button
               onClick={() => toggleQuestion(index)}
-              className="w-full text-left text-xl font-semibold text-clr-black focus:outline-none"
+              className="w-full text-left text-lg font-semibold text-clr-black focus:outline-none"
             >
               {faq.question}
             </button>
@@ -59,7 +59,7 @@ const FaqPage = () => {
                   transition={{ duration: 0.3 }}
                   className="mt-4 overflow-hidden"
                 >
-                  <p className="text-lg text-gray-700">{faq.answer}</p>
+                  <p className="text-fs-med">{faq.answer}</p>
                 </motion.div>
               )}
             </AnimatePresence>

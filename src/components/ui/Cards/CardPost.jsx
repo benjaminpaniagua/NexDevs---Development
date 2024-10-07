@@ -53,18 +53,24 @@ export function CardPost({
         onClick={onClick}
       >
         {/* Post Picture */}
-        <div className="mx-auto rounded-lg overflow-hidden">
-          <img className="w-[30rem]" src="/images/Post_Image_Placeholder.png" alt="Post_Image" />
+        <div className="rounded-lg overflow-hidden">
+          <img
+            className="w-fit"
+            src="/images/placeholder.jpg"
+            alt="Post_Image"
+          />
         </div>
 
         {/* Content */}
-        <div className="flex flex-col px-4">
+        <div className="flex flex-col ">
           {/* Post Title */}
           <h4>{title}</h4>
 
           {/* Post Description */}
-          <p className="font-normal h-20 xs:h-14 mt-2 mb-4 sm:text-fs-small">
-            {description}
+          <p className="font-normal h-20 sm:h-fit mt-2 mb-4 sm:text-fs-small">
+            {description.length > 200
+              ? description.substring(0, 200) + "..."
+              : description}
           </p>
 
           {/* Bottom */}
@@ -82,17 +88,20 @@ export function CardPost({
             </div>
 
             {/* Icons */}
-            <div className="flex gap-3 xs:gap-1 items-center ml-auto">
-              <button className="transition-all hover:scale-110">
-                {ICONS.heart}
-              </button>
-              <h4 className="text-clr-black">{likesCount}</h4>
-
-              <button className="transition-all hover:scale-110">
-                {ICONS.comment}
-              </button>
-              <h4 className="text-clr-black">{commentsCount}</h4>
-            </div>
+            <section className="flex gap-3 xs:gap-2 items-center ml-auto">
+              <div className="flex gap-1 items-center">
+                <button className="transition-all hover:scale-110">
+                  {ICONS.heart}
+                </button>
+                <h4 className="text-clr-black font-bold">{likesCount}</h4>
+              </div>
+              <div className="flex gap-1 items-center">
+                <button className="transition-all hover:scale-110">
+                  {ICONS.comment}
+                </button>
+                <h4 className="text-clr-black font-bold">{commentsCount}</h4>
+              </div>
+            </section>
           </div>
         </div>
 
@@ -106,16 +115,20 @@ export function CardPost({
       {/* Modal */}
       {showModal && (
         <div
-          className="modal-overlay fixed inset-0 bg-gray-800 bg-opacity-50 flex sm:p-4 items-center justify-center z-50 overflow-y-auto"
+          className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
           onClick={handleOutsideClick}
         >
-          <div className="bg-white p-6 rounded-lg max-w-xl w-full relative">
-            <div className="flex justify-between items-center w-full py-4 bg-white sticky top-[-16px] z-10">
+          <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
+            <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
               <div className="flex items-center">
                 <div className="h-9 w-9 bg-gray-300 rounded-full flex items-center justify-center">
-                  
+                  <img
+                    src="/images/Profile_Placeholder.png"
+                    alt="Foto de perfil"
+                    className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
+                  />
                 </div>
-                <h3 className="text-lg font-semibold ml-4">{userName}</h3>
+                <h3 className="text-fs-large font-bold ml-3">{userName}</h3>
               </div>
 
               {/* Botón para cerrar el modal */}
@@ -123,11 +136,32 @@ export function CardPost({
                 {ICONS.close}
               </button>
             </div>
-            <img className="rounded-lg" src={profilePictureUrl} alt={title} />
-            {/* <h2 className="text-lg font-bold">{title}</h2> */}
+            <div className="rounded-lg overflow-hidden w-fit">
+              <img
+                className="w-fit max-w-full "
+                src="/images/placeholder.jpg"
+                alt="Post_Image"
+              />
+            </div>
+            {/* Icons */}
+            <section className="flex gap-3 xs:gap-2 items-center my-3">
+              <div className="flex gap-1 items-center">
+                <button className="transition-all hover:scale-110">
+                  {ICONS.heart}
+                </button>
+                <h4 className="text-clr-black font-bold">{likesCount}</h4>
+              </div>
+              <div className="flex gap-1 items-center">
+                <button className="transition-all hover:scale-110">
+                  {ICONS.comment}
+                </button>
+                <h4 className="text-clr-black font-bold">{commentsCount}</h4>
+              </div>
+            </section>
+
             <p>{description}</p>
             <div className="mt-4">
-              <h4>Comentarios:</h4>
+              <h4 className="font-bold">Comentarios:</h4>
               <div className="mt-2">
                 {comments.length > 0 ? (
                   comments.map((comment) => (
@@ -144,7 +178,6 @@ export function CardPost({
                 )}
               </div>
             </div>
-
           </div>
         </div>
       )}

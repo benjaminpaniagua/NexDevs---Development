@@ -42,7 +42,7 @@ const Categories_Page = () => {
       ) : (
         <div className="grid gap-10">
           {filteredCategories.length > 0 ? (
-            <div className="grid grid-cols-4 md:grid-cols-2 xs:grid-cols-1 gap-8">
+            <div className="grid grid-cols-4 md:grid-cols-2 xs:grid-cols-1 gap-8 text-center">
               {filteredCategories.map((category) => (
                 <CardCategories
                   key={category.categoryId}

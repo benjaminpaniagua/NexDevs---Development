@@ -15,7 +15,7 @@ const Footer = () => {
 
           <div className="flex flex-col space-y-4 md:items-center items-start">
             <FooterLink linkText="Acerca de Nosotros" linkUrl="/about-us" />
-            <FooterLink linkText="Preguntas Frecuientes" linkUrl="/faq" />
+            <FooterLink linkText="Preguntas Frecuentes" linkUrl="/faq" />
             <FooterLink linkText="Términos y Condiciones" linkUrl="/terms-and-conditions" />
           </div>
         </div>

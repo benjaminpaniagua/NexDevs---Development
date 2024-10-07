@@ -42,7 +42,7 @@ export function Featured_Profiles({ setIsLoading }) {
                             <div>
                                 <Swiper
                                     modules={[Pagination, Autoplay]}
-                                    spaceBetween={50}
+                                    spaceBetween={20}
                                     breakpoints={{
                                         640: {
                                             slidesPerView: 1,

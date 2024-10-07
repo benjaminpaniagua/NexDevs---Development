@@ -13,7 +13,7 @@ export function Community_Posts() {
 
   useEffect(() => {
     const updatePosts = () => {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 767) {
         setPostsToShow(posts.data.slice(0, 3));
       } else {
         setPostsToShow(posts.data.slice(0, 6));
@@ -30,7 +30,7 @@ export function Community_Posts() {
     <>
       <div className="h-auto flex flex-col gap-2 sm:gap-0 max-w-[100rem] m-auto">
         <h2 className="font-bold text-2xl mb-2 sm:text-center">Publicaciones</h2>
-        <div className="grid grid-cols-3 md:grid-cols-2 xs:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
+        <div className="grid grid-cols-auto-350 md:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
           {postsToShow.length > 0 ? (
             postsToShow.map((post) => (
               <CardPost

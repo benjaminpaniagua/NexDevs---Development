@@ -43,7 +43,7 @@ export function Main_Categories() {
                 ) :
                     (
                         <div>
-                            <div className={`grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4`}>
+                            <div className={`grid grid-cols-4 md:grid-cols-1 gap-12 md:gap-4 text-center`}>
                                 {categoriesToShow.map((category) => (
                                     <Card
                                         key={category.categoryId}
@@ -57,7 +57,7 @@ export function Main_Categories() {
                     )}
 
                 <div className='flex justify-center'>
-                    <SecondaryButtonOutline text="Ver Más" extraStyles={"px-16 py-2 mt-5"} onClick={() => navigate('/Categories')}/>
+                    <SecondaryButtonOutline text="Ver más" extraStyles={"px-16 py-2 mt-5"} onClick={() => navigate('/Categories')}/>
                 </div>
             </div>
         </>

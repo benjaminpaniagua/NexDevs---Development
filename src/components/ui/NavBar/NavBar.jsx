@@ -68,9 +68,9 @@ const NavBar = () => {
 
   const links = [
     { label: "Inicio", route: "/Community_Feed/" },
-    { label: "Empresas", route: "/profiles/" },
-    { label: "Freelance" },
-    { label: "Contacto" },
+    { label: "Explorar", route: "/profiles/" },
+    { label: "Comunidad", route: "/posts/" },
+    { label: "Contáctanos", route: "/contact-us/" },
   ];
 
   return (
