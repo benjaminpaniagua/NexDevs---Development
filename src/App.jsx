@@ -20,6 +20,7 @@ import ContactUs from "./components/pages/ContactUs.jsx";
 import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Services from "./components/pages/Services.jsx";
 import FaqPage from "./components/pages/FaqPage.jsx";
+import CreatePost from "./components/pages/CreatePost.jsx";
 
 const MainApp = () => {
   useScrollToTop();
@@ -42,6 +43,7 @@ const MainApp = () => {
           <Route path="/error503" element={<Error_503 />} />
           <Route path="/post" element={<Modal_Post />} />
           <Route path="/posts" element={<Posts_List />} />
+          <Route path="/create-post" element={<CreatePost />} />
 
           {/* Footer routes */}
           <Route path="/about-us" element={<AboutUs />} />

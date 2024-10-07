@@ -56,11 +56,11 @@ export function Work_Profiles() {
                     {/*1st Half*/}
                     <div className="flex md:flex-col gap-8 md:gap-0">
                         {/* Profile */}
-                        <div className="w-[40%] md:w-full flex flex-col">
+                        <div className="w-[50%] md:w-full flex flex-col">
                             <ProfileInfo users={users} loading={loading} isOwner={isOwner} />
                         </div>
                         {/* Profile */}
-                        <div className="w-[60%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
+                        <div className="w-[50%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
                             {/* Mi coleccion */}
                             <Collection />
                             {/* Mi coleccion */}

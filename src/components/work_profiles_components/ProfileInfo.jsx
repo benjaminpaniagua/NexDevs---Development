@@ -1,5 +1,9 @@
 import "../../index.css";
-import { MainButton, SecondaryButtonOutline, SecondaryButton } from "../ui/Buttons";
+import {
+  MainButton,
+  SecondaryButtonOutline,
+  SecondaryButton,
+} from "../ui/Buttons";
 import { ICONS } from "../ui/Icons";
 import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
@@ -19,15 +23,15 @@ export function ProfileInfo({ users, loading, isOwner }) {
 
   const renderUserInfo = () => (
     <div className="flex flex-col mt-28">
-      <h2 className="font-clash font-medium md:text-center">{users.name}</h2>
-      <h4 className="font-bold text-clr-grey md:text-center">
+      <h2 className="font-clash text-fs-xlarge font-medium md:text-center">{users.name}</h2>
+      <h4 className="font-medium text-fs-med text-clr-grey md:text-center">
         {users.city}, {users.province}
       </h4>
     </div>
   );
 
   const renderContactInfo = () => (
-    <div className="flex flex-col gap-2 mt-5">
+    <div className="flex flex-col gap-2 mt-5 font-bold">
       <div className="flex gap-2">
         {ICONS.phone}
         <h4>+506 {users.number}</h4>
@@ -38,7 +42,7 @@ export function ProfileInfo({ users, loading, isOwner }) {
       </div>
       <MainButton
         text={"Contactar"}
-        extraStyles={"mt-8 py-2 w-full"}
+        extraStyles={"mt-4 py-2 w-full"}
         asLink={true}
         link={`https://wa.me/+506${users.number}?`}
       />
@@ -47,20 +51,31 @@ export function ProfileInfo({ users, loading, isOwner }) {
 
   const renderAboutMe = () => (
     <div className="flex flex-col gap-2 mt-5">
-      <h3 className="font-clash font-medium md:text-[1.5rem]">Acerca de mí</h3>
-      <p className="font-bold h-24">{users.workDescription}</p>
-      <div className="bg-clr-black w-[70%] h-0.5 mx-auto rounded-lg" />
+      <h3 className="font-semibold text-lg ">Acerca de mí</h3>
+      <p className="h-fit text-fs-med">{users.workDescription}</p>
+      <div className="bg-clr-black w-full h-0.5 mx-auto rounded-lg mt-3" />
     </div>
   );
 
   const renderButtons = () => (
-    <div className="flex my-2 md:justify-center">
+    <div className="flex my-2 md:justify-center gap-4">
       {isOwner ? (
         <>
-          <Link to={`/WorkUserEdit/${users.workId}`} className="w-1/3 md:w-full">
-            <SecondaryButtonOutline text="Editar Perfil" extraStyles={"py-2 mr-2 px-2"} />
+          <Link
+            to={`/WorkUserEdit/${users.workId}`}
+            className="w-full"
+          >
+            <SecondaryButtonOutline
+              text="Editar Perfil"
+              extraStyles={"py-2 w-full"}
+            />
           </Link>
-          <SecondaryButton text={"Publicar"} extraStyles={"w-full py-2 ml-2"} />
+          <Link to={"/create-post/"} className="w-full">
+            <SecondaryButton
+              text={"Publicar"}
+              extraStyles={"py-2 w-full"}
+            />
+          </Link>
         </>
       ) : (
         <SecondaryButtonOutline
@@ -81,7 +96,11 @@ export function ProfileInfo({ users, loading, isOwner }) {
       {renderProfilePicture()}
       {renderUserInfo()}
       <div className="flex gap-2">
-        <div className="flex my-2 md:justify-center">{ICONS.star}</div>
+        <div className="flex my-2 md:justify-center">
+          {ICONS.star}
+          {ICONS.star}
+          {ICONS.star}
+        </div>
       </div>
       {renderButtons()}
       {renderAboutMe()}
