@@ -6,10 +6,11 @@ import {
   SecondaryButtonOutline,
 } from "../ui/Buttons";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
     document.body.style.overflow = !isModalOpen ? "hidden" : "auto";
@@ -98,7 +99,7 @@ export default function CreatePost() {
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-12">
-              <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" />
+              <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" onClick={() => navigate(-1)} />
               <MainButton extraStyles={"w-full"} text="Publicar" />
             </div>
           </section>
