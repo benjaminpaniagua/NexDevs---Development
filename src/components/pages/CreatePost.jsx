@@ -149,9 +149,8 @@ export default function CreatePost() {
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-12">
-              <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" />
+              <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" onClick={() => navigate(-1)} />
               <MainButton extraStyles={"w-full"} text="Publicar" onClick={handleSubmit} />
-
             </div>
           </section>
           <section className="w-1/2 md:w-full">

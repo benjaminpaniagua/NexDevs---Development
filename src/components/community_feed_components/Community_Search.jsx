@@ -28,7 +28,7 @@ export function Community_Search() {
                                 <input
                                     id="search"
                                     type="text"
-                                    className="w-full bg-clr-white sm:text-[0.8rem]"
+                                    className="w-full bg-clr-white sm:text-[0.8rem] border-none outline-none"
                                     placeholder="Buscar entre todas las categorías..."
                                     value={searchTerm}
                                     onChange={(event) => setSearchTerm(event.target.value)}

@@ -63,17 +63,17 @@ export function ProfileInfo({ users, loading, isOwner }) {
         <>
           <Link
             to={`/WorkUserEdit/${users.workId}`}
-            className="w-full"
+            className="w-[25%] lg:w-full"
           >
             <SecondaryButtonOutline
               text="Editar Perfil"
-              extraStyles={"py-2 w-full"}
+              extraStyles={"py-1 w-full"}
             />
           </Link>
-          <Link to={"/create-post/"} className="w-full">
+          <Link to={"/create-post/"} className="w-[25%] lg:w-full">
             <SecondaryButton
               text={"Publicar"}
-              extraStyles={"py-2 w-full"}
+              extraStyles={"py-1 w-full"}
             />
           </Link>
         </>

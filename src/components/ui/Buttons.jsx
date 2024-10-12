@@ -11,7 +11,7 @@ export function MainButton({
   link
 }) {
   const baseStyles =
-    "text-clr-white font-montserrat font-regular text-center rounded-lg border-2 transition-all duration-300";
+    "text-clr-white font-montserrat text-center rounded-lg border-2 transition-all duration-300";
 
   if (disabled) {
     return (
