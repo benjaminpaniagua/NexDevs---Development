@@ -66,10 +66,10 @@ export function Work_Profiles() {
                             {/* Mi coleccion */}
                             <div className="pt-4 flex md:flex-col md:gap-5">
                                 {/* Categories */}
-                                <Categories workId={users.categoryId} />
+                                {/* <Categories workId={users.categoryId} /> */}
                                 {/* Categories */}
                                 {/* Habilidades */}
-                                <Skills workId={users.workId} />
+                                {/* <Skills workId={users.workId} /> */}
                                 {/* Habilidades */}
                             </div>
                         </div>
@@ -77,19 +77,19 @@ export function Work_Profiles() {
                     {/*1st Half*/}
 
                     {/* Divisor */}
-                    <div className="w-[65%] h-[4px] bg-clr-black mx-auto my-10 rounded-2xl"></div>
+                    <div className="w-[65%] h-[3px] bg-clr-black mx-auto my-10 rounded-2xl"></div>
                     {/* Divisor */}
 
                     {/*2nd Half*/}
                     <div className="flex md:flex-col gap-8">
                         {/* Posts */}
-                        <div className="w-[40%] md:w-full flex flex-col">
+                        <div className="w-[50%] md:w-full flex flex-col">
                             <Posts />
                         </div>
                         {/* Posts */}
 
                         {/* Reviews */}
-                        <div className="w-[60%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
+                        <div className="w-[50%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
                             <Reviews />
                         </div>
                         {/* Reviews */}
