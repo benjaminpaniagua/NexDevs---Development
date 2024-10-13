@@ -2,30 +2,81 @@ import React, { useState, useEffect } from "react";
 import { ICONS } from "../Icons";
 import { SecondaryButton } from "../Buttons";
 
+
 export function CardPost({
+  postId,
   title,
   imageUrl,
   description,
   userName,
   profilePictureUrl,
-  postId,
   likesCount,
   commentsCount,
   onClick,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isLiked, setIsLiked] = useState(likesCount > 0);
+  const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
 
   const openModal = () => {
     setShowModal(true);
-    fetchComments();
+    // fetchComments();
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
-  // Desactivar scroll del body cuando el modal esté abierto
+  const handleLikePost = async () => {
+    const urlLike = `https://localhost:7038/Posts/Like?postId=${postId}`;
+    const urlDislike = `https://localhost:7038/Posts/Dislike?postId=${postId}`;
+  
+    if (isLiked) {
+      setIsLiked(false);
+      setCurrentLikesCount((prevCount) => prevCount - 1);
+  
+      try {
+        const response = await fetch(urlDislike, {
+          method: "POST",
+          headers: {
+            accept: "text/plain",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error("Error al dar dislike");
+        }
+        console.log("Dislike realizado correctamente");
+      } catch (error) {
+        console.error("Error al procesar la acción de dislike:", error);
+        setIsLiked(true);
+        setCurrentLikesCount((prevCount) => prevCount + 1);
+      }
+    } else {
+      setIsLiked(true);
+      setCurrentLikesCount((prevCount) => prevCount + 1); 
+  
+      try {
+        const response = await fetch(urlLike, {
+          method: "POST",
+          headers: {
+            accept: "text/plain",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error("Error al dar like");
+        }
+        console.log("Like realizado correctamente");
+      } catch (error) {
+        console.error("Error al procesar la acción de like:", error);
+        setIsLiked(false);
+        setCurrentLikesCount((prevCount) => prevCount - 1);
+      }
+    }
+  };
+
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = "hidden";
@@ -38,12 +89,12 @@ export function CardPost({
     };
   }, [showModal]);
 
-  // Cerrar el modal al hacer clic fuera de él
-  const handleOutsideClick = (e) => {
-    if (e.target.className.includes("modal-overlay")) {
-      closeModal();
-    }
-  };
+
+  // const handleOutsideClick = (e) => {
+  //   if (e.target.className.includes("modal-overlay")) {
+  //     closeModal();
+  //   }
+  // };
 
   return (
     <>
@@ -88,12 +139,13 @@ export function CardPost({
             </div>
 
             {/* Icons */}
+            {/* Íconos */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110">
-                  {ICONS.heart}
+                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
+                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{likesCount}</h4>
+                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
@@ -116,7 +168,7 @@ export function CardPost({
       {showModal && (
         <div
           className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
-          onClick={handleOutsideClick}
+          // onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
             <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
@@ -144,12 +196,12 @@ export function CardPost({
               />
             </div>
             {/* Icons */}
-            <section className="flex gap-3 xs:gap-2 items-center my-3">
+            <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110">
-                  {ICONS.heart}
+                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
+                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{likesCount}</h4>
+                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
