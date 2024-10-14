@@ -5,13 +5,14 @@ import {
   SecondaryButton,
   SecondaryButtonOutline,
 } from "../ui/Buttons";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { use } from "framer-motion/client";
 import { useEffect, useState } from "react";
 import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 
 export default function CreatePost() {
   const { userData } = useFetchWorkUserData();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userData.profileType == "U") {
@@ -56,10 +57,11 @@ export default function CreatePost() {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        // const result = await response.json();
         console.log("Post creado correctamente");
+        navigate(-1);
       } else {
-        const errorText = await response.text();
+        // const errorText = await response.text();
         console.error("Error al crear el post:", response.status, response.statusText, errorText);
       }
     } catch (error) {
