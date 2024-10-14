@@ -41,6 +41,7 @@ export function Posts() {
               {posts.slice(0, showAllPosts ? posts.length : 1).map((post) => (
                 <CardPost
                   key={post.postId}
+                  postId={post.postId}
                   imageUrl={post.postImageUrl}
                   description={post.contentPost}
                   likesCount={post.likesCount}

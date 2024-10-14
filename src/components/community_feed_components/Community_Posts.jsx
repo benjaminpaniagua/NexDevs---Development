@@ -35,6 +35,7 @@ export function Community_Posts() {
             postsToShow.map((post) => (
               <CardPost
                 key={post.postId}
+                postId={post.postId}
                 imageUrl={post.postImageUrl}
                 description={post.contentPost}
                 likesCount={post.likesCount}

@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 
 export function MainButton({
-  text,
-  asLink,
-  extraStyles,
-  onClick,
-  disabled,
-  type,
+  text = "Button",
+  asLink = false,
+  extraStyles = "",
+  onClick = () => {},
+  disabled = false,
+  type = "button",
   id,
-  link
+  link,
 }) {
   const baseStyles =
     "text-clr-white font-montserrat text-center rounded-lg border-2 transition-all duration-300";
@@ -45,14 +45,14 @@ export function MainButton({
 }
 
 export function SecondaryButton({
-  text,
-  asLink,
-  extraStyles,
-  onClick,
-  disabled,
-  type,
+  text = "Button",
+  asLink = false,
+  extraStyles = "",
+  onClick = () => {},
+  disabled = false,
+  type = "button",
   id,
-  link
+  link,
 }) {
   const baseStyles =
     "text-clr-black rounded-lg border-2 transition-all duration-300";
@@ -91,14 +91,14 @@ export function SecondaryButton({
 }
 
 export function SecondaryButtonOutline({
-  text,
-  asLink,
-  extraStyles,
-  onClick,
-  disabled,
-  type,
+  text = "Button",
+  asLink = false,
+  extraStyles = "",
+  onClick = () => {},
+  disabled = false,
+  type = "button",
   id,
-  link
+  link,
 }) {
   const baseStyles =
     "text-clr-black rounded-lg border-2 transition-all duration-300";
@@ -137,14 +137,14 @@ export function SecondaryButtonOutline({
 }
 
 export function SimpleButton({
-  text,
-  asLink,
-  extraStyles,
-  onClick,
-  disabled,
-  type,
+  text = "Button",
+  asLink = false,
+  extraStyles = "",
+  onClick = () => {},
+  disabled = false,
+  type = "button",
   id,
-  link
+  link,
 }) {
   if (disabled) {
     return (
@@ -190,11 +190,6 @@ MainButton.propTypes = {
   link: PropTypes.string,
 };
 
-MainButton.defaultProps = {
-  text: "Button",
-  onClick: () => {},
-};
-
 SecondaryButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func,
@@ -204,11 +199,6 @@ SecondaryButton.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
-};
-
-SecondaryButton.defaultProps = {
-  text: "Button",
-  onClick: () => {},
 };
 
 SecondaryButtonOutline.propTypes = {
@@ -222,11 +212,6 @@ SecondaryButtonOutline.propTypes = {
   link: PropTypes.string,
 };
 
-SecondaryButtonOutline.defaultProps = {
-  text: "Button",
-  onClick: () => {},
-};
-
 SimpleButton.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func,
@@ -236,9 +221,4 @@ SimpleButton.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
-};
-
-SimpleButton.defaultProps = {
-  text: "Button",
-  onClick: () => {},
 };
