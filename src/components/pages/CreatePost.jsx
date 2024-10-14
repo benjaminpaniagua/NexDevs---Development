@@ -5,10 +5,10 @@ import {
   SecondaryButton,
   SecondaryButtonOutline,
 } from "../ui/Buttons";
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData";
 import { use } from "framer-motion/client";
+import { useEffect, useState } from "react";
+import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 
 export default function CreatePost() {
   const { userData } = useFetchWorkUserData();
@@ -20,7 +20,54 @@ export default function CreatePost() {
   }, [userData]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate();
+  const [contentPost, setContentPost] = useState("");
+  const [postImageUrl, setPostImageUrl] = useState("");
+
+  useEffect(() => {
+    if (userData) return;
+  }, [userData]);
+
+  console.log("user data:", userData);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newPost = {
+      postId: 0,
+      workId: userData.workId,
+      contentPost: contentPost,
+      postImageUrl: postImageUrl,
+      createAt: new Date().toISOString(),
+      likesCount: 0,
+      commentsCount: 0,
+      approved: 0,
+      // workProfile: userData
+    };
+
+    console.log(newPost);
+
+    try {
+      const response = await fetch("https://localhost:7038/Posts/Agregar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPost),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Post creado correctamente");
+      } else {
+        const errorText = await response.text();
+        console.error("Error al crear el post:", response.status, response.statusText, errorText);
+      }
+    } catch (error) {
+      console.error("Error de red o servidor:", error);
+    }
+  };
+
+
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
     document.body.style.overflow = !isModalOpen ? "hidden" : "auto";
@@ -66,8 +113,8 @@ export default function CreatePost() {
                 <label>Foto</label>
                 <img
                   className="w-full mt-2 h-fit rounded-lg flex items-center justify-center relative"
-                  src="/images/placeholder.jpg"
-                  alt=""
+                  src={postImageUrl || "/images/placeholder.jpg"}
+                  alt="post-image"
                 />
                 {/* Botón para subir imagen */}
                 <label
@@ -77,10 +124,10 @@ export default function CreatePost() {
                   <AddIcon style={{ color: "white" }} />
                 </label>
                 <input
-                  id="profileImage"
+                  id="postImage"
                   type="file"
                   accept="image/*"
-                  // onChange={handleImageChange}
+                  onChange={(e) => setPostImageUrl(URL.createObjectURL(e.target.files[0]))}
                   className="hidden"
                 />
               </div>
@@ -91,6 +138,8 @@ export default function CreatePost() {
               <FormTextArea
                 minLength={0}
                 className="h-20 border bg-clr-white border-black rounded p-1"
+                value={contentPost}
+                onChange={(e) => setContentPost(e.target.value)}
               />
             </div>
             <div>
@@ -110,7 +159,7 @@ export default function CreatePost() {
             </div>
             <div className="flex justify-end space-x-4 mt-12">
               <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" onClick={() => navigate(-1)} />
-              <MainButton extraStyles={"w-full"} text="Publicar" />
+              <MainButton extraStyles={"w-full"} text="Publicar" onClick={handleSubmit} />
             </div>
           </section>
           <section className="w-1/2 md:w-full">
