@@ -78,7 +78,7 @@ export function Access_Panel() {
             {/* Forms */}
             <div className="w-1/2 h-full relative overflow-hidden flex items-center justify-center bg-clr-white md:w-full">
                 {/* Logo */}
-                <div className="absolute top-6 left-6 z-10 flex flex-no-shrink p-6 cursor-pointer">
+                <div className="absolute top-6 left-6 z-10 flex flex-no-shrink p-6 cursor-pointer md:hidden">
                     <Link to={'/'}>
                         <div>
                             <svg className="sm:w-12 sm:h-12 w-20 h-20" viewBox="0 0 117 66" fill="black" xmlns="http://www.w3.org/2000/svg">

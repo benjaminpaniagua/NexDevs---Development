@@ -17,7 +17,12 @@ export const useFetchWorkUserData = () => {
         const userEmail = decodedToken.nameid;
         try {
           const response = await axios.get(`https://localhost:7038/WorkProfile/BuscarEmail?email=${userEmail}`);
-          setUserData(response.data);
+          if (response.data === "") {
+            const responseUser = await axios.get(`https://localhost:7038/Users/BuscarEmail?email=${userEmail}`);
+            setUserData(responseUser.data);
+          }else{
+            setUserData(response.data);
+          }
         } catch (error) {
           setError('Error al cargar los datos del usuario');
           console.error('Error fetching user data:', error);

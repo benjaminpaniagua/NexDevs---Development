@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
 import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWorkProfile";
+import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
 
@@ -42,7 +43,6 @@ export function LogIn() {
             navigate('/Access_Panel/register-1');
         }, 100);
     };
-
     const handleRecovertClick = () => {
         setIsAnimating(true);
         setTimeout(() => {
@@ -105,7 +105,7 @@ export function SignIn_1({ onUserDataChange, handleRegisterContinue }) {
     const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        name: '',
+        firstname: '',
         lastName: '',
         email: '',
         password: ''
@@ -163,7 +163,7 @@ export function SignIn_1({ onUserDataChange, handleRegisterContinue }) {
 
             {/* Formulario */}
             <div className="flex flex-col gap-2 my-10 sm:my-5">
-                <FormInput id={"signIn_name"} type="text" name="name" title="Nombre" minLength={0} value={formData.name} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
+                <FormInput id={"signIn_firstname"} type="text" name="firstname" title="Nombre" minLength={0} value={formData.firstname} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id={"signIn_lastName"} type="text" name="lastName" title="Apellidos" minLength={0} value={formData.lastName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id={"signIn_email"} type="email" name="email" title="Email" minLength={0} value={formData.email} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormInput id={"signIn_password"} type="password" name="password" title="Contraseña" minLength={8} value={formData.password} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
@@ -189,6 +189,12 @@ export function SignIn_1({ onUserDataChange, handleRegisterContinue }) {
 }
 export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
     const [isAnimating, setIsAnimating] = useState(false);
+    const navigate = useNavigate();
+    const { registerUserProfile, loading, error, message } = useRegisterNormalUser();
+    const { login } = useLogin()
+    const [termsAccepted, setTermsAccepted] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
         if (!isRegister2) {
             navigate('/Access_Panel/register-1');
@@ -200,12 +206,11 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         }
     }, [isRegister2]);
 
-    const navigate = useNavigate();
     //Guarda los datos ingresados en el SignIn
     const [formData, setFormData] = useState({
-        state: '',
+        province: '',
         city: '',
-        biography: ''
+        bio: ''
     });
 
     //Lista de opciones de los selects
@@ -221,7 +226,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         'Puntarenas': ['Puntarenas', 'Esparza'],
         'Limón': ['Limón', 'Guápiles']
     };
-    const [selectedProvince, setSelectedProvince] = useState(formData.state);
+    const [selectedProvince, setSelectedProvince] = useState(formData.province);
     const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
@@ -231,7 +236,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
             ...formData,
             [name]: value
         });
-        if (name === 'state') {
+        if (name === 'province') {
             setSelectedProvince(value);
             setAvailableCities(cityOptions[value] || []);
         }
@@ -273,20 +278,37 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         }, 100);
     };
 
+    const openModal = () => {
+        setShowModal(true);
+    };
+
+    const closeModal = () => {
+        setShowModal(false);
+    };
+
+    const handleCheckboxChange = (e) => {
+        setTermsAccepted(e.target.checked);
+    };
+
+
     //Maneja el envio del formulario
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!termsAccepted) {
+            alert("Debes aceptar los términos y condiciones");
+            return;
+        }
         const updatedUserData = {
             ...userData,
             ...formData,
-            profileImage
+            profilePictureUrl: profileImage || 'default_image_url',
+            profileType: 'U',
         };
-        console.log(updatedUserData);
-        setIsAnimating(true);
-        setTimeout(() => {
-            handleRegisterBack();
-            navigate('/Access_Panel/login');
-        }, 100);
+        const response = await registerUserProfile(updatedUserData);
+        const result = await login(response.email, response.password);        
+        if (result.success) {
+            window.location.href = (`/Community_Feed/`);
+        }
     };
 
     return (
@@ -319,18 +341,38 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
                         />
                     </div>
                     <div className="flex flex-col  w-1/2 gap-2 sm:gap-1">
-                        <FormSelect id="user_state" name="state" title="Provincia" value={formData.state} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="user_province" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="user_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
                 </div>
-                <FormTextArea id="user_biography" name="biography" title="Biografía" minLength={0} value={formData.biography} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <FormTextArea id="user_bio" name="bio" title="Biografía" minLength={0} value={formData.bio} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                <div className="flex items-center gap-3">
+                    <input id="terms" type="checkbox" checked={termsAccepted} onChange={handleCheckboxChange} className="focus:ring-clr-blue h-4 w-4 border-gray-300 rounded" />
+                    <label className="font-medium text-gray-700">
+                        Acepto los{" "}
+                        <a className="text-clr-blue hover:underline" onClick={openModal}>
+                            Términos y Condiciones
+                        </a>
+                    </label>
+                </div>
             </div>
 
             {/* Boton de volver o confirmar */}
-            <div className="flex justify-between">
-                <button id="user_back" className="rounded-md border-black border-2 bg-white text-black w-[47%] h-12 font-medium" type="button" onClick={handleBack}>Volver</button>
-                <button id="user_confirm" className="rounded-md bg-black text-white w-[47%] h-12 font-medium" type="submit">Confirmar</button>
+            <div className="flex justify-between h-12">
+                <SecondaryButtonOutline id="user_back" text="Volver" type="button" onClick={handleBack} extraStyles="w-[47%] font-medium" />
+                <MainButton id="user_confirm" text="Confirmar" type="submit" extraStyles="w-[47%]" disabled={!termsAccepted} />
             </div>
+
+            {/* Cargando */}
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {error && <p className="text-red-500 font-bold mt-5">{message}</p>}
+
+
+            {/* Modal de terminos y condiciones */}
+            {showModal && (
+                <Terms closeModal={closeModal} />
+            )}
         </form>
     );
 }

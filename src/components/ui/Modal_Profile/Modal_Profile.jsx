@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../../../index.css';
 import PropTypes from "prop-types";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
@@ -17,6 +17,69 @@ export function Modal_Profile({ onClose }) {
         logout();
         navigate('/');
     };
+
+    const renderProfileInfo = () => {
+        if (userData.profileType === 'W') {
+            return (
+                <div className="flex flex-col justify-center items-center">
+                    <h3 className="font-clashDisplay font-medium">{userData.name}</h3>
+                    <h6 className="font-bold">{userData.province}, {userData.city}</h6>
+                </div>
+            )
+        }
+        if (userData.profileType === 'U') {
+            return (
+                <div className="flex flex-col justify-center items-center">
+                    <h3 className="font-clashDisplay font-medium">{userData.firstName} {userData.lastName}</h3>
+                    <h6 className="font-bold">{userData.province}, {userData.city}</h6>
+                </div>
+            )
+        }
+    };
+
+    const renderProfileDescription = () => {
+        if (userData.profileType === 'W') {
+            return (
+                <div className="flex flex-col justify-center items-center text-center">
+                    <h4 className="font-bold">Acerca de mi</h4>
+                    <p className="font-bold text-fs-xsmall">{userData.workDescription}</p>
+                </div>
+            )
+        }
+        if (userData.profileType === 'U') {
+            return (
+                <div className="flex flex-col justify-center items-center text-center">
+                    <h4 className="font-bold">Biografía</h4>
+                    <p className="font-bold text-fs-xsmall">{userData.bio}</p>
+                </div>
+            )
+        }
+    };
+
+    const renderButtons = () => {
+        if (userData.profileType === 'W') {
+            return (
+                <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
+                    <Link to={`/WorkUserEdit/${userData.workId}`}>
+                        <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
+                    </Link>
+                    <Link to={`/workprofile/${userData.workId}`}>
+                        <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
+                    </Link>
+                </div>
+            )
+        }
+        if (userData.profileType === 'U') {
+            return (
+                <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
+                </div>
+            )
+        }
+    };
+
+    /*                    <Link to={`/WorkUserEdit/${userData.workId}`}>
+                        <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
+                    </Link> */
 
     return (
         <>
@@ -46,31 +109,18 @@ export function Modal_Profile({ onClose }) {
                         </div>
                         {/* Profile Picture */}
                         {/* Profile */}
-                        <div className="flex flex-col justify-center items-center">
-                            <h3 className="font-clashDisplay font-medium">{userData.name}</h3>
-                            <h6 className="font-bold">{userData.province}, {userData.city}</h6>
-                        </div>
+                        {renderProfileInfo()}
                         {/* Profile */}
 
                         {/* Botones */}
-                        <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
-                            <Link to={`/WorkUserEdit/${userData.workId}`}>
-                                <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
-                            </Link>
-                            <Link to={`/workprofile/${userData.workId}`}>
-                                <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
-                            </Link>
-                        </div>
+                        {renderButtons()}
                         {/* Botones */}
 
                         {/* Divider */}
                         <div className="divide-y divide-clr-black">
 
                             {/* Bio */}
-                            <div className="flex flex-col justify-center items-center text-center">
-                                <h4 className="font-bold">Acerca de mi</h4>
-                                <p className="font-bold text-fs-xsmall">{userData.workDescription}</p>
-                            </div>
+                            {renderProfileDescription()}
                             {/* Bio */}
 
                             {/* Log Out */}
