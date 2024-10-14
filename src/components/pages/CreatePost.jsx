@@ -5,10 +5,20 @@ import {
   SecondaryButton,
   SecondaryButtonOutline,
 } from "../ui/Buttons";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData";
+import { use } from "framer-motion/client";
 
 export default function CreatePost() {
+  const { userData } = useFetchWorkUserData();
+
+  useEffect(() => {
+    if (userData.profileType == "U") {
+      window.location.href = (`/Community_Feed/`);
+    }
+  }, [userData]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const toggleModal = () => {
