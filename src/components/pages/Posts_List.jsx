@@ -12,6 +12,7 @@ export function Posts_List() {
   const { data: posts, error, loading } = useFetchPosts();
 
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if (error) return <p>Error: {error}</p>;
 
@@ -21,11 +22,13 @@ export function Posts_List() {
         <Loading_Screen Loading={loading} />
         <div className="flex justify-between">
           <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
-          <SecondaryButtonOutline
-            text="Crear publicación"
-            extraStyles={"px-16 py-2"}
-            onClick={() => navigate("/create-post")}
-          />
+          {isLoggedIn ? (
+            <SecondaryButtonOutline
+              text="Crear publicación"
+              extraStyles={"px-16 py-2"}
+              onClick={() => navigate("/create-post")}
+            />
+          ) : null}
         </div>
         <div className="grid grid-cols-auto-350 md:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
           {Array.isArray(posts) && posts.length > 0 ? (

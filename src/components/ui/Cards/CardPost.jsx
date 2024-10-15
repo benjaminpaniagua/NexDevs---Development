@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ICONS } from "../Icons";
 import { SecondaryButton } from "../Buttons";
-
+import { useNavigate } from "react-router-dom";
 
 export function CardPost({
   postId,
@@ -18,6 +18,15 @@ export function CardPost({
   const [comments, setComments] = useState([]);
   const [isLiked, setIsLiked] = useState(likesCount > 0);
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const openModal = () => {
     setShowModal(true);
@@ -29,13 +38,18 @@ export function CardPost({
   };
 
   const handleLikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
     const urlLike = `https://localhost:7038/Posts/Like?postId=${postId}`;
     const urlDislike = `https://localhost:7038/Posts/Dislike?postId=${postId}`;
-  
+
     if (isLiked) {
       setIsLiked(false);
       setCurrentLikesCount((prevCount) => prevCount - 1);
-  
+
       try {
         const response = await fetch(urlDislike, {
           method: "POST",
@@ -43,7 +57,7 @@ export function CardPost({
             accept: "text/plain",
           },
         });
-  
+
         if (!response.ok) {
           throw new Error("Error al dar dislike");
         }
@@ -55,8 +69,8 @@ export function CardPost({
       }
     } else {
       setIsLiked(true);
-      setCurrentLikesCount((prevCount) => prevCount + 1); 
-  
+      setCurrentLikesCount((prevCount) => prevCount + 1);
+
       try {
         const response = await fetch(urlLike, {
           method: "POST",
@@ -64,10 +78,11 @@ export function CardPost({
             accept: "text/plain",
           },
         });
-  
+
         if (!response.ok) {
           throw new Error("Error al dar like");
         }
+
         console.log("Like realizado correctamente");
       } catch (error) {
         console.error("Error al procesar la acción de like:", error);
@@ -88,7 +103,6 @@ export function CardPost({
       document.body.style.overflow = "auto";
     };
   }, [showModal]);
-
 
   // const handleOutsideClick = (e) => {
   //   if (e.target.className.includes("modal-overlay")) {
@@ -142,10 +156,16 @@ export function CardPost({
             {/* Íconos */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
-                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
+                <button
+                  className="transition-all hover:scale-110"
+                  onClick={handleLikePost}
+                >
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
+                  {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
+                <h4 className="text-clr-black font-bold">
+                  {currentLikesCount}
+                </h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
@@ -198,10 +218,16 @@ export function CardPost({
             {/* Icons */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
-                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
+                <button
+                  className="transition-all hover:scale-110"
+                  onClick={handleLikePost}
+                >
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
+                  {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
+                <h4 className="text-clr-black font-bold">
+                  {currentLikesCount}
+                </h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
