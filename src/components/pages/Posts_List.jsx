@@ -14,6 +14,13 @@ export function Posts_List() {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
   if (error) return <p>Error: {error}</p>;
 
   return (
