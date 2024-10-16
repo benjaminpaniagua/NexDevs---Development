@@ -10,25 +10,38 @@ export const useLogin = () => {
     setError(null);
 
     try {
-        const response = await axios.post('https://localhost:7038/WorkProfile/Login', {
-            email: email,
-            password: password
-          }, {
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      return { success: true, token };
+      const workUserResponse = await axios.post('https://localhost:7038/WorkProfile/Login', {
+        email: email,
+        password: password
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const workUserToken = workUserResponse.data.token;
+      localStorage.setItem('token', workUserToken);
+      return { success: true, token: workUserToken };
     } catch (err) {
-      setError('Error al iniciar sesión, verifica tus datos');
-      return { success: false, error: err };
+      try {
+        const normalUserResponse = await axios.post('https://localhost:7038/Users/Login', {
+          email: email,
+          password: password
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        const normalUserToken = normalUserResponse.data.token;
+        localStorage.setItem('token', normalUserToken);
+        return { success: true, token: normalUserToken };        
+      } catch (err) {
+        setError('Error al iniciar sesión, verifica tus datos');
+        return { success: false, error: err };
+      } 
     } finally {
       setLoading(false);
     }
   };
 
-  return { login, loading, error };
-};
+    return { login, loading, error };
+  };

@@ -120,8 +120,8 @@ export function CardPost({
         {/* Post Picture */}
         <div className="rounded-lg overflow-hidden">
           <img
-            className="w-fit"
-            src="/images/placeholder.jpg"
+            className="aspect-[4/3] object-cover"
+            src={imageUrl || "/images/placeholder.jpg"}
             alt="Post_Image"
           />
         </div>
@@ -211,7 +211,7 @@ export function CardPost({
             <div className="rounded-lg overflow-hidden w-fit">
               <img
                 className="w-fit max-w-full "
-                src="/images/placeholder.jpg"
+                src={imageUrl || "/images/placeholder.jpg"}
                 alt="Post_Image"
               />
             </div>

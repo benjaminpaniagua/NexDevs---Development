@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export function Posts_List() {
   const { data: posts, error, loading } = useFetchPosts();
-
+  console.log(posts);
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
