@@ -5,56 +5,55 @@ import {
   SecondaryButton,
   SecondaryButtonOutline,
 } from "../ui/Buttons";
+import { redirect, useNavigate } from "react-router-dom";
+import { use } from "framer-motion/client";
 import { useEffect, useState } from "react";
 import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 
 export default function CreatePost() {
+  const { userData } = useFetchWorkUserData();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (userData.profileType == "U") {
+      window.location.href = (`/Community_Feed/`);
+    }
+  }, [userData]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentPost, setContentPost] = useState("");
   const [postImageUrl, setPostImageUrl] = useState("");
-  const { userData } = useFetchWorkUserData();
+  const [selectedFile, setSelectedFile] = useState(null); // Añadimos un estado para el archivo seleccionado
 
   useEffect(() => {
     if (userData) return;
   }, [userData]);
 
-  console.log("user data:", userData);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newPost = {
-      postId: 0,
-      workId: userData.workId,
-      contentPost: contentPost,
-      postImageUrl: postImageUrl,
-      createAt: new Date().toISOString(),
-      likesCount: 0,
-      commentsCount: 0,
-      approved: 0,
-      // workProfile: userData
-    };
-
-    console.log(newPost);
+    const formData = new FormData();
+    if (selectedFile) {
+      formData.append('photo', selectedFile); // Añadimos el archivo
+    }
+    formData.append('workId', userData.workId);
+    formData.append('contentPost', contentPost);
+    formData.append('createAt', new Date().toISOString());
 
     try {
-      const response = await fetch("https://localhost:7038/Posts/Agregar", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPost),
+      const response = await fetch('https://localhost:7038/Posts/Agregar', {
+        method: 'POST',
+        body: formData,
       });
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Post creado correctamente");
-      } else {
-        const errorText = await response.text();
-        console.error("Error al crear el post:", response.status, response.statusText, errorText);
+      if (!response.ok) {
+        throw new Error(`Error de servidor: ${response.statusText}`);
       }
+
+      const data = await response.json();
+      console.log('Post agregado exitosamente', data);
     } catch (error) {
-      console.error("Error de red o servidor:", error);
+      console.error('Error de red o servidor: ', error.message);
     }
   };
 
@@ -118,7 +117,10 @@ export default function CreatePost() {
                   id="postImage"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setPostImageUrl(URL.createObjectURL(e.target.files[0]))}
+                  onChange={(e) => {
+                    setSelectedFile(e.target.files[0]); // Guardamos el archivo en el estado
+                    setPostImageUrl(URL.createObjectURL(e.target.files[0])); // Mostramos una vista previa de la imagen
+                  }}
                   className="hidden"
                 />
               </div>

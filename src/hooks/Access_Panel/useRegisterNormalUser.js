@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-export const useRegisterWorkProfile = () => {
+export const useRegisterNormalUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
 
-  const registerWorkProfile = async (workProfile) => {
+  const registerUserProfile = async (userProfile) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('https://localhost:7038/WorkProfile/CrearCuenta', workProfile);
+      const response = await axios.post('https://localhost:7038/Users/CrearCuenta', userProfile);
       //console.log(response.data);
       setMessage(response.data.message);
       return response.data;
@@ -22,5 +22,5 @@ export const useRegisterWorkProfile = () => {
     }
   };
 
-  return { registerWorkProfile, loading, error, message };
+  return { registerUserProfile, loading, error, message };
 };
