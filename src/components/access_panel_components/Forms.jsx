@@ -9,7 +9,7 @@ import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWork
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
-import { useUploadImage } from "../../hooks/useUploadImage";
+// import { useUploadImage } from "../../hooks/useUploadImage";
 import { form } from "framer-motion/client";
 
 
