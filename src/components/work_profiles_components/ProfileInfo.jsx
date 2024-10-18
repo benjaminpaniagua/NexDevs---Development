@@ -41,10 +41,11 @@ export function ProfileInfo({ users, loading, isOwner }) {
         <h4>{users.email}</h4>
       </div>
       <MainButton
-        text={"Contactar"}
+        text={"Contactar por WhatsApp"}
         extraStyles={"mt-4 py-2 w-full"}
         asLink={true}
         link={`https://wa.me/+506${users.number}?`}
+        icon={ICONS.whatsapp}
       />
     </div>
   );
