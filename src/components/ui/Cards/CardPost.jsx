@@ -148,6 +148,8 @@ export function CardPost({
       };
     }
 
+    console.log(userData.profileType);
+
     try {
       const response = await createComments(commentData);
       console.log("Comentario enviado exitosamente", response);
@@ -371,14 +373,15 @@ export function CardPost({
                       <div className="flex items-center">
                         <img
                           src={
-                            comment.profilePictureUrlUser ||
-                            "/images/Profile_Placeholder.png"
+                            comment.profilePictureUrlUser === "ND" || !comment.profilePictureUrlUser ? "/images/Profile_Placeholder.png" : comment.profilePictureUrlUser
+
                           }
                           alt="Foto de perfil"
                           className="w-8 h-8 rounded-full mr-2"
                         />
                         <h5 className="font-bold">
-                          {comment.firstName} {comment.lastName || ""}
+                          {comment.firstName}{" "}
+                          {comment.lastName || comment.name || ""}
                         </h5>
                       </div>
                       <p>{comment.contentComment}</p>
