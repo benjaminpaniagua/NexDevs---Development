@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ICONS } from "../Icons";
 import { SecondaryButton } from "../Buttons";
+import { FormInput } from "../FormInput";
+import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
+import { useCreateComments } from "../../../hooks/useCreateComments";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export function CardPost({
@@ -18,6 +22,13 @@ export function CardPost({
   const [comments, setComments] = useState([]);
   const [isLiked, setIsLiked] = useState(likesCount > 0);
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
+  const { userData } = useFetchWorkUserData();
+  const { createComments } = useCreateComments();
+
+  const [postComment, setPostComment] = useState('');
+  const handleCommentChange = (e) => {
+    setPostComment(e.target.value);
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -35,6 +46,69 @@ export function CardPost({
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const renderCreateComment = () => {
+    if (userData.profileType) {
+      return (
+        <form className="flex gap-2 my-5" onSubmit={handleCommentSubmit}>
+          <FormInput id="create_comment" type="text" name="comment" minLength={0} placeholder="Añadir comentario..." value={postComment} onChange={handleCommentChange} className="border h-12 w-[80%] bg-clr-white border-black rounded p-1" />
+          <SecondaryButton text="Comentar" type="submit" extraStyles="py-2 w-[20%]" disabled={!postComment} />
+        </form>
+      )
+    }
+
+    if (!userData.profileType) {
+      return (
+        <div className="flex gap-2 my-5">
+        <FormInput id="create_comment" name="comment" minLength={0} value="Inicia sesion para comentar" className="border h-12 w-[80%] bg-clr-white border-black rounded p-1" />
+        <Link className="w-[20%]" to="/Access_Panel/login">
+        <SecondaryButton text="Únete" type="button" extraStyles="py-2 w-full"/>
+        </Link>
+        </div>
+      )
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!postComment) {
+      console.log("No hay valor");
+      return;
+    }
+
+    let commentData;
+
+    if (userData.profileType === 'W') {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: 0,
+        workId: userData.workId,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+    if (userData.profileType === 'U') {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: userData.userId,
+        workId: 0,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+
+    try {
+      const response = await createComments(commentData);
+      console.log("Comentario enviado exitosamente", response);
+      setPostComment('');
+    } catch (error) {
+      console.error("Error al enviar el comentario", error);
+    }
   };
 
   const handleLikePost = async () => {
@@ -188,7 +262,7 @@ export function CardPost({
       {showModal && (
         <div
           className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
-          // onClick={handleOutsideClick}
+        // onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
             <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
@@ -256,6 +330,10 @@ export function CardPost({
                 )}
               </div>
             </div>
+
+            {/*Comentar*/}
+            {renderCreateComment()}
+
           </div>
         </div>
       )}

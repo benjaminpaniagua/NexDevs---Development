@@ -1,8 +1,8 @@
-export function FormInput({ type, name, title, minLength, maxLength, value, onChange, className, id }) {
+export function FormInput({ type, name, title, minLength, maxLength, value, onChange, className, id, placeholder }) {
     return (
         <>
             <label className="text-fs-small">{title}</label>
-            <input id={id} type={type} name={name} minLength={minLength} maxLength={maxLength} value={value} onChange={onChange} required className={className} />
+            <input id={id} type={type} name={name} minLength={minLength} maxLength={maxLength} value={value} placeholder={placeholder} onChange={onChange} required className={className} />
         </>
     );
 }
