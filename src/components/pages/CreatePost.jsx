@@ -5,44 +5,38 @@ import {
   SecondaryButton,
   SecondaryButtonOutline,
 } from "../ui/Buttons";
-import { redirect, useNavigate } from "react-router-dom";
-import { use } from "framer-motion/client";
+import Alert from "../ui/Alert";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
+import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
 
 export default function CreatePost() {
   const { userData } = useFetchWorkUserData();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userData.profileType == "U") {
-      window.location.href = (`/Community_Feed/`);
+    if (userData.profileType === "U") {
+      window.location.href = `/Community_Feed/`;
     }
   }, [userData]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentPost, setContentPost] = useState("");
   const [postImageUrl, setPostImageUrl] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null); // Añadimos un estado para el archivo seleccionado
-
-  useEffect(() => {
-    if (userData) return;
-  }, [userData]);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData();
-    if (selectedFile) {
-      formData.append('photo', selectedFile); // Añadimos el archivo
-    }
-    formData.append('workId', userData.workId);
-    formData.append('contentPost', contentPost);
-    formData.append('createAt', new Date().toISOString());
+    formData.append("photo", selectedFile);
+    formData.append("contentPost", contentPost);
+    formData.append("workId", userData.workId);
+    formData.append("createAt", new Date().toISOString());
 
     try {
-      const response = await fetch('https://localhost:7038/Posts/Agregar', {
-        method: 'POST',
+      const response = await fetch("https://localhost:7038/Posts/Agregar", {
+        method: "POST",
         body: formData,
       });
 
@@ -50,13 +44,26 @@ export default function CreatePost() {
         throw new Error(`Error de servidor: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      console.log('Post agregado exitosamente', data);
+      const successAlert = {
+        show: true,
+        type: "success",
+        message: "Tu publicación ha sido agregada exitosamente.",
+      };
+      setAlert(successAlert);
+
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500); 
     } catch (error) {
-      console.error('Error de red o servidor: ', error.message);
+      console.error("Error de red o servidor: ", error.message);
+      const errorAlert = {
+        show: true,
+        type: "error",
+        message: "Hubo un error al agregar la publicación. Inténtalo de nuevo.",
+      };
+      setAlert(errorAlert);
     }
   };
-
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -94,7 +101,7 @@ export default function CreatePost() {
 
   return (
     <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-8">
-      <form>
+      <form onSubmit={handleSubmit}>
         <h1 className="text-4xl font-bold mb-8">Publicar</h1>
         <div className="flex gap-12 md:flex-col-reverse md:gap-7">
           <section className="w-1/2 md:w-full">
@@ -118,8 +125,8 @@ export default function CreatePost() {
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
-                    setSelectedFile(e.target.files[0]); // Guardamos el archivo en el estado
-                    setPostImageUrl(URL.createObjectURL(e.target.files[0])); // Mostramos una vista previa de la imagen
+                    setSelectedFile(e.target.files[0]);
+                    setPostImageUrl(URL.createObjectURL(e.target.files[0]));
                   }}
                   className="hidden"
                 />
@@ -151,8 +158,16 @@ export default function CreatePost() {
               </div>
             </div>
             <div className="flex justify-end space-x-4 mt-12">
-              <SecondaryButtonOutline extraStyles={"px-8 py-2"} text="Volver" onClick={() => navigate(-1)} />
-              <MainButton extraStyles={"w-full"} text="Publicar" onClick={handleSubmit} />
+              <SecondaryButtonOutline
+                extraStyles={"px-8 py-2"}
+                text="Volver"
+                onClick={() => navigate(-1)}
+              />
+              <MainButton
+                extraStyles={"w-full"}
+                text="Publicar"
+                type="submit"
+              />
             </div>
           </section>
           <section className="w-1/2 md:w-full">
@@ -194,6 +209,7 @@ export default function CreatePost() {
           </section>
         </div>
       </form>
+      <Alert alert={alert} setAlert={setAlert} />
     </div>
   );
 }

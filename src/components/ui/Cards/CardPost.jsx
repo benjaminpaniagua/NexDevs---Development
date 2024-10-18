@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ICONS } from "../Icons";
+import { ICONS } from "../ICONS";
 import { SecondaryButton } from "../Buttons";
 
 
