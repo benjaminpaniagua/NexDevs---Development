@@ -14,17 +14,27 @@ export function Posts_List() {
   const { userData } = useFetchWorkUserData();
 
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const renderTop = () => {
     if (userData.profileType === 'W') {
         return (
           <div className="flex justify-between">
           <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
-          <SecondaryButtonOutline
-            text="Crear publicación"
-            extraStyles={"px-16 py-2"}
-            onClick={() => navigate("/create-post")}
-          />
+          {isLoggedIn ? (
+            <SecondaryButtonOutline
+              text="Crear publicación"
+              extraStyles={"px-16 py-2"}
+              onClick={() => navigate("/create-post")}
+            />
+          ) : null}
         </div>
         )
     }

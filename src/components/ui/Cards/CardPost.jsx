@@ -5,6 +5,7 @@ import { FormInput } from "../FormInput";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function CardPost({
   postId,
@@ -28,6 +29,15 @@ export function CardPost({
   const handleCommentChange = (e) => {
     setPostComment(e.target.value);
   };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const openModal = () => {
     setShowModal(true);
@@ -102,6 +112,11 @@ export function CardPost({
   };
 
   const handleLikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
     const urlLike = `https://localhost:7038/Posts/Like?postId=${postId}`;
     const urlDislike = `https://localhost:7038/Posts/Dislike?postId=${postId}`;
 
@@ -141,6 +156,7 @@ export function CardPost({
         if (!response.ok) {
           throw new Error("Error al dar like");
         }
+
         console.log("Like realizado correctamente");
       } catch (error) {
         console.error("Error al procesar la acción de like:", error);
@@ -162,7 +178,6 @@ export function CardPost({
     };
   }, [showModal]);
 
-
   // const handleOutsideClick = (e) => {
   //   if (e.target.className.includes("modal-overlay")) {
   //     closeModal();
@@ -179,8 +194,8 @@ export function CardPost({
         {/* Post Picture */}
         <div className="rounded-lg overflow-hidden">
           <img
-            className="w-fit"
-            src="/images/placeholder.jpg"
+            className="aspect-[4/3] object-cover"
+            src={imageUrl || "/images/placeholder.jpg"}
             alt="Post_Image"
           />
         </div>
@@ -215,10 +230,16 @@ export function CardPost({
             {/* Íconos */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
-                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
+                <button
+                  className="transition-all hover:scale-110"
+                  onClick={handleLikePost}
+                >
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
+                  {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
+                <h4 className="text-clr-black font-bold">
+                  {currentLikesCount}
+                </h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
@@ -264,17 +285,23 @@ export function CardPost({
             <div className="rounded-lg overflow-hidden w-fit">
               <img
                 className="w-fit max-w-full "
-                src="/images/placeholder.jpg"
+                src={imageUrl || "/images/placeholder.jpg"}
                 alt="Post_Image"
               />
             </div>
             {/* Icons */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110" onClick={handleLikePost}>
-                  {isLiked ? ICONS.heart_filled : ICONS.heart} {/* Cambiar icono basado en si está "liked" */}
+                <button
+                  className="transition-all hover:scale-110"
+                  onClick={handleLikePost}
+                >
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
+                  {/* Cambiar icono basado en si está "liked" */}
                 </button>
-                <h4 className="text-clr-black font-bold">{currentLikesCount}</h4>
+                <h4 className="text-clr-black font-bold">
+                  {currentLikesCount}
+                </h4>
               </div>
               <div className="flex gap-1 items-center">
                 <button className="transition-all hover:scale-110">
