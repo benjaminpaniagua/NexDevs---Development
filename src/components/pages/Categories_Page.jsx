@@ -34,7 +34,7 @@ const Categories_Page = () => {
       {/* Loading Screen */}
 
       <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-20 mb-4 items-center justify-between">
-        <h2 className="font-clash">Categorías</h2>
+        <h2 className="font-clash font-medium md:text-[1.5rem]">Categorías</h2>
         <Search_Input search={handleSearch} />
       </div>
       {loading ? (

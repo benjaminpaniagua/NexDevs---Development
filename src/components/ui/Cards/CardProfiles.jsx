@@ -14,7 +14,7 @@ export function CardProfiles({
   return (
     <>
       {/* Profile Card */}
-      <div className="h-auto md:w-auto flex flex-col gap-2 transition-all hover:scale-95">
+      <div className="h-auto md:w-auto flex flex-col gap-2 transition-all hover:scale-[.99]">
         {/* Profile Picture */}
         <div className="rounded-lg overflow-hidden">
           <img src={image} alt="Profile_Picture" />
