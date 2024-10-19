@@ -365,7 +365,9 @@ export function CardPost({
               <h4 className="font-bold">Comentarios:</h4>
               <div className="mt-2">
                 {comments.length > 0 ? (
-                  comments.map((comment) => (
+                  comments
+                  .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
+                  .map((comment) => (
                     <div
                       key={comment.commentId}
                       className="border-b border-gray-200 py-2"
@@ -373,8 +375,10 @@ export function CardPost({
                       <div className="flex items-center">
                         <img
                           src={
-                            comment.profilePictureUrlUser === "ND" || !comment.profilePictureUrlUser ? "/images/Profile_Placeholder.png" : comment.profilePictureUrlUser
-
+                            comment.profilePictureUrlUser === "ND" ||
+                            !comment.profilePictureUrlUser
+                              ? "/images/Profile_Placeholder.png"
+                              : comment.profilePictureUrlUser
                           }
                           alt="Foto de perfil"
                           className="w-8 h-8 rounded-full mr-2"
@@ -392,7 +396,6 @@ export function CardPost({
                 )}
               </div>
             </div>
-
             {/*Comentar*/}
             {renderCreateComment()}
           </div>
