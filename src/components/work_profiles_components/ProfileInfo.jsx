@@ -67,7 +67,7 @@ export function ProfileInfo({ users, loading, isOwner }) {
   );
 
   const renderAboutMe = () => (
-    <div className="flex flex-col gap-2 mt-5">
+    <div className="flex flex-col gap-2 mt-5 h-28">
       <h3 className="font-semibold text-lg ">Acerca de mí</h3>
       <p className="h-fit text-fs-med">{users.workDescription}</p>
       <div className="bg-clr-black w-full h-0.5 mx-auto rounded-lg mt-3" />
@@ -84,13 +84,13 @@ export function ProfileInfo({ users, loading, isOwner }) {
           >
             <SecondaryButtonOutline
               text="Editar Perfil"
-              extraStyles={"py-1 w-full"}
+              extraStyles={"py-2 w-full"}
             />
           </Link>
           <Link to={"/create-post/"} className="w-[25%] lg:w-full">
             <SecondaryButton
               text={"Publicar"}
-              extraStyles={"py-1 w-full"}
+              extraStyles={"py-2 w-full"}
             />
           </Link>
         </>

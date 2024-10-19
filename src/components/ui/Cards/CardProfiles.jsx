@@ -31,7 +31,6 @@ export function CardProfiles({
             <h4 className="font-semibold">{name}</h4>
           </div>
           <h5 className="text-black">{category}</h5>
-          {/* <p className='h-16 xs:h-24 text-fs-med truncate'>{biography}</p> */}
           <p className="text-black h-16 sm:h-fit text-fs-med lg:text-fs-small">
             {biography.length > 120
               ? biography.substring(0, 120) + "..."

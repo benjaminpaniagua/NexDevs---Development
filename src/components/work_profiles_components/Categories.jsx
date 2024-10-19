@@ -2,7 +2,7 @@ import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
 import { useFetchWorkProfileCategories } from '../../hooks/WorkProfile/useFetchWorkProfileCategory';
 export function Categories({workId}) {
-    const { categories, loading } = useFetchWorkProfileCategories({categoryID: workId});
+    const { categories, loading } = useFetchWorkProfileCategories({workID: workId});
 
     return (
         <>
@@ -14,8 +14,14 @@ export function Categories({workId}) {
                     </div>
                 ) : (
                     <div className='flex flex-wrap gap-2 py-2'>
-                        <Tags text={categories.categoryName} />
+                        {categories.map((category) => (
+                            <Tags
+                                key={category.categoryId}
+                                text={category.categoryName}
+                            />
+                        ))}
                     </div>
+                    
                 )}
             </div>
         </>

@@ -195,7 +195,11 @@ export function CardPost({
         <div className="rounded-lg overflow-hidden">
           <img
             className="aspect-[4/3] object-cover"
-            src={imageUrl}
+            src={
+              imageUrl === "ND" || imageUrl === "default_image_url"
+                ? "/images/placeholder.jpg"
+                : imageUrl
+              }
             alt="Post_Image"
           />
         </div>

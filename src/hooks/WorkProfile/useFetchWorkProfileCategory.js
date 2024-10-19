@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-export const useFetchWorkProfileCategories = ({ categoryID }) => {
+export const useFetchWorkProfileCategories = ({ workID }) => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ export const useFetchWorkProfileCategories = ({ categoryID }) => {
 
         const fetchCategories = async () => {
             try {
-                const response = await axios.get(`https://localhost:7038/Categories/Consultar?categoryId=${categoryID}`, {
+                const response = await axios.get(`https://localhost:7038/WorkCategories/Consultar?workId=${workID}`, {
                     cancelToken: source.token
                 });
                 setCategories(response.data);
@@ -31,7 +31,7 @@ export const useFetchWorkProfileCategories = ({ categoryID }) => {
         return () => {
             source.cancel('Solicitud Cancelada');
         };
-    }, [categoryID]);
+    }, [workID]);
 
     return { categories, loading, error };
 

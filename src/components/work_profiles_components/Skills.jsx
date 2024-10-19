@@ -15,7 +15,7 @@ export function Skills({ workId }) {
                     <div className='flex flex-wrap gap-2 py-2'>
                         {skills.map((skill) => (
                             <Tags
-                                key={skill.skillID}
+                                key={skill.skillId}
                                 text={skill.skillName}
                             />
                         ))}
