@@ -69,7 +69,7 @@ export function Work_Profiles() {
                                 {/* <Categories workId={users.categoryId} /> */}
                                 {/* Categories */}
                                 {/* Habilidades */}
-                                {/* <Skills workId={users.workId} /> */}
+                                {<Skills workId={users.workId} />}
                                 {/* Habilidades */}
                             </div>
                         </div>
