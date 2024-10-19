@@ -9,7 +9,8 @@ import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWork
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
-
+import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
+import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -213,21 +214,41 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         bio: ''
     });
 
-    //Lista de opciones de los selects
-    const stateOptions = [
-        'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
-    ];
-    const cityOptions = {
-        'San José': ['San José', 'Escazú'],
-        'Alajuela': ['Alajuela', 'San Carlos'],
-        'Cartago': ['Cartago', 'Paraíso'],
-        'Heredia': ['Heredia', 'Barva'],
-        'Guanacaste': ['Liberia', 'Santa Cruz'],
-        'Puntarenas': ['Puntarenas', 'Esparza'],
-        'Limón': ['Limón', 'Guápiles']
-    };
+    const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
-    const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
+    const [availableCities, setAvailableCities] = useState([]);
+
+    //Lista de opciones de los selects
+    const stateOptions  = provincias ? Object.values(provincias) : [];
+    //console.log(provincias);
+
+    const provinceIdMap = {
+        'San José': '1',
+        'Alajuela': '2',
+        'Cartago': '3',
+        'Heredia': '4',
+        'Guanacaste': '5',
+        'Puntarenas': '6',
+        'Limón': '7'
+    };
+
+    useEffect(() => {
+        const fetchCities = async (provinceId) => {
+            try {
+                const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                const data = await response.json();
+                const citiesArray = data ? Object.values(data) : [];
+                setAvailableCities(citiesArray);
+                //console.log(citiesArray);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
+        };    
+        if (selectedProvince) {
+            const provinceId = provinceIdMap[selectedProvince];
+            fetchCities(provinceId);
+        }
+    }, [selectedProvince]);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
     const handleSelectChange = (e) => {
@@ -238,7 +259,6 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         });
         if (name === 'province') {
             setSelectedProvince(value);
-            setAvailableCities(cityOptions[value] || []);
         }
     };
 
@@ -620,21 +640,41 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         workDescription: ''
     });
 
-    //Lista de opciones de los selects
-    const stateOptions = [
-        'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
-    ];
-    const cityOptions = {
-        'San José': ['San José', 'Escazú'],
-        'Alajuela': ['Alajuela', 'San Carlos'],
-        'Cartago': ['Cartago', 'Paraíso'],
-        'Heredia': ['Heredia', 'Barva'],
-        'Guanacaste': ['Liberia', 'Santa Cruz'],
-        'Puntarenas': ['Puntarenas', 'Esparza'],
-        'Limón': ['Limón', 'Guápiles']
-    };
+    const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
-    const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
+    const [availableCities, setAvailableCities] = useState([]);
+
+    //Lista de opciones de los selects
+    const stateOptions  = provincias ? Object.values(provincias) : [];
+    //console.log(provincias);
+
+    const provinceIdMap = {
+        'San José': '1',
+        'Alajuela': '2',
+        'Cartago': '3',
+        'Heredia': '4',
+        'Guanacaste': '5',
+        'Puntarenas': '6',
+        'Limón': '7'
+    };
+
+    useEffect(() => {
+        const fetchCities = async (provinceId) => {
+            try {
+                const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                const data = await response.json();
+                const citiesArray = data ? Object.values(data) : [];
+                setAvailableCities(citiesArray);
+                //console.log(citiesArray);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
+        };    
+        if (selectedProvince) {
+            const provinceId = provinceIdMap[selectedProvince];
+            fetchCities(provinceId);
+        }
+    }, [selectedProvince]);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
     const handleSelectChange = (e) => {
@@ -645,7 +685,6 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         });
         if (name === 'province') {
             setSelectedProvince(value);
-            setAvailableCities(cityOptions[value] || []);
         }
     };
 

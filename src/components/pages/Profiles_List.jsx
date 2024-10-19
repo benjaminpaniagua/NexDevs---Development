@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Search_Input } from "../ui/Search_Input";
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { CardProfiles } from "../ui/Cards/CardProfiles";
 import { useNavigate } from "react-router-dom";
 import { Loading_Screen } from '../ui/Loading_Screen.jsx'
+import { useParams } from "react-router-dom";
 
 export function Profiles_List() {
     const navigate = useNavigate();
     const { users, loading, error } = useFetchWorkUsers();
     const [searchTerm, setSearchTerm] = useState("");
+
+    const {search} = useParams();
+
+    useEffect(() => {
+        if (search) {
+            setSearchTerm(search);
+        }
+    }, [search]);
 
     const handleCardClick = (title) => {
         console.log(`Usuario seleccionada: ${title}`);
