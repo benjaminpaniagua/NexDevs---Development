@@ -18,6 +18,8 @@ export function Modal_Profile({ onClose }) {
         navigate('/');
     };
 
+    console.log(userData);
+
     const renderProfileInfo = () => {
         if (userData.profileType === 'W') {
             return (
@@ -32,6 +34,23 @@ export function Modal_Profile({ onClose }) {
                 <div className="flex flex-col justify-center items-center">
                     <h3 className="font-clashDisplay font-medium">{userData.firstName} {userData.lastName}</h3>
                     <h6 className="font-bold">{userData.province}, {userData.city}</h6>
+                </div>
+            )
+        }
+    };
+
+    const renderProfilePicture = () => {
+        if (userData.profilePictureUrl === 'ND') {
+            return (
+                <div className="absolute top-10 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                    <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
+                </div>
+            )
+        }
+        if (userData.profilePictureUrl !== 'ND') {
+            return (
+                <div className="absolute top-10 left-1/2 transform -translate-x-1/2 translate-y-1/2">
+                    <img src={userData.profilePictureUrl} alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
                 </div>
             )
         }
@@ -104,9 +123,7 @@ export function Modal_Profile({ onClose }) {
                     {/* Upper Background */}
                     <div className="mx-10 mb-5 mt-16">
                         {/* Profile Picture */}
-                        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 translate-y-1/2">
-                            <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
-                        </div>
+                        {renderProfilePicture()}
                         {/* Profile Picture */}
                         {/* Profile */}
                         {renderProfileInfo()}
