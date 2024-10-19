@@ -71,7 +71,7 @@ const NavBar = () => {
   const links = [
     { label: "Inicio", route: "/Community_Feed/" },
     { label: "Explorar", route: "/profiles/" },
-    { label: "Comunidad", route: "/posts/" },
+    { label: "Publicaciones", route: "/posts/" },
     { label: "Contáctanos", route: "/contact-us/" },
   ];
 

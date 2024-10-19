@@ -9,8 +9,6 @@ import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWork
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
-// import { useUploadImage } from "../../hooks/useUploadImage";
-import { form } from "framer-motion/client";
 
 
 export function LogIn() {
@@ -710,11 +708,19 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         const updatedUserData = {
             ...userData,
             ...formData,
-            profilePictureUrl: profileImage || 'default_image_url',
             profileType: 'W',
         };
-        const response = await registerWorkProfile(updatedUserData);
+
+        const newFormData = new FormData();
+
+        Object.keys(updatedUserData).forEach((key) => {
+            newFormData.append(key, updatedUserData[key]);
+        });        
+        newFormData.append('profilePictureUrl', profileImage || defaultImage);
+
+        const response = await registerWorkProfile(newFormData);
         const result = await login(response.email, response.password);
+
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
         }
