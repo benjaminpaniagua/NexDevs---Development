@@ -219,7 +219,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
     const [availableCities, setAvailableCities] = useState([]);
 
     //Lista de opciones de los selects
-    const stateOptions  = provincias ? Object.values(provincias) : [];
+    const stateOptions = provincias ? Object.values(provincias) : [];
     //console.log(provincias);
 
     const provinceIdMap = {
@@ -243,7 +243,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
             } catch (error) {
                 console.error('Error fetching cities:', error);
             }
-        };    
+        };
         if (selectedProvince) {
             const provinceId = provinceIdMap[selectedProvince];
             fetchCities(provinceId);
@@ -334,8 +334,8 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerUserProfile(newFormData);
-        const result = await login(response.email, response.password);        
-        
+        const result = await login(response.email, userData.password);
+
         if (result.success) {
             window.location.href = (`/Community_Feed/`);
         }
@@ -645,7 +645,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const [availableCities, setAvailableCities] = useState([]);
 
     //Lista de opciones de los selects
-    const stateOptions  = provincias ? Object.values(provincias) : [];
+    const stateOptions = provincias ? Object.values(provincias) : [];
     //console.log(provincias);
 
     const provinceIdMap = {
@@ -669,7 +669,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             } catch (error) {
                 console.error('Error fetching cities:', error);
             }
-        };    
+        };
         if (selectedProvince) {
             const provinceId = provinceIdMap[selectedProvince];
             fetchCities(provinceId);
@@ -754,11 +754,11 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
         Object.keys(updatedUserData).forEach((key) => {
             newFormData.append(key, updatedUserData[key]);
-        });        
+        });
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerWorkProfile(newFormData);
-        const result = await login(response.email, response.password);
+        const result = await login(response.email, userData.password);
 
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
@@ -802,12 +802,22 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                         />
                     </div>
 
-                    <div className="flex flex-col  w-1/2 gap-2 sm:gap-1">
+                    <div className="flex flex-col w-1/2 gap-2 sm:gap-1">
                         <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="company_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
 
                 </div>
+                {/*<div className="flex gap-2">
+                    <div className="flex flex-col w-1/2 gap-2">
+                        <FormSelect id="company_state" name="province" title="Categorias" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    </div>
+                    <div className="flex flex-col w-1/2">
+                        <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    </div>
+                </div>*/}
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
                 <div className="flex items-center gap-3">

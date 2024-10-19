@@ -21,7 +21,7 @@ const useScreenWidth = () => {
 
   // Modifies the base data of the calendars depending on the resolution of the screen.
   useEffect(() => {
-    if (screenWidth <= 765) {
+    if (screenWidth <= 900) {
       setIsRendering(false);
       //console.log('Mobile');
     } else {
