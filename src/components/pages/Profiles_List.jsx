@@ -51,7 +51,11 @@ export function Profiles_List() {
                                 {filteredUsers.map((user) => (
                                     <CardProfiles
                                         key={user.workId}
-                                        image="/images/Profile_Placeholder.png"
+                                        image={
+                                            user.profilePictureUrl === "ND" || user.profilePictureUrl === "default_image_url"
+                                                ? "/images/default_profile_picture.jpg"
+                                                : user.profilePictureUrl
+                                        }
                                         name={user.name}
                                         biography={user.workDescription}
                                         province={user.province}

@@ -5,6 +5,7 @@ import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
 import { Link, Route } from 'react-router-dom';
 import { SecondaryButton } from '../Buttons';
 import { useAuth } from '../../../utils/AuthProvider';
+import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 
 const NavBar = () => {
   const { token } = useAuth();
@@ -12,6 +13,7 @@ const NavBar = () => {
   const [isMenuAnimating, setIsMenuAnimating] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { userData } = useFetchWorkUserData();
   // Funciones para abrir y cerrar el modal
   const handleOpenModal = () => {
     setIsAnimating(true);
@@ -69,9 +71,58 @@ const NavBar = () => {
   const links = [
     { label: "Inicio", route: "/Community_Feed/" },
     { label: "Explorar", route: "/profiles/" },
-    { label: "Comunidad", route: "/posts/" },
+    { label: "Publicaciones", route: "/posts/" },
     { label: "Contáctanos", route: "/contact-us/" },
   ];
+
+  const renderProfilePicture = () => {
+    if (!token) {
+      return (
+        <Link to="/Access_Panel/login">
+          <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
+        </Link>
+      )
+    }
+    if (userData.profilePictureUrl === 'ND') {
+      return (
+        <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
+          <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+        </a>
+      )
+    }
+    if (userData.profilePictureUrl !== 'ND') {
+      return (
+        <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
+          <img src={userData.profilePictureUrl} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+        </a>
+      )
+    }
+  };
+
+  const renderProfilePictureMovil = () => {
+    if (!token) {
+      return (
+        <Link to="/Access_Panel/login">
+          <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
+        </Link>
+      )
+    }
+
+    if (userData.profilePictureUrl === 'ND') {
+      return (
+        <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
+          <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+        </a>
+      )
+    }
+    if (userData.profilePictureUrl !== 'ND') {
+      return (
+        <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
+          <img src={userData.profilePictureUrl} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+        </a>
+      )
+    }
+  };
 
   return (
     <>
@@ -83,29 +134,11 @@ const NavBar = () => {
         </div>
         <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
           <NavLinks links={links} />
-          {token &&
-            <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-              <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
-            </a>
-          }
-          {!token &&
-            <Link to="/Access_Panel/login">
-              <SecondaryButton text="Únete" extraStyles={"px-6 py-2 text-fs-med font-bold"} />
-            </Link>
-          }
+          {renderProfilePicture()}
         </div>
 
         <div className='sm:flex items-center gap-10 hidden'>
-          {token &&
-            <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-              <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
-            </a>
-          }
-          {!token &&
-            <Link to="/Access_Panel/login">
-              <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
-            </Link>
-          }
+        {renderProfilePictureMovil()}
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
               id="menu-toggle"

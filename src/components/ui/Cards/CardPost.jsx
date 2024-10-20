@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ICONS } from "../ICONS";
 import { SecondaryButton } from "../Buttons";
+import { FormInput } from "../FormInput";
+import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
+import { useCreateComments } from "../../../hooks/useCreateComments";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export function CardPost({
@@ -18,6 +22,13 @@ export function CardPost({
   const [comments, setComments] = useState([]);
   const [isLiked, setIsLiked] = useState(likesCount > 0);
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
+  const { userData } = useFetchWorkUserData();
+  const { createComments } = useCreateComments();
+
+  const [postComment, setPostComment] = useState("");
+  const handleCommentChange = (e) => {
+    setPostComment(e.target.value);
+  };
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
@@ -28,13 +39,125 @@ export function CardPost({
     }
   }, []);
 
+  const fetchComments = async () => {
+    const url = `https://localhost:7038/Comments/ConsultarPorPost?postId=${postId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al obtener los comentarios");
+      }
+
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Error al obtener los comentarios:", error);
+    }
+  };
+
   const openModal = () => {
     setShowModal(true);
-    // fetchComments();
+    fetchComments();
   };
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const renderCreateComment = () => {
+    if (userData.profileType) {
+      return (
+        <form className="flex gap-2 my-5" onSubmit={handleCommentSubmit}>
+          <FormInput
+            id="create_comment"
+            type="text"
+            name="comment"
+            minLength={0}
+            placeholder="Añadir comentario..."
+            value={postComment}
+            onChange={handleCommentChange}
+            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
+          />
+          <SecondaryButton
+            text="Comentar"
+            type="submit"
+            extraStyles="py-2 w-[20%]"
+            disabled={!postComment}
+          />
+        </form>
+      );
+    }
+
+    if (!userData.profileType) {
+      return (
+        <div className="flex gap-2 my-5">
+          <FormInput
+            id="create_comment"
+            name="comment"
+            minLength={0}
+            value="Inicia sesion para comentar"
+            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
+          />
+          <Link className="w-[20%]" to="/Access_Panel/login">
+            <SecondaryButton
+              text="Únete"
+              type="button"
+              extraStyles="py-2 w-full"
+            />
+          </Link>
+        </div>
+      );
+    }
+  };
+
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!postComment) {
+      console.log("No hay valor");
+      return;
+    }
+
+    let commentData;
+
+    if (userData.profileType === "W") {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: 0,
+        workId: userData.workId,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+    if (userData.profileType === "U") {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: userData.userId,
+        workId: 0,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+
+    console.log(userData.profileType);
+
+    try {
+      const response = await createComments(commentData);
+      console.log("Comentario enviado exitosamente", response);
+      setPostComment("");
+      fetchComments(); // Llama a fetchComments después de enviar el comentario
+    } catch (error) {
+      console.error("Error al enviar el comentario", error);
+    }
   };
 
   const handleLikePost = async () => {
@@ -121,7 +244,7 @@ export function CardPost({
         <div className="rounded-lg overflow-hidden">
           <img
             className="aspect-[4/3] object-cover"
-            src={imageUrl || "/images/placeholder.jpg"}
+            src={imageUrl}
             alt="Post_Image"
           />
         </div>
@@ -242,13 +365,30 @@ export function CardPost({
               <h4 className="font-bold">Comentarios:</h4>
               <div className="mt-2">
                 {comments.length > 0 ? (
-                  comments.map((comment) => (
+                  comments
+                  .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
+                  .map((comment) => (
                     <div
-                      key={comment.id}
+                      key={comment.commentId}
                       className="border-b border-gray-200 py-2"
                     >
-                      <h5 className="font-bold">{comment.user}</h5>
-                      <p>{comment.comment}</p>
+                      <div className="flex items-center">
+                        <img
+                          src={
+                            comment.profilePictureUrlUser === "ND" ||
+                            !comment.profilePictureUrlUser
+                              ? "/images/Profile_Placeholder.png"
+                              : comment.profilePictureUrlUser
+                          }
+                          alt="Foto de perfil"
+                          className="w-8 h-8 rounded-full mr-2"
+                        />
+                        <h5 className="font-bold">
+                          {comment.firstName}{" "}
+                          {comment.lastName || comment.name || ""}
+                        </h5>
+                      </div>
+                      <p>{comment.contentComment}</p>
                     </div>
                   ))
                 ) : (
@@ -256,6 +396,8 @@ export function CardPost({
                 )}
               </div>
             </div>
+            {/*Comentar*/}
+            {renderCreateComment()}
           </div>
         </div>
       )}
