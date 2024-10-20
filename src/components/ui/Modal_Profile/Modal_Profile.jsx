@@ -18,7 +18,11 @@ export function Modal_Profile({ onClose }) {
         navigate('/');
     };
 
-    console.log(userData);
+    const handleVerPerfil = () => {
+        onClose();
+        window.location.href = (`/workprofile/${userData.workId}`);
+        
+    };
 
     const renderProfileInfo = () => {
         if (userData.profileType === 'W') {
@@ -82,9 +86,7 @@ export function Modal_Profile({ onClose }) {
                     <Link to={`/WorkUserEdit/${userData.workId}`}>
                         <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
                     </Link>
-                    <Link to={`/workprofile/${userData.workId}`}>
-                        <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
-                    </Link>
+                        <MainButton id="modal_view_profile" text="Ver perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={handleVerPerfil} />
                 </div>
             )
         }
