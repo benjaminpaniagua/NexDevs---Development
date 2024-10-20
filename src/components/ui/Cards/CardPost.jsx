@@ -20,17 +20,139 @@ export function CardPost({
 }) {
   const [showModal, setShowModal] = useState(false);
   const [comments, setComments] = useState([]);
-  const [isLiked, setIsLiked] = useState(likesCount > 0);
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
   const { userData } = useFetchWorkUserData();
   const { createComments } = useCreateComments();
-
   const [postComment, setPostComment] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+    if (userData) {
+      fetchIsLiked();
+    }
+  }, [userData]); // Dependencia en userData para asegurarse de que esté cargado
+
+  const fetchIsLiked = async () => {
+    try {
+      const userId = userData?.userId || 0; // Obtenemos userId desde userData
+      const workProfileId = userData?.workId || 0; // Obtenemos workProfileId desde userData
+
+      // Validar si ambos son null, no hacer la solicitud
+      if (!userId && !workProfileId) {
+        console.error(
+          "No se ha encontrado userId ni workProfileId para verificar el like."
+        );
+        return;
+      }
+
+      // Construimos la URL con los parámetros correctos
+      const url = `https://localhost:7038/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsLiked(data); // La respuesta es booleana, actualiza el estado de isLiked
+        console.log("isLiked después de la actualización:", data);
+      } else {
+        console.error("Error al verificar si el post ha sido liked");
+      }
+    } catch (error) {
+      console.error("Error al verificar si el post ha sido liked:", error);
+    }
+    console.log("isLiked", isLiked);
+  };
+
+  const handleLikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
+    const userId = userData?.userId || 0;
+    const workProfileId = userData?.workId || 0;
+
+    const urlLike = `https://localhost:7038/Likes/LikePost`;
+
+    try {
+      const response = await fetch(urlLike, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: postId,
+          userId: userId,
+          workProfileId: workProfileId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al dar like al post");
+      }
+
+      const data = await response.json();
+      setIsLiked(!isLiked);
+      setCurrentLikesCount((prevCount) =>
+        isLiked ? prevCount - 1 : prevCount + 1
+      );
+    } catch (error) {
+      console.error("Error al dar like al post:", error);
+    }
+  };
+
+  const handleDislikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
+    const userId = userData?.userId || 0;
+    const workProfileId = userData?.workId || 0;
+
+    const urlDislike = `https://localhost:7038/Likes/DislikePost`;
+
+    try {
+      const response = await fetch(urlDislike, {
+        method: "DELETE",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: postId,
+          userId: userId,
+          workProfileId: workProfileId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al dar dislike al post");
+      }
+
+      const data = await response.json();
+      setIsLiked(false);
+      setCurrentLikesCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    } catch (error) {
+      console.error("Error al dar dislike al post:", error);
+    }
+  };
+
   const handleCommentChange = (e) => {
     setPostComment(e.target.value);
   };
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -160,61 +282,6 @@ export function CardPost({
     }
   };
 
-  const handleLikePost = async () => {
-    if (!isLoggedIn) {
-      navigate("/Access_Panel/login");
-      return;
-    }
-
-    const urlLike = `https://localhost:7038/Posts/Like?postId=${postId}`;
-    const urlDislike = `https://localhost:7038/Posts/Dislike?postId=${postId}`;
-
-    if (isLiked) {
-      setIsLiked(false);
-      setCurrentLikesCount((prevCount) => prevCount - 1);
-
-      try {
-        const response = await fetch(urlDislike, {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al dar dislike");
-        }
-        console.log("Dislike realizado correctamente");
-      } catch (error) {
-        console.error("Error al procesar la acción de dislike:", error);
-        setIsLiked(true);
-        setCurrentLikesCount((prevCount) => prevCount + 1);
-      }
-    } else {
-      setIsLiked(true);
-      setCurrentLikesCount((prevCount) => prevCount + 1);
-
-      try {
-        const response = await fetch(urlLike, {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al dar like");
-        }
-
-        console.log("Like realizado correctamente");
-      } catch (error) {
-        console.error("Error al procesar la acción de like:", error);
-        setIsLiked(false);
-        setCurrentLikesCount((prevCount) => prevCount - 1);
-      }
-    }
-  };
-
   useEffect(() => {
     if (showModal) {
       document.body.style.overflow = "hidden";
@@ -281,10 +348,9 @@ export function CardPost({
               <div className="flex gap-1 items-center">
                 <button
                   className="transition-all hover:scale-110"
-                  onClick={handleLikePost}
+                  onClick={isLiked ? handleDislikePost : handleLikePost}
                 >
-                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
-                  {/* Cambiar icono basado en si está "liked" */}
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}
                 </button>
                 <h4 className="text-clr-black font-bold">
                   {currentLikesCount}
@@ -343,10 +409,9 @@ export function CardPost({
               <div className="flex gap-1 items-center">
                 <button
                   className="transition-all hover:scale-110"
-                  onClick={handleLikePost}
+                  onClick={isLiked ? handleDislikePost : handleLikePost}
                 >
-                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
-                  {/* Cambiar icono basado en si está "liked" */}
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}
                 </button>
                 <h4 className="text-clr-black font-bold">
                   {currentLikesCount}
@@ -366,31 +431,31 @@ export function CardPost({
               <div className="mt-2">
                 {comments.length > 0 ? (
                   comments
-                  .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
-                  .map((comment) => (
-                    <div
-                      key={comment.commentId}
-                      className="border-b border-gray-200 py-2"
-                    >
-                      <div className="flex items-center">
-                        <img
-                          src={
-                            comment.profilePictureUrlUser === "ND" ||
-                            !comment.profilePictureUrlUser
-                              ? "/images/Profile_Placeholder.png"
-                              : comment.profilePictureUrlUser
-                          }
-                          alt="Foto de perfil"
-                          className="w-8 h-8 rounded-full mr-2"
-                        />
-                        <h5 className="font-bold">
-                          {comment.firstName}{" "}
-                          {comment.lastName || comment.name || ""}
-                        </h5>
+                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
+                    .map((comment) => (
+                      <div
+                        key={comment.commentId}
+                        className="border-b border-gray-200 py-2"
+                      >
+                        <div className="flex items-center">
+                          <img
+                            src={
+                              comment.profilePictureUrlUser === "ND" ||
+                              !comment.profilePictureUrlUser
+                                ? "/images/Profile_Placeholder.png"
+                                : comment.profilePictureUrlUser
+                            }
+                            alt="Foto de perfil"
+                            className="w-8 h-8 rounded-full mr-2"
+                          />
+                          <h5 className="font-bold">
+                            {comment.firstName}{" "}
+                            {comment.lastName || comment.name || ""}
+                          </h5>
+                        </div>
+                        <p>{comment.contentComment}</p>
                       </div>
-                      <p>{comment.contentComment}</p>
-                    </div>
-                  ))
+                    ))
                 ) : (
                   <p>No hay comentarios aún.</p>
                 )}
