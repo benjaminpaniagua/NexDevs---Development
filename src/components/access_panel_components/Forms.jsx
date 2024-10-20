@@ -10,7 +10,7 @@ import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNorma
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
 
-//Fromulario de LogIn
+
 export function LogIn() {
     const { login, loading, error } = useLogin()
 
@@ -267,6 +267,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
                 setPreviewImage(reader.result);
             };
             reader.readAsDataURL(file);
+            console.log(profileImage);
         }
     };
 
@@ -298,14 +299,23 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
             alert("Debes aceptar los términos y condiciones");
             return;
         }
+
         const updatedUserData = {
             ...userData,
             ...formData,
-            profilePictureUrl: profileImage || 'default_image_url',
             profileType: 'U',
         };
-        const response = await registerUserProfile(updatedUserData);
+
+        const newFormData = new FormData();
+
+        Object.keys(updatedUserData).forEach((key) => {
+            newFormData.append(key, updatedUserData[key]);
+        });
+        newFormData.append('profilePictureUrl', profileImage || defaultImage);
+
+        const response = await registerUserProfile(newFormData);
         const result = await login(response.email, response.password);        
+        
         if (result.success) {
             window.location.href = (`/Community_Feed/`);
         }
@@ -698,11 +708,19 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         const updatedUserData = {
             ...userData,
             ...formData,
-            profilePictureUrl: profileImage || 'default_image_url',
             profileType: 'W',
         };
-        const response = await registerWorkProfile(updatedUserData);
+
+        const newFormData = new FormData();
+
+        Object.keys(updatedUserData).forEach((key) => {
+            newFormData.append(key, updatedUserData[key]);
+        });        
+        newFormData.append('profilePictureUrl', profileImage || defaultImage);
+
+        const response = await registerWorkProfile(newFormData);
         const result = await login(response.email, response.password);
+
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
         }

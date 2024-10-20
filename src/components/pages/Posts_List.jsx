@@ -7,10 +7,12 @@ import { useFetchPosts } from "../../hooks/useFetchPosts";
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { Loading_Screen } from "../ui/Loading_Screen.jsx";
 import { useNavigate } from "react-router-dom";
+import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
 
 export function Posts_List() {
   const { data: posts, error, loading } = useFetchPosts();
-  console.log(posts);
+  const { userData } = useFetchWorkUserData();
+
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -21,13 +23,10 @@ export function Posts_List() {
     }
   }, []);
 
-  if (error) return <p>Error: {error}</p>;
-
-  return (
-    <>
-      <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
-        <Loading_Screen Loading={loading} />
-        <div className="flex justify-between">
+  const renderTop = () => {
+    if (userData.profileType === 'W') {
+        return (
+          <div className="flex justify-between">
           <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
           {isLoggedIn ? (
             <SecondaryButtonOutline
@@ -37,6 +36,31 @@ export function Posts_List() {
             />
           ) : null}
         </div>
+        )
+    }
+    if (userData.profileType === 'U') {
+        return (
+          <div className="flex justify-between">
+          <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
+        </div>
+        )
+    }
+    if (!userData.profileType) {
+        return (
+          <div className="flex justify-between">
+          <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
+        </div>
+        )
+    }
+};
+
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <>
+      <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+        <Loading_Screen Loading={loading} />
+        {renderTop()}
         <div className="grid grid-cols-auto-350 md:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
           {Array.isArray(posts) && posts.length > 0 ? (
             posts.map((post) => (

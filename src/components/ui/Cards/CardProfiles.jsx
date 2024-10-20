@@ -14,16 +14,22 @@ export function CardProfiles({
   return (
     <>
       {/* Profile Card */}
-      <div className="h-auto md:w-auto flex flex-col gap-2 transition-all hover:scale-95">
+      <div className="h-auto md:w-auto flex flex-col gap-2 transition-all hover:scale-[.99]">
         {/* Profile Picture */}
         <div className="rounded-lg overflow-hidden">
-          <img src={image} alt="Profile_Picture" />
+          <img src={
+            image === "ND" || image === "default_image_url"
+              ? "/images/default_profile_picture.jpg"
+              : image} 
+          className="w-full h-80 rounded-lg object-cover" alt="Profile_Picture" />
         </div>
         {/* Profile Picture */}
 
         {/* Profile Info */}
-        <div className=" flex flex-col gap-1">
-          <h3 className="font-semibold">{name}</h3>
+        <div className=" flex flex-col gap-1 pt-2">
+          <div className="h-16">
+            <h4 className="font-semibold">{name}</h4>
+          </div>
           <h5 className="text-black">{category}</h5>
           {/* <p className='h-16 xs:h-24 text-fs-med truncate'>{biography}</p> */}
           <p className="text-black h-16 sm:h-fit text-fs-med lg:text-fs-small">

@@ -4,7 +4,7 @@ export function MainButton({
   text = "Button",
   asLink = false,
   extraStyles = "",
-  onClick = () => {},
+  onClick = () => { },
   disabled = false,
   type = "button",
   id,
@@ -57,7 +57,7 @@ export function SecondaryButton({
   text = "Button",
   asLink = false,
   extraStyles = "",
-  onClick = () => {},
+  onClick = () => { },
   disabled = false,
   type = "button",
   id,
@@ -70,7 +70,7 @@ export function SecondaryButton({
   if (disabled) {
     return (
       <button
-        className={`${baseStyles} bg-clr-green-light border-clr-green-light saturate-50 cursor-default ${extraStyles}`}
+        type="button" className={`${baseStyles} bg-clr-green-light border-clr-green-light saturate-50 cursor-default ${extraStyles}`}
       >
         {text}
       </button>
@@ -104,7 +104,7 @@ export function SecondaryButtonOutline({
   text = "Button",
   asLink = false,
   extraStyles = "",
-  onClick = () => {},
+  onClick = () => { },
   disabled = false,
   type = "button",
   id,
@@ -117,7 +117,7 @@ export function SecondaryButtonOutline({
   if (disabled) {
     return (
       <button
-        className={`${baseStyles} bg-clr-white border-clr-black opacity-50 cursor-default ${extraStyles}`}
+        type="button" className={`${baseStyles} bg-clr-white border-clr-black opacity-50 cursor-default ${extraStyles}`}
       >
         {text}
       </button>
@@ -151,7 +151,7 @@ export function SimpleButton({
   text = "Button",
   asLink = false,
   extraStyles = "",
-  onClick = () => {},
+  onClick = () => { },
   disabled = false,
   type = "button",
   id,
@@ -161,7 +161,7 @@ export function SimpleButton({
   if (disabled) {
     return (
       <button
-        className={`underline text-clr-white hover:text-clr-green-dark transition-all duration-300 ${extraStyles}`}
+        type="button" className={`underline text-clr-white hover:text-clr-green-dark transition-all duration-300 ${extraStyles}`}
       >
         {text}
       </button>
