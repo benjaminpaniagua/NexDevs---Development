@@ -1,5 +1,5 @@
 import { MainButton } from "../Buttons";
-import { ICONS } from "../Icons";
+import { ICONS } from "../ICONS";
 export function CardProfiles({
   image,
   name,
@@ -21,7 +21,7 @@ export function CardProfiles({
             image === "ND" || image === "default_image_url"
               ? "/images/default_profile_picture.jpg"
               : image} 
-          className="w-full h-80 rounded-lg object-cover" alt="Profile_Picture" />
+          className="aspect-[4/3] w-full h-full rounded-lg object-cover" alt="Profile_Picture" />
         </div>
         {/* Profile Picture */}
 
