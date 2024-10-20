@@ -83,20 +83,16 @@ const NavBar = () => {
         </Link>
       )
     }
-    if (userData.profilePictureUrl === 'ND') {
-      return (
-        <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-          <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
-        </a>
-      )
-    }
-    if (userData.profilePictureUrl !== 'ND') {
-      return (
-        <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-          <img src={userData.profilePictureUrl} alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
-        </a>
-      )
-    }
+    return (
+      <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
+        <img src={
+          userData.profilePictureUrl === "ND" || userData.profilePictureUrl === "default_image_url"
+            ? "/images/default_profile_picture.jpg"
+            : userData.profilePictureUrl}
+          alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+      </a>
+    )
+
   };
 
   const renderProfilePictureMovil = () => {
@@ -138,7 +134,7 @@ const NavBar = () => {
         </div>
 
         <div className='sm:flex items-center gap-10 hidden'>
-        {renderProfilePictureMovil()}
+          {renderProfilePictureMovil()}
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
               id="menu-toggle"
