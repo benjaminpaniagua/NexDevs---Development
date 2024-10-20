@@ -775,7 +775,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
     return (
         <form className={`relative w-1/2 items-center justify-center md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
-            <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Registrar Empresa</h1>
+            <h1 className="text-5xl font-medium sm:text-2xl md:mt-32 md:-mb-3">Registrar Empresa</h1>
 
             {/* Formulario */}
             <div className="flex flex-col gap-2 my-10 sm:my-5">
@@ -808,16 +808,18 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                     </div>
 
                 </div>
-                {/*<div className="flex gap-2">
+                <div className="flex gap-2">
                     <div className="flex flex-col w-1/2 gap-2">
                         <FormSelect id="company_state" name="province" title="Categorias" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
-                    <div className="flex flex-col w-1/2">
-                        <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    <div className="flex flex-col w-1/2 gap-2">
+                        <FormSelect id="company_state" name="province" title="Habilidades" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
-                </div>*/}
+                </div>
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
                 <div className="flex items-center gap-3">

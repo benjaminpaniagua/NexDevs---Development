@@ -41,7 +41,7 @@ export function Featured_Profiles({ setIsLoading }) {
                             {/* Cards */}
                             <div>
                                 <Swiper
-                                    modules={[Pagination, Autoplay]}
+                                    modules={[Autoplay]}
                                     spaceBetween={20}
                                     breakpoints={{
                                         640: {
@@ -60,7 +60,7 @@ export function Featured_Profiles({ setIsLoading }) {
                                         disableOnInteraction: false,
                                     }}
                                     loop
-                                    style={{ paddingBottom: '69px' }}
+                                    style={{ paddingBottom: '24px' }}
                                 >
                                     {users.map((user) => (
                                         <SwiperSlide key={user.workId}>

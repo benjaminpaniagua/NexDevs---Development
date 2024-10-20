@@ -15,7 +15,7 @@ export function Profiles_List() {
 
     useEffect(() => {
         if (search) {
-            setSearchTerm(search);
+            setSearchTerm(search.toLowerCase());
         }
     }, [search]);
 
