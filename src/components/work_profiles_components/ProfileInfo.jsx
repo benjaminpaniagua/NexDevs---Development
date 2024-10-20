@@ -4,7 +4,7 @@ import {
   SecondaryButtonOutline,
   SecondaryButton,
 } from "../ui/Buttons";
-import { ICONS } from "../ui/Icons";
+import { ICONS } from "../ui/ICONS";
 import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 
@@ -58,10 +58,11 @@ export function ProfileInfo({ users, loading, isOwner }) {
         <h4>{users.email}</h4>
       </div>
       <MainButton
-        text={"Contactar Whatsapp"}
+        text={"Contactar por WhatsApp"}
         extraStyles={"mt-4 py-2 w-full"}
         asLink={true}
         link={`https://wa.me/+506${users.number}?`}
+        icon={ICONS.whatsapp}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ICONS } from "../Icons";
+import { ICONS } from "../ICONS";
 import { SecondaryButton } from "../Buttons";
 import { FormInput } from "../FormInput";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
@@ -20,17 +20,139 @@ export function CardPost({
 }) {
   const [showModal, setShowModal] = useState(false);
   const [comments, setComments] = useState([]);
-  const [isLiked, setIsLiked] = useState(likesCount > 0);
   const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
   const { userData } = useFetchWorkUserData();
   const { createComments } = useCreateComments();
+  const [postComment, setPostComment] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const navigate = useNavigate();
 
-  const [postComment, setPostComment] = useState('');
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+    }
+    if (userData) {
+      fetchIsLiked();
+    }
+  }, [userData]); // Dependencia en userData para asegurarse de que esté cargado
+
+  const fetchIsLiked = async () => {
+    try {
+      const userId = userData?.userId || 0; // Obtenemos userId desde userData
+      const workProfileId = userData?.workId || 0; // Obtenemos workProfileId desde userData
+
+      // Validar si ambos son null, no hacer la solicitud
+      if (!userId && !workProfileId) {
+        console.error(
+          "No se ha encontrado userId ni workProfileId para verificar el like."
+        );
+        return;
+      }
+
+      // Construimos la URL con los parámetros correctos
+      const url = `https://localhost:7038/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
+
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setIsLiked(data); // La respuesta es booleana, actualiza el estado de isLiked
+        console.log("isLiked después de la actualización:", data);
+      } else {
+        console.error("Error al verificar si el post ha sido liked");
+      }
+    } catch (error) {
+      console.error("Error al verificar si el post ha sido liked:", error);
+    }
+    console.log("isLiked", isLiked);
+  };
+
+  const handleLikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
+    const userId = userData?.userId || 0;
+    const workProfileId = userData?.workId || 0;
+
+    const urlLike = `https://localhost:7038/Likes/LikePost`;
+
+    try {
+      const response = await fetch(urlLike, {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: postId,
+          userId: userId,
+          workProfileId: workProfileId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al dar like al post");
+      }
+
+      const data = await response.json();
+      setIsLiked(!isLiked);
+      setCurrentLikesCount((prevCount) =>
+        isLiked ? prevCount - 1 : prevCount + 1
+      );
+    } catch (error) {
+      console.error("Error al dar like al post:", error);
+    }
+  };
+
+  const handleDislikePost = async () => {
+    if (!isLoggedIn) {
+      navigate("/Access_Panel/login");
+      return;
+    }
+
+    const userId = userData?.userId || 0;
+    const workProfileId = userData?.workId || 0;
+
+    const urlDislike = `https://localhost:7038/Likes/DislikePost`;
+
+    try {
+      const response = await fetch(urlDislike, {
+        method: "DELETE",
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId: postId,
+          userId: userId,
+          workProfileId: workProfileId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al dar dislike al post");
+      }
+
+      const data = await response.json();
+      setIsLiked(false);
+      setCurrentLikesCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    } catch (error) {
+      console.error("Error al dar dislike al post:", error);
+    }
+  };
+
   const handleCommentChange = (e) => {
     setPostComment(e.target.value);
   };
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -39,9 +161,31 @@ export function CardPost({
     }
   }, []);
 
+  const fetchComments = async () => {
+    const url = `https://localhost:7038/Comments/ConsultarPorPost?postId=${postId}`;
+
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al obtener los comentarios");
+      }
+
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error("Error al obtener los comentarios:", error);
+    }
+  };
+
   const openModal = () => {
     setShowModal(true);
-    // fetchComments();
+    fetchComments();
   };
 
   const closeModal = () => {
@@ -52,21 +196,45 @@ export function CardPost({
     if (userData.profileType) {
       return (
         <form className="flex gap-2 my-5" onSubmit={handleCommentSubmit}>
-          <FormInput id="create_comment" type="text" name="comment" minLength={0} placeholder="Añadir comentario..." value={postComment} onChange={handleCommentChange} className="border h-12 w-[80%] bg-clr-white border-black rounded p-1" />
-          <SecondaryButton text="Comentar" type="submit" extraStyles="py-2 w-[20%]" disabled={!postComment} />
+          <FormInput
+            id="create_comment"
+            type="text"
+            name="comment"
+            minLength={0}
+            placeholder="Añadir comentario..."
+            value={postComment}
+            onChange={handleCommentChange}
+            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
+          />
+          <SecondaryButton
+            text="Comentar"
+            type="submit"
+            extraStyles="py-2 w-[20%]"
+            disabled={!postComment}
+          />
         </form>
-      )
+      );
     }
 
     if (!userData.profileType) {
       return (
         <div className="flex gap-2 my-5">
-        <FormInput id="create_comment" name="comment" minLength={0} value="Inicia sesion para comentar" className="border h-12 w-[80%] bg-clr-white border-black rounded p-1" />
-        <Link className="w-[20%]" to="/Access_Panel/login">
-        <SecondaryButton text="Únete" type="button" extraStyles="py-2 w-full"/>
-        </Link>
+          <FormInput
+            id="create_comment"
+            name="comment"
+            minLength={0}
+            value="Inicia sesion para comentar"
+            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
+          />
+          <Link className="w-[20%]" to="/Access_Panel/login">
+            <SecondaryButton
+              text="Únete"
+              type="button"
+              extraStyles="py-2 w-full"
+            />
+          </Link>
         </div>
-      )
+      );
     }
   };
 
@@ -79,7 +247,7 @@ export function CardPost({
 
     let commentData;
 
-    if (userData.profileType === 'W') {
+    if (userData.profileType === "W") {
       commentData = {
         commentId: 0,
         postId: postId,
@@ -90,7 +258,7 @@ export function CardPost({
         likesCount: 0,
       };
     }
-    if (userData.profileType === 'U') {
+    if (userData.profileType === "U") {
       commentData = {
         commentId: 0,
         postId: postId,
@@ -102,67 +270,15 @@ export function CardPost({
       };
     }
 
+    console.log(userData.profileType);
+
     try {
       const response = await createComments(commentData);
       console.log("Comentario enviado exitosamente", response);
-      setPostComment('');
+      setPostComment("");
+      fetchComments(); // Llama a fetchComments después de enviar el comentario
     } catch (error) {
       console.error("Error al enviar el comentario", error);
-    }
-  };
-
-  const handleLikePost = async () => {
-    if (!isLoggedIn) {
-      navigate("/Access_Panel/login");
-      return;
-    }
-
-    const urlLike = `https://localhost:7038/Posts/Like?postId=${postId}`;
-    const urlDislike = `https://localhost:7038/Posts/Dislike?postId=${postId}`;
-
-    if (isLiked) {
-      setIsLiked(false);
-      setCurrentLikesCount((prevCount) => prevCount - 1);
-
-      try {
-        const response = await fetch(urlDislike, {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al dar dislike");
-        }
-        console.log("Dislike realizado correctamente");
-      } catch (error) {
-        console.error("Error al procesar la acción de dislike:", error);
-        setIsLiked(true);
-        setCurrentLikesCount((prevCount) => prevCount + 1);
-      }
-    } else {
-      setIsLiked(true);
-      setCurrentLikesCount((prevCount) => prevCount + 1);
-
-      try {
-        const response = await fetch(urlLike, {
-          method: "POST",
-          headers: {
-            accept: "text/plain",
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Error al dar like");
-        }
-
-        console.log("Like realizado correctamente");
-      } catch (error) {
-        console.error("Error al procesar la acción de like:", error);
-        setIsLiked(false);
-        setCurrentLikesCount((prevCount) => prevCount - 1);
-      }
     }
   };
 
@@ -236,10 +352,9 @@ export function CardPost({
               <div className="flex gap-1 items-center">
                 <button
                   className="transition-all hover:scale-110"
-                  onClick={handleLikePost}
+                  onClick={isLiked ? handleDislikePost : handleLikePost}
                 >
-                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
-                  {/* Cambiar icono basado en si está "liked" */}
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}
                 </button>
                 <h4 className="text-clr-black font-bold">
                   {currentLikesCount}
@@ -266,7 +381,7 @@ export function CardPost({
       {showModal && (
         <div
           className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
-        // onClick={handleOutsideClick}
+          // onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
             <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
@@ -298,10 +413,9 @@ export function CardPost({
               <div className="flex gap-1 items-center">
                 <button
                   className="transition-all hover:scale-110"
-                  onClick={handleLikePost}
+                  onClick={isLiked ? handleDislikePost : handleLikePost}
                 >
-                  {isLiked ? ICONS.heart_filled : ICONS.heart}{" "}
-                  {/* Cambiar icono basado en si está "liked" */}
+                  {isLiked ? ICONS.heart_filled : ICONS.heart}
                 </button>
                 <h4 className="text-clr-black font-bold">
                   {currentLikesCount}
@@ -320,24 +434,39 @@ export function CardPost({
               <h4 className="font-bold">Comentarios:</h4>
               <div className="mt-2">
                 {comments.length > 0 ? (
-                  comments.map((comment) => (
-                    <div
-                      key={comment.id}
-                      className="border-b border-gray-200 py-2"
-                    >
-                      <h5 className="font-bold">{comment.user}</h5>
-                      <p>{comment.comment}</p>
-                    </div>
-                  ))
+                  comments
+                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
+                    .map((comment) => (
+                      <div
+                        key={comment.commentId}
+                        className="border-b border-gray-200 py-2"
+                      >
+                        <div className="flex items-center">
+                          <img
+                            src={
+                              comment.profilePictureUrlUser === "ND" ||
+                              !comment.profilePictureUrlUser
+                                ? "/images/Profile_Placeholder.png"
+                                : comment.profilePictureUrlUser
+                            }
+                            alt="Foto de perfil"
+                            className="w-8 h-8 rounded-full mr-2"
+                          />
+                          <h5 className="font-bold">
+                            {comment.firstName}{" "}
+                            {comment.lastName || comment.name || ""}
+                          </h5>
+                        </div>
+                        <p>{comment.contentComment}</p>
+                      </div>
+                    ))
                 ) : (
                   <p>No hay comentarios aún.</p>
                 )}
               </div>
             </div>
-
             {/*Comentar*/}
             {renderCreateComment()}
-
           </div>
         </div>
       )}
