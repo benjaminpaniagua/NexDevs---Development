@@ -14,28 +14,20 @@ export function ProfileInfo({ users, loading, isOwner }) {
 
 
   const renderProfilePicture = () => {
-    if (users.profilePictureUrl === 'ND') {
+
       return (
         <div className="absolute md:left-1/2 transform md:-translate-x-1/2 translate-x-2 -translate-y-1/2">
           <img
-            src="/images/default_profile_picture.jpg"
-            alt="Foto de perfil"
-            className="w-56 h-56 rounded-full border-4 border-white object-cover"
-          />
-        </div>
-      )
-    }
-    if (users.profilePictureUrl !== 'ND') {
-      return (
-        <div className="absolute md:left-1/2 transform md:-translate-x-1/2 translate-x-2 -translate-y-1/2">
-          <img
-            src={users.profilePictureUrl}
+            src={
+              users.profilePictureUrl === "ND" || users.profilePictureUrl === "default_image_url"
+                ? "/images/default_profile_picture.jpg"
+                : users.profilePictureUrl} 
             alt="Foto de perfil"
             className="w-56 h-56 md:w-40 md:h-40 rounded-full border-4 border-white object-cover"
           />
         </div>
       )
-    }
+    
   };
 
   const renderUserInfo = () => (
