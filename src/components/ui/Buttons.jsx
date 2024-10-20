@@ -9,13 +9,20 @@ export function MainButton({
   type = "button",
   id,
   link,
+  icon,
 }) {
   const baseStyles =
-    "text-clr-white font-montserrat text-center rounded-lg border-2 transition-all duration-300";
+    "text-clr-white font-montserrat text-center rounded-lg border-2 transition-all duration-300 flex items-center justify-center py-2 px-4";
+
+  const iconElement = icon ? <span className="mr-2">{icon}</span> : null;
 
   if (disabled) {
     return (
-      <button type="button" className={`${baseStyles} bg-clr-grey border-clr-grey brightness-[1.5] cursor-default ${extraStyles}`}>
+      <button
+        type="button"
+        className={`${baseStyles} bg-clr-grey border-clr-grey brightness-[1.5] cursor-default ${extraStyles}`}
+      >
+         {iconElement}
         {text}
       </button>
     );
@@ -27,6 +34,7 @@ export function MainButton({
         rel="noopener noreferrer"
         className={`${baseStyles} bg-clr-black border-clr-black hover:text-clr-green-dark ${extraStyles}`}
       >
+         {iconElement}
         {text}
       </a>
     );
@@ -38,6 +46,7 @@ export function MainButton({
         onClick={onClick}
         className={`${baseStyles} bg-clr-black border-clr-black hover:text-clr-green-dark ${extraStyles}`}
       >
+         {iconElement}
         {text}
       </button>
     );
@@ -53,6 +62,7 @@ export function SecondaryButton({
   type = "button",
   id,
   link,
+  icon,
 }) {
   const baseStyles =
     "text-clr-black rounded-lg border-2 transition-all duration-300";
@@ -99,6 +109,7 @@ export function SecondaryButtonOutline({
   type = "button",
   id,
   link,
+  icon,
 }) {
   const baseStyles =
     "text-clr-black rounded-lg border-2 transition-all duration-300";
@@ -145,6 +156,7 @@ export function SimpleButton({
   type = "button",
   id,
   link,
+  icon,
 }) {
   if (disabled) {
     return (
@@ -188,6 +200,7 @@ MainButton.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
+  icon: PropTypes.element,
 };
 
 SecondaryButton.propTypes = {
@@ -199,6 +212,7 @@ SecondaryButton.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
+  icon: PropTypes.element,
 };
 
 SecondaryButtonOutline.propTypes = {
@@ -210,6 +224,7 @@ SecondaryButtonOutline.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
+  icon: PropTypes.element,
 };
 
 SimpleButton.propTypes = {
@@ -221,4 +236,5 @@ SimpleButton.propTypes = {
   extraStyles: PropTypes.string,
   asLink: PropTypes.bool,
   link: PropTypes.string,
+  icon: PropTypes.element,
 };

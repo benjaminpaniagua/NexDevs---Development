@@ -65,7 +65,7 @@ export function Featured_Profiles({ setIsLoading }) {
                                     {users.map((user) => (
                                         <SwiperSlide key={user.workId}>
                                             <CardProfiles
-                                                image="/images/Profile_Placeholder.png"
+                                                image={user.profilePictureUrl}
                                                 name={user.name}
                                                 biography={user.workDescription}
                                                 province={user.province}

@@ -36,6 +36,7 @@ const MainApp = () => {
           <Route path="/access_panel/*" element={<Access_Panel />} />
           <Route path="/categories/" element={<Categories_Page />} />
           <Route path="/profiles/" element={<Profiles_List />} />
+          <Route path="/profiles/:search" element={<Profiles_List />} />
           <Route path="/workProfile/:userId" element={<Work_Profiles />} />
           <Route path="/WorkUserEdit/:userId" element={<WorkUserEdit />} />
           <Route path="/community_feed/" element={<Community_Feed />} />
