@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-export const useFetchWorkProfileCategories = ({ workID }) => {
-    const [categories, setCategories] = useState([]);
+export const useFetchCiudades = ({provincia}) => {
+    const [ciudades, setCiudadess] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const source = axios.CancelToken.source();
 
-        const fetchCategories = async () => {
+        const fetchCiudades = async () => {
             try {
-                const response = await axios.get(`https://localhost:7038/WorkCategories/Consultar?workId=${workID}`, {
+                const response = await axios.get(`https://ubicaciones.paginasweb.cr/provincia/${provincia}/cantones.json`, {
                     cancelToken: source.token
                 });
-                setCategories(response.data);
+                setCiudadess(Object.values(response.data));
             } catch (err) {
 
                 if (axios.isCancel(err)) {
@@ -26,13 +26,15 @@ export const useFetchWorkProfileCategories = ({ workID }) => {
                 setLoading(false);
             }
         };
-
-        fetchCategories();
+        
+        if (provincia) {
+            fetchCiudades();
+        }
         return () => {
             source.cancel('Solicitud Cancelada');
         };
-    }, [workID]);
+    }, [provincia]);
 
-    return { categories, loading, error };
+    return { ciudades, loading, error };
 
 };

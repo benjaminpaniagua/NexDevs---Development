@@ -64,9 +64,9 @@ export function Work_Profiles() {
                             {/* Mi coleccion */}
                             <Collection />
                             {/* Mi coleccion */}
-                            <div className="pt-4 flex md:flex-col md:gap-5">
+                            <div className="pt-4 flex md:flex-col md:gap-5 h-36">
                                 {/* Categories */}
-                                {/* <Categories workId={users.categoryId} /> */}
+                                {<Categories workId={users.workId} />}
                                 {/* Categories */}
                                 {/* Habilidades */}
                                 {<Skills workId={users.workId} />}

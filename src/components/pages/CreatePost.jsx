@@ -9,6 +9,7 @@ import Alert from "../ui/Alert";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
+import { useCreatePost } from "../../hooks/useCreatePost.js";
 
 export default function CreatePost() {
   const { userData } = useFetchWorkUserData();
@@ -22,48 +23,10 @@ export default function CreatePost() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contentPost, setContentPost] = useState("");
+  const { createPost } = useCreatePost();
   const [postImageUrl, setPostImageUrl] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("photo", selectedFile);
-    formData.append("contentPost", contentPost);
-    formData.append("workId", userData.workId);
-    formData.append("createAt", new Date().toISOString());
-
-    try {
-      const response = await fetch("https://localhost:7038/Posts/Agregar", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error de servidor: ${response.statusText}`);
-      }
-
-      const successAlert = {
-        show: true,
-        type: "success",
-        message: "Tu publicación ha sido agregada exitosamente.",
-      };
-      setAlert(successAlert);
-
-      setTimeout(() => {
-        navigate(-1);
-      }, 2500); 
-    } catch (error) {
-      console.error("Error de red o servidor: ", error.message);
-      const errorAlert = {
-        show: true,
-        type: "error",
-        message: "Hubo un error al agregar la publicación. Inténtalo de nuevo.",
-      };
-      setAlert(errorAlert);
-    }
-  };
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -99,6 +62,39 @@ export default function CreatePost() {
     </ol>
   );
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setPostImageUrl(file);
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setSelectedFile(reader.result);
+        };
+        reader.readAsDataURL(file);
+    }
+};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("contentPost", contentPost);
+    formData.append("workId", userData.workId);
+    formData.append("createAt", new Date().toISOString());
+    formData.append("postImageUrl", postImageUrl);
+
+    const response = await createPost(formData);
+    if (response) {
+      const successAlert = {
+        show: true,
+        type: "success",
+        message: "Tu publicación ha sido agregada exitosamente.",
+      };
+      setAlert(successAlert);
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500); 
+    }
+  };
+
   return (
     <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-8">
       <form onSubmit={handleSubmit}>
@@ -110,7 +106,7 @@ export default function CreatePost() {
                 <label>Foto</label>
                 <img
                   className="w-full mt-2 h-fit rounded-lg flex items-center justify-center relative"
-                  src={postImageUrl || "/images/placeholder.jpg"}
+                  src={selectedFile || "/images/placeholder.jpg"}
                   alt="post-image"
                 />
                 {/* Botón para subir imagen */}
@@ -124,10 +120,7 @@ export default function CreatePost() {
                   id="postImage"
                   type="file"
                   accept="image/*"
-                  onChange={(e) => {
-                    setSelectedFile(e.target.files[0]);
-                    setPostImageUrl(URL.createObjectURL(e.target.files[0]));
-                  }}
+                  onChange={handleImageChange}
                   className="hidden"
                 />
               </div>

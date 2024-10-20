@@ -9,7 +9,8 @@ import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWork
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
-
+import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
+import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -213,21 +214,41 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         bio: ''
     });
 
-    //Lista de opciones de los selects
-    const stateOptions = [
-        'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
-    ];
-    const cityOptions = {
-        'San José': ['San José', 'Escazú'],
-        'Alajuela': ['Alajuela', 'San Carlos'],
-        'Cartago': ['Cartago', 'Paraíso'],
-        'Heredia': ['Heredia', 'Barva'],
-        'Guanacaste': ['Liberia', 'Santa Cruz'],
-        'Puntarenas': ['Puntarenas', 'Esparza'],
-        'Limón': ['Limón', 'Guápiles']
-    };
+    const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
-    const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
+    const [availableCities, setAvailableCities] = useState([]);
+
+    //Lista de opciones de los selects
+    const stateOptions = provincias ? Object.values(provincias) : [];
+    //console.log(provincias);
+
+    const provinceIdMap = {
+        'San José': '1',
+        'Alajuela': '2',
+        'Cartago': '3',
+        'Heredia': '4',
+        'Guanacaste': '5',
+        'Puntarenas': '6',
+        'Limón': '7'
+    };
+
+    useEffect(() => {
+        const fetchCities = async (provinceId) => {
+            try {
+                const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                const data = await response.json();
+                const citiesArray = data ? Object.values(data) : [];
+                setAvailableCities(citiesArray);
+                //console.log(citiesArray);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
+        };
+        if (selectedProvince) {
+            const provinceId = provinceIdMap[selectedProvince];
+            fetchCities(provinceId);
+        }
+    }, [selectedProvince]);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
     const handleSelectChange = (e) => {
@@ -238,7 +259,6 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         });
         if (name === 'province') {
             setSelectedProvince(value);
-            setAvailableCities(cityOptions[value] || []);
         }
     };
 
@@ -314,8 +334,8 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerUserProfile(newFormData);
-        const result = await login(response.email, response.password);        
-        
+        const result = await login(response.email, userData.password);
+
         if (result.success) {
             window.location.href = (`/Community_Feed/`);
         }
@@ -620,21 +640,41 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         workDescription: ''
     });
 
-    //Lista de opciones de los selects
-    const stateOptions = [
-        'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
-    ];
-    const cityOptions = {
-        'San José': ['San José', 'Escazú'],
-        'Alajuela': ['Alajuela', 'San Carlos'],
-        'Cartago': ['Cartago', 'Paraíso'],
-        'Heredia': ['Heredia', 'Barva'],
-        'Guanacaste': ['Liberia', 'Santa Cruz'],
-        'Puntarenas': ['Puntarenas', 'Esparza'],
-        'Limón': ['Limón', 'Guápiles']
-    };
+    const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
-    const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
+    const [availableCities, setAvailableCities] = useState([]);
+
+    //Lista de opciones de los selects
+    const stateOptions = provincias ? Object.values(provincias) : [];
+    //console.log(provincias);
+
+    const provinceIdMap = {
+        'San José': '1',
+        'Alajuela': '2',
+        'Cartago': '3',
+        'Heredia': '4',
+        'Guanacaste': '5',
+        'Puntarenas': '6',
+        'Limón': '7'
+    };
+
+    useEffect(() => {
+        const fetchCities = async (provinceId) => {
+            try {
+                const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                const data = await response.json();
+                const citiesArray = data ? Object.values(data) : [];
+                setAvailableCities(citiesArray);
+                //console.log(citiesArray);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
+        };
+        if (selectedProvince) {
+            const provinceId = provinceIdMap[selectedProvince];
+            fetchCities(provinceId);
+        }
+    }, [selectedProvince]);
 
     //Maneja los selects, y actualiza la lista de ciudades respecto a la provincia
     const handleSelectChange = (e) => {
@@ -645,7 +685,6 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         });
         if (name === 'province') {
             setSelectedProvince(value);
-            setAvailableCities(cityOptions[value] || []);
         }
     };
 
@@ -715,11 +754,11 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
         Object.keys(updatedUserData).forEach((key) => {
             newFormData.append(key, updatedUserData[key]);
-        });        
+        });
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerWorkProfile(newFormData);
-        const result = await login(response.email, response.password);
+        const result = await login(response.email, userData.password);
 
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
@@ -736,7 +775,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
     return (
         <form className={`relative w-1/2 items-center justify-center md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
-            <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Registrar Empresa</h1>
+            <h1 className="text-5xl font-medium sm:text-2xl md:mt-32 md:-mb-3">Registrar Empresa</h1>
 
             {/* Formulario */}
             <div className="flex flex-col gap-2 my-10 sm:my-5">
@@ -763,11 +802,23 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                         />
                     </div>
 
-                    <div className="flex flex-col  w-1/2 gap-2 sm:gap-1">
+                    <div className="flex flex-col w-1/2 gap-2 sm:gap-1">
                         <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                         <FormSelect id="company_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
 
+                </div>
+                <div className="flex gap-2">
+                    <div className="flex flex-col w-1/2 gap-2">
+                        <FormSelect id="company_state" name="province" title="Categorias" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    </div>
+                    <div className="flex flex-col w-1/2 gap-2">
+                        <FormSelect id="company_state" name="province" title="Habilidades" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    </div>
                 </div>
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
                 <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />

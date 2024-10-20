@@ -1,12 +1,15 @@
 import '../../index.css'
 import { useState } from 'react';
 import { SecondaryButton } from '../ui/Buttons'
+import { useNavigate } from 'react-router-dom';
 export function Community_Search() {
     const [searchTerm, setSearchTerm] = useState('');
 
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
-        event.preventDefault();
-        console.log('Form submitted, searched for:', searchTerm);
+        event.preventDefault();    
+        navigate(`/profiles/${searchTerm}`);
     };
 
     return (

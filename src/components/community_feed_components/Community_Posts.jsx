@@ -36,7 +36,7 @@ export function Community_Posts() {
               <CardPost
                 key={post.postId}
                 postId={post.postId}
-                imageUrl={post.postImageUrl === "ND" ? "/images/placeholder.jpg" : post.postImageUrl}
+                imageUrl={post.postImageUrl}
                 description={post.contentPost}
                 likesCount={post.likesCount}
                 commentsCount={post.commentsCount}

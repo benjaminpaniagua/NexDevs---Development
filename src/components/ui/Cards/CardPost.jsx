@@ -310,8 +310,12 @@ export function CardPost({
         {/* Post Picture */}
         <div className="rounded-lg overflow-hidden">
           <img
-            className="aspect-[4/3] object-cover"
-            src={imageUrl}
+            className="aspect-[4/3] w-full h-full object-cover"
+            src={
+              imageUrl === "ND" || imageUrl === "default_image_url"
+                ? "/images/placeholder.jpg"
+                : imageUrl
+              }
             alt="Post_Image"
           />
         </div>
@@ -333,7 +337,11 @@ export function CardPost({
             {/* Autor */}
             <div className="flex cursor-pointer">
               <img
-                src="/images/Profile_Placeholder.png"
+                src={
+                  profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
+                    ? "/images/default_profile_picture.jpg"
+                    : profilePictureUrl
+                  }
                 alt="Foto de perfil"
                 className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
               />
@@ -384,7 +392,11 @@ export function CardPost({
               <div className="flex items-center">
                 <div className="h-9 w-9 bg-gray-300 rounded-full flex items-center justify-center">
                   <img
-                    src="/images/Profile_Placeholder.png"
+                    src={
+                      profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
+                        ? "/images/default_profile_picture.jpg"
+                        : profilePictureUrl
+                      }
                     alt="Foto de perfil"
                     className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
                   />
@@ -397,10 +409,14 @@ export function CardPost({
                 {ICONS.close}
               </button>
             </div>
-            <div className="rounded-lg overflow-hidden w-fit">
+            <div className="rounded-lg overflow-hidden">
               <img
-                className="w-fit max-w-full "
-                src={imageUrl || "/images/placeholder.jpg"}
+                className="aspect-[4/3] w-full h-full mb-5"
+                src={
+                  imageUrl === "ND" || imageUrl === "default_image_url"
+                    ? "/images/placeholder.jpg"
+                    : imageUrl
+                  }
                 alt="Post_Image"
               />
             </div>
