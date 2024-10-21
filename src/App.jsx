@@ -22,6 +22,7 @@ import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Services from "./components/pages/Services.jsx";
 import FaqPage from "./components/pages/FaqPage.jsx";
 import CreatePost from "./components/pages/CreatePost.jsx";
+import { EditCollection } from "./components/pages/editCollection.jsx";
 
 const MainApp = () => {
   useScrollToTop();
@@ -47,6 +48,7 @@ const MainApp = () => {
           <Route path="/post" element={<Modal_Post />} />
           <Route path="/posts" element={<Posts_List />} />
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/editCollection/:userId" element={<EditCollection />} />
 
           {/* Footer routes */}
           <Route path="/about-us" element={<AboutUs />} />

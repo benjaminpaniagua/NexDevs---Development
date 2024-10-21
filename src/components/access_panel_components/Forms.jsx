@@ -791,6 +791,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         setTermsAccepted(e.target.checked);
     };
 
+    const [categoryisEqual, setCategoryIsEqual] = useState(false);
+    const [skillisEqual, setSkillIsEqual] = useState(false);
+
     //Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -810,8 +813,12 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         const sk3 = Number(skill3);
 
         if (cat1 === cat2 || cat2 === cat3 || cat3 === cat1) {
-            setCategoryIsEqual(true);
-            return;
+            if (cat2 === 0 || cat3 === 0) {
+                setCategoryIsEqual(false);
+            } else {
+                setCategoryIsEqual(true);
+                return;
+            }
         } else {
             setCategoryIsEqual(false);
         }
@@ -858,7 +865,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             }
     
             if (categoryForm.category3) {
-                if (categoryForm.category2 === "57") {
+                if (categoryForm.category3 === "57") {
                 } else {
                     await addCategories({
                         WorkId: response.workId,
@@ -877,7 +884,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             if (skillForm.skill2) {
                 await addSkills({
                     WorkId: response.workId,
-                    id: skillForm.skill2,
+                    SkillId: skillForm.skill2,
                 });
             }
     
@@ -974,6 +981,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
             {/* Error */}
             {error && <p className="text-red-500 font-bold mt-5">{message}</p>}
+            {/* Equals */}
+            {skillisEqual && <p className="text-red-500 font-bold mt-5">Las habilidades no pueden ser iguales</p>}
+            {categoryisEqual && <p className="text-red-500 font-bold mt-5">Las categorías no pueden ser iguales</p>}
 
             {/* Modal de terminos y condiciones */}
             {showModal && (
