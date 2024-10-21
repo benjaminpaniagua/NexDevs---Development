@@ -73,6 +73,7 @@ export function Posts_List() {
                 commentsCount={post.commentsCount}
                 userName={post.workProfile?.name}
                 profilePictureUrl={post.workProfile?.profilePictureUrl}
+                workId={post.workProfile?.workId}
               />
             ))
           ) : (

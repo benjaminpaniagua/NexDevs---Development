@@ -17,7 +17,7 @@ export function WorkUserEdit() {
     //const [isOwner, setIsOwner] = useState(false);
     const { userData, loading, error } = useFetchWorkUserData();
     const { userId } = useParams();
-    const { editProfile, editError } = useEditWorkProfile();
+    const { editProfile, editLoading, editError } = useEditWorkProfile();
 
     const [previewImage, setPreviewImage] = useState(null);
     const defaultImage = '/images/default_profile_picture.jpg';
@@ -249,6 +249,7 @@ export function WorkUserEdit() {
                     </div>
 
                     {editError && <p className="text-red-500 flex justify-center mt-2">{editError}</p>}
+                    {editLoading && <p className="text-clr-green text-fs-med flex justify-center mt-2">Cargando...</p>}
 
                     <div className='mx-auto flex gap-5 mb-5'>
                         <Link to={'/workprofile/' + userData.workId}>
