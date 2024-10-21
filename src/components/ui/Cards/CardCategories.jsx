@@ -7,7 +7,11 @@ const CardCategories = ({ title, imageUrl, onClick }) => {
       onClick={onClick}
     >
       <img
-        src={imageUrl}
+        src={
+          imageUrl === "ND" || imageUrl === "default_image_url"
+            ? "/images/categories/aire-acondicionado.jpg"
+            : imageUrl
+        }
         alt={title}
         className="w-full h-40 object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-100"
       />

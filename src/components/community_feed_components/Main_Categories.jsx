@@ -48,7 +48,7 @@ export function Main_Categories() {
                                     <Card
                                         key={category.categoryId}
                                         title={category.categoryName}
-                                        imageUrl="/images/categories/aire-acondicionado.jpg"
+                                        imageUrl={category.categoryImageUrl}
                                         onClick={() => handleCardClick(category.categoryName)}
                                     />
                                 ))}

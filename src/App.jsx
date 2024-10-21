@@ -7,6 +7,7 @@ import { Landing_Page } from './components/pages/Landing_Page.jsx';
 import { Access_Panel } from './components/pages/Access_Panel.jsx';
 import { Work_Profiles } from './components/pages/Work_Profiles.jsx';
 import { WorkUserEdit } from "./components/pages/WorkUserEdit.jsx";
+import { NormalUserEdit } from "./components/pages/NormalUserEdit.jsx";
 import Categories_Page from './components/pages/Categories_Page.jsx';
 import { Community_Feed } from './components/pages/Community_Feed.jsx';
 import { Error_404, Error_503 } from './components/pages/Errors.jsx';
@@ -39,6 +40,7 @@ const MainApp = () => {
           <Route path="/profiles/:search" element={<Profiles_List />} />
           <Route path="/workProfile/:userId" element={<Work_Profiles />} />
           <Route path="/WorkUserEdit/:userId" element={<WorkUserEdit />} />
+          <Route path="/UserEdit/:userId" element={<NormalUserEdit />} />
           <Route path="/community_feed/" element={<Community_Feed />} />
           <Route path="*" element={<Error_404 />} />
           <Route path="/error503" element={<Error_503 />} />

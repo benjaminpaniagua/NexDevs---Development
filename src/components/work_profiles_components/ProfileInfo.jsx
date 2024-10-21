@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export function ProfileInfo({ users, loading, isOwner }) {
   const { token } = useAuth();
-  console.log(users, "users");
+  //console.log(users, "users");
 
 
   const renderProfilePicture = () => {

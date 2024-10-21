@@ -6,33 +6,32 @@ import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { FormInput, FormSelect, FormTextArea } from '../ui/FormInput.jsx';
-import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons';
-import { useEditWorkProfile } from '../../hooks/EditProfile/useEditWorkProfile.js';
+import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons.jsx';
+import { useEditNormalUser } from '../../hooks/EditProfile/useEditNormalProfile.js';
 import { Link } from 'react-router-dom';
 import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';
-import { use } from 'framer-motion/client';
 
-export function WorkUserEdit() {
+export function NormalUserEdit() {
     const navigate = useNavigate();
     //const [isOwner, setIsOwner] = useState(false);
     const { userData, loading, error } = useFetchWorkUserData();
     const { userId } = useParams();
-    const { editProfile, editError } = useEditWorkProfile();
+    const { editProfile, editError } = useEditNormalUser();
 
     const [previewImage, setPreviewImage] = useState(null);
     const defaultImage = '/images/default_profile_picture.jpg';
 
     const [formData, setFormData] = useState({
-        workId: userData.workId,
-        name: userData.name,
+        userId: userData.userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
         email: userData.email,
-        number: userData.number,
         password: userData.password,
         province: userData.province,
         city: userData.city,
-        workDescription: userData.workDescription,
+        bio: userData.bio,
         profilePictureUrl: userData.profilePictureUrl,
-        profileType: 'W',
+        profileType: 'U',
     });
 
     const handleImageChange = (e) => {
@@ -49,16 +48,6 @@ export function WorkUserEdit() {
             reader.readAsDataURL(file);
         }
     };
-
-    const handleNumberChange = (e) => {
-        const { name, value } = e.target;
-        if (/^\d*$/.test(value)) {
-            setFormData({
-                ...formData,
-                [name]: value
-            });
-        }
-    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -114,29 +103,30 @@ export function WorkUserEdit() {
         }
     };
 
+
     if (error) {
         navigate('/error503');
     }
 
     useEffect(() => {
         if (!loading) {
-            if (userData.profileType == "U") {
-                window.location.href = '/UserEdit/' + userData.userId;
+            if (userData.profileType == "W") {
+                window.location.href = '/WorkUserEdit/' + userData.workId;
             }
-            else if (userData.workId == userId) {
+            else if(userData.userId == userId) {
                 //console.log("Is owner");
                 //console.log(userData);
                 setFormData({
-                    workId: userData.workId,
-                    name: userData.name,
+                    userId: userData.userId,
+                    firstName: userData.firstName,
+                    lastName: userData.lastName,
                     email: userData.email,
-                    number: userData.number,
                     password: userData.password,
                     province: userData.province,
                     city: userData.city,
-                    workDescription: userData.workDescription,
+                    bio: userData.bio,
                     profilePictureUrl: userData.profilePictureUrl,
-                    profileType: 'W',
+                    profileType: 'U',
                 });
                 if (userData.profilePictureUrl !== "ND" && userData.profilePictureUrl !== "default_image_url") {
                     setPreviewImage(userData.profilePictureUrl);
@@ -158,8 +148,8 @@ export function WorkUserEdit() {
                     fetchCities(provinceId);
                 }
             }
-            else if (userData.workId !== userId) {
-                window.location.href = '/WorkUserEdit/' + userData.workId;
+            else if (userData.userId !== userId) {
+                window.location.href = '/UserEdit/' + userData.userId;
             }
         }
     }, [userData, loading]);
@@ -182,15 +172,14 @@ export function WorkUserEdit() {
             newFormData.append('profilePictureUrl', userData.profilePictureUrl);
         }
 
-                /*for (let pair of newFormData.entries()) {
+        /*for (let pair of newFormData.entries()) {
             console.log(pair[0] + ': ' + pair[1]);
         }*/
-
 
         const result = await editProfile(newFormData);
         if (result.success) {
             console.log('Perfil editado con éxito', result);
-            window.location.href = '/workprofile/' + userData.workId;
+            window.location.href = '/Community_Feed/';
         } else if (editError) {
             console.error('Error al editar el perfil', editError);
         }
@@ -232,26 +221,26 @@ export function WorkUserEdit() {
                     <div className='flex justify-center gap-4'>
                         {/* Profile Info */}
                         <div className="flex flex-col w-1/3 mt-10 gap-2">
-                            <FormInput id="company_name" type="text" name="name" title="Nombre de la Empresa" minLength={0} value={formData.name} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
-                            <FormInput id="company_email" type="email" name="email" title="Email" minLength={0} value={formData.email} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
-                            <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
+                            <FormInput id={"user_firstname"} type="text" name="firstName" title="Nombre" minLength={0} value={formData.firstName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
+                            <FormInput id={"user_lastName"} type="text" name="lastName" title="Apellidos" minLength={0} value={formData.lastName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
+                            <FormInput id={"user_email"} type="email" name="email" title="Email" minLength={0} value={formData.email} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                         </div>
 
                         <div className="flex flex-col mt-10 w-1/3 gap-2">
-                            <FormSelect id="company_state" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                            <FormSelect id="company_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
+                            <FormSelect id="user_province" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                            <FormSelect id="user_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                         </div>
                         {/* Profile Info */}
                     </div>
 
                     <div className="flex flex-col w-1/2 mx-auto mt-5">
-                        <FormTextArea id="company_description" name="workDescription" title="Descripción" minLength={0} maxLength={450} value={formData.workDescription} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
+                        <FormTextArea id="user_bio" name="bio" title="Biografía" minLength={0} value={formData.bio} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
                     </div>
 
                     {editError && <p className="text-red-500 flex justify-center mt-2">{editError}</p>}
 
                     <div className='mx-auto flex gap-5 mb-5'>
-                        <Link to={'/workprofile/' + userData.workId}>
+                        <Link to={-1}>
                             <MainButton id="back" type="button" text="Regresar" extraStyles="mt-8 p-2" />
                         </Link>
                         <MainButton id="save" type="submit" text="Guardar" extraStyles="mt-8 p-2" />

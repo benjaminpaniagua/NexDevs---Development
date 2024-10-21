@@ -27,6 +27,9 @@ export function Work_Profiles() {
         if (userData.workId == userId) {
             setIsOwner(true);
         }
+        if (!users) {
+            navigate('/error404');
+        }
     }, [userData]);
 
     return (
