@@ -88,6 +88,9 @@ export function Modal_Profile({ onClose }) {
         if (userData.profileType === 'U') {
             return (
                 <div className="flex gap-5 justify-center transition-all duration-500 items-center my-8">
+                    <Link to={`/UserEdit/${userData.userId}`}>
+                        <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
+                    </Link>
                 </div>
             )
         }

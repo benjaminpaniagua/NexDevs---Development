@@ -287,7 +287,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
                 setPreviewImage(reader.result);
             };
             reader.readAsDataURL(file);
-            console.log(profileImage);
+            //console.log(profileImage);
         }
     };
 
@@ -332,6 +332,10 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
             newFormData.append(key, updatedUserData[key]);
         });
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
+
+        /*for (let pair of newFormData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }*/
 
         const response = await registerUserProfile(newFormData);
         const result = await login(response.email, userData.password);
