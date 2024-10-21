@@ -60,7 +60,7 @@ export function ProfileInfo({ users, loading, isOwner }) {
   );
 
   const renderAboutMe = () => (
-    <div className="flex flex-col gap-2 mt-5 h-28">
+    <div className="flex flex-col gap-2 mt-5 h-32 md:h-auto">
       <h3 className="font-semibold text-lg ">Acerca de mí</h3>
       <p className="h-fit text-fs-med">{users.workDescription}</p>
       <div className="bg-clr-black w-full h-0.5 mx-auto rounded-lg mt-3" />

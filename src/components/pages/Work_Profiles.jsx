@@ -63,9 +63,9 @@ export function Work_Profiles() {
                             <ProfileInfo users={users} loading={loading} isOwner={isOwner} />
                         </div>
                         {/* Profile */}
-                        <div className="w-[50%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-5">
+                        <div className="w-[50%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-20">
                             {/* Mi coleccion */}
-                            <Collection />
+                            <Collection users={users} isOwner={isOwner}/>
                             {/* Mi coleccion */}
                             <div className="pt-4 flex md:flex-col md:gap-5 h-36">
                                 {/* Categories */}

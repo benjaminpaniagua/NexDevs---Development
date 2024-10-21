@@ -278,8 +278,12 @@ export function WorkUserEdit() {
         const sk3 = Number(skill3);
 
         if (cat1 === cat2 || cat2 === cat3 || cat3 === cat1) {
-            setCategoryIsEqual(true);
-            return;
+            if (cat2 === 0 || cat3 === 0) {
+                setCategoryIsEqual(false);
+            } else {
+                setCategoryIsEqual(true);
+                return;
+            }
         } else {
             setCategoryIsEqual(false);
         }

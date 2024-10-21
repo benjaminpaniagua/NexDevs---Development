@@ -1,5 +1,6 @@
 import { MainButton } from "../Buttons";
 import { ICONS } from "../ICONS";
+import { useFetchWorkProfileCategories } from "../../../hooks/WorkProfile/useFetchWorkProfileCategory";
 export function CardProfiles({
   image,
   name,
@@ -9,8 +10,12 @@ export function CardProfiles({
   city,
   number,
   email,
+  id,
   onClick,
 }) {
+  const { categories } = useFetchWorkProfileCategories({workID: id});
+  //console.log(categories);
+
   return (
     <>
       {/* Profile Card */}
@@ -30,7 +35,15 @@ export function CardProfiles({
           <div className="h-12 md:h-8">
             <h4 className="font-semibold">{name}</h4>
           </div>
-          <h5 className="text-black">Categorias</h5>
+          <div className="flex gap-2">
+          {categories.map((category) => (
+            <h6 className="text-black font-bold">
+              {category.categoryName.length > 12
+                ? category.categoryName.substring(0, 12) + "..." 
+                : category.categoryName}
+              </h6>
+          ))}
+          </div>
           <p className="text-black h-16 sm:h-fit text-fs-small lg:text-fs-small">
             {biography.length > 120
               ? biography.substring(0, 120) + "..."
