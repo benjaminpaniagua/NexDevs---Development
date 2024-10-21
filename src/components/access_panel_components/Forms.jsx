@@ -12,7 +12,9 @@ import { Terms } from "./Terms_Modal";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
 import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
+import { useAddSkills } from "../../hooks/Access_Panel/useAddSkills";
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -623,6 +625,8 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const [isAnimating, setIsAnimating] = useState(false);
     const navigate = useNavigate();
     const { registerWorkProfile, loading, error, message } = useRegisterWorkProfile();
+    const { addCategories } = useAddCategories()
+    const { addSkills } = useAddSkills()
     const { login } = useLogin()
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [showModal, setShowModal] = useState(false);
@@ -684,7 +688,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     }));
 
     const skillList = skills.map(skill => ({
-        id: skill.skillId,
+        id: skill.id,
         name: skill.skillName
     }));
 
@@ -793,8 +797,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             return;
         }
 
-        console.log(categoryForm);
-        /*const updatedUserData = {
+        //console.log(categoryForm);
+        //console.log(skillForm);
+        const updatedUserData = {
             ...userData,
             ...formData,
             profileType: 'W',
@@ -808,11 +813,54 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerWorkProfile(newFormData);
+
+        if (categoryForm.category1) {
+            await addCategories({
+                WorkId: response.workId,
+                CategoryId: categoryForm.category1,
+            });
+        }
+        
+        if (categoryForm.category2) {
+            await addCategories({
+                WorkId: response.workId,
+                CategoryId: categoryForm.category2,
+            });
+        }
+        
+        if (categoryForm.category3) {
+            await addCategories({
+                WorkId: response.workId,
+                CategoryId: categoryForm.category3,
+            });
+        }
+
+        if (skillForm.skill1) {
+            await addSkills({
+                WorkId: response.workId,
+                SkillId: skillForm.skill1,
+            });
+        }
+        
+        if (skillForm.skill2) {
+            await addSkills({
+                WorkId: response.workId,
+                id: skillForm.skill2,
+            });
+        }
+        
+        if (skillForm.skill3) {
+            await addSkills({
+                WorkId: response.workId,
+                SkillId: skillForm.skill3,
+            });
+        }
+
         const result = await login(response.email, userData.password);
 
-        if (result.success) {
+        if (result.success) {     
             window.location.href = (`/workProfile/${response.workId}`);
-        }*/
+        }
     };
 
     const openModal = () => {
