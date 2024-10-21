@@ -25,6 +25,7 @@ export default function CreatePost() {
   const [contentPost, setContentPost] = useState("");
   const { createPost } = useCreatePost();
   const [postImageUrl, setPostImageUrl] = useState("");
+  const [paymentReceipt, setPaymentReceipt] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
@@ -37,27 +38,27 @@ export default function CreatePost() {
     <ol className="list-decimal list-inside space-y-7 md:space-y-3 md:text-fs-med">
       <li>
         <strong>Monto a Pagar</strong> <br /> El costo de la publicación es de
-        500 colones
+        500 colones.
       </li>
       <li>
         <strong>Método de Pago</strong> <br /> Realiza el pago mediante Sinpe
-        Móvil al número 00000000
+        Móvil al número 00000000.
       </li>
       <li>
-        <strong>Subir Comprobante</strong> <br /> Una vez realizado el pago, es
-        obligatorio subir el comprobante como parte del proceso de solicitud de
-        publicación
+        <strong>Ingresar número de Comprobante</strong> <br /> Una vez realizado
+        el pago, es obligatorio ingresar el número de comprobante como parte del
+        proceso de solicitud de publicación.
       </li>
       <li>
-        <strong>Revisión de Publicación</strong> <br /> Después de subir el
-        comprobante, uno de nuestros administradores revisará tanto el pago como
-        la publicación para asegurarse de que todo esté en orden
+        <strong>Revisión de Publicación</strong> <br /> Después de ingresar el
+        número de comprobante, uno de nuestros administradores revisará tanto el
+        pago como la publicación para asegurarse de que todo esté en orden.
       </li>
       <li>
         <strong>Tiempo de Aprobación</strong> <br /> La aprobación de la
         publicación puede tardar entre uno a dos días. Una vez aprobada, tu
-        publicación aparecerá en el feed. Si la publicación no es aprobada se
-        realizará la devolución del dinero
+        publicación aparecerá en el feed. Si la publicación no es aprobada, se
+        realizará la devolución del dinero.
       </li>
     </ol>
   );
@@ -66,41 +67,51 @@ export default function CreatePost() {
     const file = e.target.files[0];
     setPostImageUrl(file);
     if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setSelectedFile(reader.result);
-        };
-        reader.readAsDataURL(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedFile(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
-};
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  if (!contentPost) {
-    const errorAlert = {
-      show: true,
-      type: "error",
-      message: "Por favor, ingresa el contenido de tu publicación.",
-    };
-    setAlert(errorAlert);
-    return;
-  }
+    if (!contentPost) {
+      const errorAlert = {
+        show: true,
+        type: "error",
+        message: "Por favor, ingresa el contenido de tu publicación.",
+      };
+      setAlert(errorAlert);
+      return;
+    }
 
-  if (!selectedFile) {
-    const errorAlert = {
-      show: true,
-      type: "error",
-      message: "Por favor, selecciona una imagen para tu publicación.",
-    };
-    setAlert(errorAlert);
-    return;
-  }
+    if (!selectedFile) {
+      const errorAlert = {
+        show: true,
+        type: "error",
+        message: "Por favor, selecciona una imagen para tu publicación.",
+      };
+      setAlert(errorAlert);
+      return;
+    }
+
+    if (!paymentReceipt) {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "Por favor, ingresa el número de comprobante.",
+      });
+      return;
+    }
 
     const formData = new FormData();
     formData.append("contentPost", contentPost);
     formData.append("workId", userData.workId);
     formData.append("createAt", new Date().toISOString());
     formData.append("postImageUrl", postImageUrl);
+    formData.append("paymentReceipt", paymentReceipt);
 
     const response = await createPost(formData);
     if (response) {
@@ -112,7 +123,7 @@ export default function CreatePost() {
       setAlert(successAlert);
       setTimeout(() => {
         navigate(-1);
-      }, 2500); 
+      }, 2500);
     }
   };
 
@@ -156,20 +167,21 @@ export default function CreatePost() {
                 onChange={(e) => setContentPost(e.target.value)}
               />
             </div>
-            <div>
-              <div className="flex mt-6 gap-2">
-                <label
-                  htmlFor="receipt"
-                  className="content-center sm:text-fs-med rounded border-black border-solid border-[1px] w-full px-3"
-                >
-                  Comprobante de pago
-                </label>
-                <SecondaryButton
-                  text="Adjuntar"
-                  extraStyles={"px-12 py-2"}
-                  Adjuntar
-                />
-              </div>
+            <div className="flex flex-col mt-6">
+              <label>Número de Comprobante</label>
+              <input
+                type="text"
+                className="h-12 border bg-clr-white border-black rounded p-1"
+                value={paymentReceipt}
+                onChange={(e) => {
+                  const newValue = e.target.value
+                    .replace(/[^0-9]/g, "")
+                    .slice(0, 8);
+                  setPaymentReceipt(newValue);
+                }}
+                maxLength={8}
+                minLength={8}
+              />
             </div>
             <div className="flex justify-end space-x-4 mt-12">
               <SecondaryButtonOutline
