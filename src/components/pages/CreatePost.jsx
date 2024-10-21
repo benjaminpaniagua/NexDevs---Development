@@ -75,6 +75,27 @@ export default function CreatePost() {
 };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+  if (!contentPost) {
+    const errorAlert = {
+      show: true,
+      type: "error",
+      message: "Por favor, ingresa el contenido de tu publicación.",
+    };
+    setAlert(errorAlert);
+    return;
+  }
+
+  if (!selectedFile) {
+    const errorAlert = {
+      show: true,
+      type: "error",
+      message: "Por favor, selecciona una imagen para tu publicación.",
+    };
+    setAlert(errorAlert);
+    return;
+  }
+
     const formData = new FormData();
     formData.append("contentPost", contentPost);
     formData.append("workId", userData.workId);
