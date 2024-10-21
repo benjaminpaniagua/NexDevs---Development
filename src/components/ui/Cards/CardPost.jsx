@@ -6,9 +6,11 @@ import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { h1 } from "framer-motion/client";
 
 export function CardPost({
   postId,
+  workId,
   title,
   imageUrl,
   description,
@@ -315,7 +317,7 @@ export function CardPost({
               imageUrl === "ND" || imageUrl === "default_image_url"
                 ? "/images/placeholder.jpg"
                 : imageUrl
-              }
+            }
             alt="Post_Image"
           />
         </div>
@@ -335,21 +337,22 @@ export function CardPost({
           {/* Bottom */}
           <div className="flex">
             {/* Autor */}
-            <div className="flex cursor-pointer">
-              <img
-                src={
-                  profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
-                    ? "/images/default_profile_picture.jpg"
-                    : profilePictureUrl
+            <Link to={`/workprofile/${workId}`}>
+              <div className="flex cursor-pointer">
+                <img
+                  src={
+                    profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
+                      ? "/images/default_profile_picture.jpg"
+                      : profilePictureUrl
                   }
-                alt="Foto de perfil"
-                className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
-              />
-              <h5 className="ml-2 text-clr-black font-bold flex items-center sm:text-fs-small">
-                {userName}
-              </h5>
-            </div>
-
+                  alt="Foto de perfil"
+                  className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
+                />
+                <h5 className="ml-2 text-clr-black font-bold flex items-center sm:text-fs-small">
+                  {userName}
+                </h5>
+              </div>
+            </Link>
             {/* Icons */}
             {/* Íconos */}
             <section className="flex gap-3 xs:gap-2 items-center ml-auto">
@@ -365,7 +368,7 @@ export function CardPost({
                 </h4>
               </div>
               <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110">
+                <button className="transition-all hover:scale-110" onClick={openModal}>
                   {ICONS.comment}
                 </button>
                 <h4 className="text-clr-black font-bold">{commentsCount}</h4>
@@ -385,24 +388,26 @@ export function CardPost({
       {showModal && (
         <div
           className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
-          // onClick={handleOutsideClick}
+        // onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
             <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
-              <div className="flex items-center">
-                <div className="h-9 w-9 bg-gray-300 rounded-full flex items-center justify-center">
-                  <img
-                    src={
-                      profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
-                        ? "/images/default_profile_picture.jpg"
-                        : profilePictureUrl
+              <Link to={`/workprofile/${workId}`}>
+                <div className="flex items-center">
+                  <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center">
+                    <img
+                      src={
+                        profilePictureUrl === "ND" || profilePictureUrl === "default_image_url"
+                          ? "/images/default_profile_picture.jpg"
+                          : profilePictureUrl
                       }
-                    alt="Foto de perfil"
-                    className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
-                  />
+                      alt="Foto de perfil"
+                      className="aspect-square rounded-full border-2 border-white object-cover"
+                    />
+                  </div>
+                  <h3 className="text-fs-large font-bold ml-3">{userName}</h3>
                 </div>
-                <h3 className="text-fs-large font-bold ml-3">{userName}</h3>
-              </div>
+              </Link>
 
               {/* Botón para cerrar el modal */}
               <button onClick={closeModal} className="text-black">
@@ -416,7 +421,7 @@ export function CardPost({
                   imageUrl === "ND" || imageUrl === "default_image_url"
                     ? "/images/placeholder.jpg"
                     : imageUrl
-                  }
+                }
                 alt="Post_Image"
               />
             </div>
@@ -447,28 +452,51 @@ export function CardPost({
               <div className="mt-2">
                 {comments.length > 0 ? (
                   comments
-                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt)) // Ordenar por fecha de creación
+                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
                     .map((comment) => (
                       <div
                         key={comment.commentId}
                         className="border-b border-gray-200 py-2"
                       >
-                        <div className="flex items-center">
-                          <img
-                            src={
-                              comment.profilePictureUrlUser === "ND" ||
-                              !comment.profilePictureUrlUser
-                                ? "/images/Profile_Placeholder.png"
-                                : comment.profilePictureUrlUser
-                            }
-                            alt="Foto de perfil"
-                            className="w-8 h-8 rounded-full mr-2"
-                          />
-                          <h5 className="font-bold">
-                            {comment.firstName}{" "}
-                            {comment.lastName || comment.name || ""}
-                          </h5>
-                        </div>
+                        {comment.workId && (
+                          <Link to={`/workprofile/${comment.workId}`}>
+                            <div className="flex items-center">
+                              <img
+                                src={
+                                  comment.profilePictureUrlWorker === "ND" ||
+                                    !comment.profilePictureUrlWorker
+                                    ? "/images/default_profile_picture.jpg"
+                                    : comment.profilePictureUrlWorker
+                                }
+                                alt="Foto de perfil"
+                                className="w-8 h-8 rounded-full mr-2"
+                              />
+                              <h5 className="font-bold">
+                                {comment.firstName}{" "}
+                                {comment.lastName || comment.name || ""}
+                              </h5>
+                            </div>
+                          </Link>
+                        )}
+
+                        {comment.userId && (
+                          <div className="flex items-center">
+                            <img
+                              src={
+                                comment.profilePictureUrlUser === "ND" ||
+                                  !comment.profilePictureUrlUser
+                                  ? "/images/Profile_Placeholder.png"
+                                  : comment.profilePictureUrlUser
+                              }
+                              alt="Foto de perfil"
+                              className="w-8 h-8 rounded-full mr-2"
+                            />
+                            <h5 className="font-bold">
+                              {comment.firstName}{" "}
+                              {comment.lastName || comment.name || ""}
+                            </h5>
+                          </div>
+                        )}
                         <p>{comment.contentComment}</p>
                       </div>
                     ))
