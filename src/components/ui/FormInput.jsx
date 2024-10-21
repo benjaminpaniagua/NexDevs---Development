@@ -31,3 +31,21 @@ export function FormSelect({ name, title, value, onChange, options, className, i
         </>
     );
 }
+
+export function FormSelectSpecial({ name, title, value, onChange, options, className, id, type, required }) {
+    return (
+        <>
+            <label className="text-fs-small">{title}</label>
+            <select id={id} name={name} value={value} onChange={onChange} required={required} className={className}>
+                <option value="" disabled hidden>
+                    Seleccione una {type}
+                </option>
+                {options.map((option, index) => (
+                    <option key={index} value={option.id}>
+                        {option.name}
+                    </option>
+                ))}
+            </select>
+        </>
+    );
+}

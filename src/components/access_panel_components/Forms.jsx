@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../index.css'
-import { FormInput, FormSelect, FormTextArea } from "../ui/FormInput";
+import { FormInput, FormSelect, FormTextArea, FormSelectSpecial } from "../ui/FormInput";
 import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
@@ -11,6 +11,8 @@ import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } fro
 import { Terms } from "./Terms_Modal";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
 import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
+import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useFetchSkills } from "../../hooks/useFetchSkills";
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -644,6 +646,48 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         workDescription: ''
     });
 
+    const [categoryForm, setCategoryForm] = useState({
+        category1: '',
+        category2: '',
+        category3: '',
+    });
+
+    const [skillForm, setSkillForm] = useState({
+        skill1: '',
+        skill2: '',
+        skill3: '',
+    });
+
+    const handleCategoryChange = (event) => {
+        const { name, value } = event.target;
+        setCategoryForm(prevForm => ({
+          ...prevForm,
+          [name]: value
+        }));
+      };
+
+    const handleSkillChange = (event) => {
+        const { name, value } = event.target;
+        setSkillForm(prevForm => ({
+          ...prevForm,
+          [name]: value
+        }));
+      };
+
+    const {categories} = useFetchCategories();
+
+    const { skills } = useFetchSkills();
+
+    const categoryList = categories.map(category => ({
+        id: category.categoryId,
+        name: category.categoryName
+    }));
+
+    const skillList = skills.map(skill => ({
+        id: skill.skillId,
+        name: skill.skillName
+    }));
+
     const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
     const [availableCities, setAvailableCities] = useState([]);
@@ -748,7 +792,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             alert("Debes aceptar los términos y condiciones");
             return;
         }
-        const updatedUserData = {
+
+        console.log(categoryForm);
+        /*const updatedUserData = {
             ...userData,
             ...formData,
             profileType: 'W',
@@ -766,7 +812,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
 
         if (result.success) {
             window.location.href = (`/workProfile/${response.workId}`);
-        }
+        }*/
     };
 
     const openModal = () => {
@@ -814,14 +860,14 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                 </div>
                 <div className="flex gap-2">
                     <div className="flex flex-col w-1/2 gap-2">
-                        <FormSelect id="company_state" name="province" title="Categorias" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelectSpecial id="company_category1" name="category1" title="Categorías" type="Categoría" required={true} value={categoryForm.category1} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                        <FormSelectSpecial id="company_category2" name="category2" title="" type="Categoría" required={false} value={categoryForm.category2} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                        <FormSelectSpecial id="company_category3" name="category3" title="" type="Categoría" required={false} value={categoryForm.category3} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
                     </div>
                     <div className="flex flex-col w-1/2 gap-2">
-                        <FormSelect id="company_state" name="province" title="Habilidades" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
-                        <FormSelect id="company_state" name="province" title="" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
+                    <FormSelectSpecial id="company_category3" name="skill1" title="Habilidades" type="Habilidad" required={true} value={skillForm.skill1} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                    <FormSelectSpecial id="company_category3" name="skill2" title="" type="Habilidad" required={true} value={skillForm.skill2} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                    <FormSelectSpecial id="company_category3" name="skill3" title="" type="Habilidad" required={true} value={skillForm.skill3} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
                     </div>
                 </div>
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />

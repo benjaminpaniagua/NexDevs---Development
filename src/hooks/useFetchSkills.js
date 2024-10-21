@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from 'axios';
 
-export const useFetchCategories = () => {
-  const [categories, setCategories] = useState([]);
+export const useFetchSkills = () => {
+  const [skills, setSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
 
-    const fetchCategories = async () => {
+    const fetchSkills = async () => {
       try {
-        const response = await axios.get('https://localhost:7038/Categories/Listado', {
+        const response = await axios.get('https://localhost:7038/Skills/Listado', {
           cancelToken: source.token
         });
-        setCategories(response.data);
+        setSkills(response.data);
       } catch (err) {
 
         if (axios.isCancel(err)) {
@@ -27,12 +27,12 @@ export const useFetchCategories = () => {
       }
     };
 
-    fetchCategories();
+    fetchSkills();
     return () => {
       source.cancel('Solicitud Cancelada');
     };
   }, []);
 
-  return { categories, loading, error };
+  return { skills, loading, error };
 
 };
