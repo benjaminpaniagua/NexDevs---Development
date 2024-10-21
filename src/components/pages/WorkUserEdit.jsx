@@ -10,6 +10,7 @@ import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Butto
 import { useEditWorkProfile } from '../../hooks/EditProfile/useEditWorkProfile.js';
 import { Link } from 'react-router-dom';
 import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';
+import { use } from 'framer-motion/client';
 
 export function WorkUserEdit() {
     const navigate = useNavigate();
@@ -119,7 +120,10 @@ export function WorkUserEdit() {
 
     useEffect(() => {
         if (!loading) {
-            if (userData.workId == userId) {
+            if (userData.profileType == "U") {
+                window.location.href = '/UserEdit/' + userData.userId;
+            }
+            else if (userData.workId == userId) {
                 //console.log("Is owner");
                 //console.log(userData);
                 setFormData({
@@ -153,7 +157,8 @@ export function WorkUserEdit() {
                     const provinceId = provinceIdMap[selectedProvince];
                     fetchCities(provinceId);
                 }
-            } else if (userData.workId !== userId) {
+            }
+            else if (userData.workId !== userId) {
                 window.location.href = '/WorkUserEdit/' + userData.workId;
             }
         }

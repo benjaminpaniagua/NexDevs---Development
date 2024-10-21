@@ -27,11 +27,11 @@ export function CardProfiles({
 
         {/* Profile Info */}
         <div className=" flex flex-col gap-1 pt-2">
-          <div className="h-16">
+          <div className="h-12 md:h-8">
             <h4 className="font-semibold">{name}</h4>
           </div>
-          <h5 className="text-black">{category}</h5>
-          <p className="text-black h-16 sm:h-fit text-fs-med lg:text-fs-small">
+          <h5 className="text-black">Categorias</h5>
+          <p className="text-black h-16 sm:h-fit text-fs-small lg:text-fs-small">
             {biography.length > 120
               ? biography.substring(0, 120) + "..."
               : biography}

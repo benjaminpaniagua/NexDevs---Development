@@ -110,7 +110,10 @@ export function NormalUserEdit() {
 
     useEffect(() => {
         if (!loading) {
-            if (userData.userId == userId) {
+            if (userData.profileType == "W") {
+                window.location.href = '/WorkUserEdit/' + userData.workId;
+            }
+            else if(userData.userId == userId) {
                 //console.log("Is owner");
                 //console.log(userData);
                 setFormData({
@@ -144,8 +147,9 @@ export function NormalUserEdit() {
                     const provinceId = provinceIdMap[selectedProvince];
                     fetchCities(provinceId);
                 }
-            } else if (userData.workId !== userId) {
-                window.location.href = '/WorkUserEdit/' + userData.workId;
+            }
+            else if (userData.userId !== userId) {
+                window.location.href = '/UserEdit/' + userData.userId;
             }
         }
     }, [userData, loading]);
