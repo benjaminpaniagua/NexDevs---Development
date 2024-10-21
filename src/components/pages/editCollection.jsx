@@ -296,7 +296,12 @@ export function EditCollection() {
             <div>
                 <form className='flex flex-col mt-40 mx-auto px-20 max-w-[100rem] md:px-10 h-auto' onSubmit={handleSubmit}>
 
-                    <div className='grid grid-cols-2 sm:grid-cols-1 sm:gap-5 justify-items-center pt-2 gap-2'>
+                    <div className='flex flex-col justify-center items-center mb-5'>
+                        <h1>Tu Coleccion</h1>
+                        <h4>Añade imagenes que muestren tu trabajo</h4>
+                    </div>
+
+                    <div className='grid grid-cols-2 sm:grid-cols-1 sm:gap-5 justify-items-center pt-2 gap-5'>
                         {/*Coleccion 1 */}
                         <div className='relative rounded-md overflow-hidden'>
                             <img
