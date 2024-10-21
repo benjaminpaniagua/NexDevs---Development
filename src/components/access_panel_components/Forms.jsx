@@ -15,6 +15,7 @@ import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
 import { useAddSkills } from "../../hooks/Access_Panel/useAddSkills";
+import { useDeleteCategory } from '../../hooks/EditProfile/useDeleteCategory.js';
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -626,6 +627,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const navigate = useNavigate();
     const { registerWorkProfile, loading, error, message } = useRegisterWorkProfile();
     const { addCategories } = useAddCategories()
+    const { deleteCategory } = useDeleteCategory();
     const { addSkills } = useAddSkills()
     const { login } = useLogin()
     const [termsAccepted, setTermsAccepted] = useState(false);
@@ -665,20 +667,20 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
     const handleCategoryChange = (event) => {
         const { name, value } = event.target;
         setCategoryForm(prevForm => ({
-          ...prevForm,
-          [name]: value
+            ...prevForm,
+            [name]: value
         }));
-      };
+    };
 
     const handleSkillChange = (event) => {
         const { name, value } = event.target;
         setSkillForm(prevForm => ({
-          ...prevForm,
-          [name]: value
+            ...prevForm,
+            [name]: value
         }));
-      };
+    };
 
-    const {categories} = useFetchCategories();
+    const { categories } = useFetchCategories();
 
     const { skills } = useFetchSkills();
 
@@ -789,6 +791,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         setTermsAccepted(e.target.checked);
     };
 
+    const [categoryisEqual, setCategoryIsEqual] = useState(false);
+    const [skillisEqual, setSkillIsEqual] = useState(false);
+
     //Handle Submit
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -797,6 +802,34 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             return;
         }
 
+        const { category1, category2, category3 } = categoryForm;
+        const cat1 = Number(category1);
+        const cat2 = Number(category2);
+        const cat3 = Number(category3);
+
+        const { skill1, skill2, skill3 } = skillForm;
+        const sk1 = Number(skill1);
+        const sk2 = Number(skill2);
+        const sk3 = Number(skill3);
+
+        if (cat1 === cat2 || cat2 === cat3 || cat3 === cat1) {
+            if (cat2 === 0 || cat3 === 0) {
+                setCategoryIsEqual(false);
+            } else {
+                setCategoryIsEqual(true);
+                return;
+            }
+        } else {
+            setCategoryIsEqual(false);
+        }
+
+        if (sk1 === sk2 || sk2 === sk3 || sk3 === sk1) {
+            setSkillIsEqual(true);
+            return;
+        } else {
+            setSkillIsEqual(false);
+        }
+        
         //console.log(categoryForm);
         //console.log(skillForm);
         const updatedUserData = {
@@ -813,53 +846,60 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         newFormData.append('profilePictureUrl', profileImage || defaultImage);
 
         const response = await registerWorkProfile(newFormData);
+        if (response) {
+            if (categoryForm.category1) {
+                await addCategories({
+                    WorkId: response.workId,
+                    CategoryId: categoryForm.category1,
+                });
+            }
+    
+            if (categoryForm.category2) {
+                if (categoryForm.category2 === "57") {
+                } else {
+                    await addCategories({
+                        WorkId: response.workId,
+                        CategoryId: categoryForm.category2,
+                    });
+                }
+            }
+    
+            if (categoryForm.category3) {
+                if (categoryForm.category3 === "57") {
+                } else {
+                    await addCategories({
+                        WorkId: response.workId,
+                        CategoryId: categoryForm.category3,
+                    });
+                }
+            }
+    
+            if (skillForm.skill1) {
+                await addSkills({
+                    WorkId: response.workId,
+                    SkillId: skillForm.skill1,
+                });
+            }
+    
+            if (skillForm.skill2) {
+                await addSkills({
+                    WorkId: response.workId,
+                    SkillId: skillForm.skill2,
+                });
+            }
+    
+            if (skillForm.skill3) {
+                await addSkills({
+                    WorkId: response.workId,
+                    SkillId: skillForm.skill3,
+                });
+            }
+            
+            const result = await login(response.email, userData.password);
 
-        if (categoryForm.category1) {
-            await addCategories({
-                WorkId: response.workId,
-                CategoryId: categoryForm.category1,
-            });
-        }
-        
-        if (categoryForm.category2) {
-            await addCategories({
-                WorkId: response.workId,
-                CategoryId: categoryForm.category2,
-            });
-        }
-        
-        if (categoryForm.category3) {
-            await addCategories({
-                WorkId: response.workId,
-                CategoryId: categoryForm.category3,
-            });
-        }
-
-        if (skillForm.skill1) {
-            await addSkills({
-                WorkId: response.workId,
-                SkillId: skillForm.skill1,
-            });
-        }
-        
-        if (skillForm.skill2) {
-            await addSkills({
-                WorkId: response.workId,
-                id: skillForm.skill2,
-            });
-        }
-        
-        if (skillForm.skill3) {
-            await addSkills({
-                WorkId: response.workId,
-                SkillId: skillForm.skill3,
-            });
-        }
-
-        const result = await login(response.email, userData.password);
-
-        if (result.success) {     
-            window.location.href = (`/workProfile/${response.workId}`);
+            if (result.success) {
+                window.location.href = (`/workProfile/${response.workId}`);
+            }
         }
     };
 
@@ -908,14 +948,14 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                 </div>
                 <div className="flex gap-2">
                     <div className="flex flex-col w-1/2 gap-2">
-                        <FormSelectSpecial id="company_category1" name="category1" title="Categorías" type="Categoría" required={true} value={categoryForm.category1} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
-                        <FormSelectSpecial id="company_category2" name="category2" title="" type="Categoría" required={false} value={categoryForm.category2} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
-                        <FormSelectSpecial id="company_category3" name="category3" title="" type="Categoría" required={false} value={categoryForm.category3} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                        <FormSelectSpecial id="company_category1" name="category1" title="Categorías" type="Categoría" required={true} value={categoryForm.category1} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelectSpecial id="company_category2" name="category2" title="" type="Categoría" required={false} value={categoryForm.category2} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelectSpecial id="company_category3" name="category3" title="" type="Categoría" required={false} value={categoryForm.category3} onChange={handleCategoryChange} options={categoryList} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
                     <div className="flex flex-col w-1/2 gap-2">
-                    <FormSelectSpecial id="company_category3" name="skill1" title="Habilidades" type="Habilidad" required={true} value={skillForm.skill1} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
-                    <FormSelectSpecial id="company_category3" name="skill2" title="" type="Habilidad" required={true} value={skillForm.skill2} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
-                    <FormSelectSpecial id="company_category3" name="skill3" title="" type="Habilidad" required={true} value={skillForm.skill3} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1"/>
+                        <FormSelectSpecial id="company_category3" name="skill1" title="Habilidades" type="Habilidad" required={true} value={skillForm.skill1} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelectSpecial id="company_category3" name="skill2" title="" type="Habilidad" required={true} value={skillForm.skill2} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1" />
+                        <FormSelectSpecial id="company_category3" name="skill3" title="" type="Habilidad" required={true} value={skillForm.skill3} onChange={handleSkillChange} options={skillList} className="border h-12 bg-clr-white border-black rounded p-1" />
                     </div>
                 </div>
                 <FormInput id="company_number" type="text" name="number" value={formData.number} title="Numero de celular" onChange={handleNumberChange} minLength={8} maxLength={8} className="border h-12 bg-clr-white border-black rounded p-1" />
@@ -941,6 +981,9 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
             {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
             {/* Error */}
             {error && <p className="text-red-500 font-bold mt-5">{message}</p>}
+            {/* Equals */}
+            {skillisEqual && <p className="text-red-500 font-bold mt-5">Las habilidades no pueden ser iguales</p>}
+            {categoryisEqual && <p className="text-red-500 font-bold mt-5">Las categorías no pueden ser iguales</p>}
 
             {/* Modal de terminos y condiciones */}
             {showModal && (

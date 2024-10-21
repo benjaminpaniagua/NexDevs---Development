@@ -42,6 +42,7 @@ export function Community_Posts() {
                 commentsCount={post.commentsCount}
                 userName={post.workProfile?.name}
                 profilePictureUrl={post.workProfile?.profilePictureUrl}
+                workId={post.workProfile?.workId}
               />
             ))
           ) : (

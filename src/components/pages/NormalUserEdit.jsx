@@ -16,7 +16,7 @@ export function NormalUserEdit() {
     //const [isOwner, setIsOwner] = useState(false);
     const { userData, loading, error } = useFetchWorkUserData();
     const { userId } = useParams();
-    const { editProfile, editError } = useEditNormalUser();
+    const { editProfile, editLoading, editError } = useEditNormalUser();
 
     const [previewImage, setPreviewImage] = useState(null);
     const defaultImage = '/images/default_profile_picture.jpg';
@@ -218,26 +218,27 @@ export function NormalUserEdit() {
                     </div>
                     {/* Profile Picture */}
 
-                    <div className='flex justify-center gap-4'>
+                    <div className='flex md:flex-col justify-center gap-4'>
                         {/* Profile Info */}
-                        <div className="flex flex-col w-1/3 mt-10 gap-2">
+                        <div className="flex flex-col w-1/3 md:w-full mt-10 gap-2">
                             <FormInput id={"user_firstname"} type="text" name="firstName" title="Nombre" minLength={0} value={formData.firstName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                             <FormInput id={"user_lastName"} type="text" name="lastName" title="Apellidos" minLength={0} value={formData.lastName} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                             <FormInput id={"user_email"} type="email" name="email" title="Email" minLength={0} value={formData.email} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                         </div>
 
-                        <div className="flex flex-col mt-10 w-1/3 gap-2">
+                        <div className="flex flex-col mt-10 w-1/3 md:mt-0 md:w-full gap-2">
                             <FormSelect id="user_province" name="province" title="Provincia" value={formData.province} onChange={handleSelectChange} options={stateOptions} className="border h-12 bg-clr-white border-black rounded p-1" />
                             <FormSelect id="user_city" name="city" title="Ciudad" value={formData.city} onChange={handleSelectChange} options={availableCities} className="border h-12 bg-clr-white border-black rounded p-1" />
                         </div>
                         {/* Profile Info */}
                     </div>
 
-                    <div className="flex flex-col w-1/2 mx-auto mt-5">
+                    <div className="flex flex-col w-1/2 md:w-full mx-auto mt-5">
                         <FormTextArea id="user_bio" name="bio" title="Biografía" minLength={0} value={formData.bio} onChange={handleInputChange} className="border h-44 md:h-32 bg-clr-white border-black rounded p-1" />
                     </div>
 
                     {editError && <p className="text-red-500 flex justify-center mt-2">{editError}</p>}
+                    {editLoading && <p className="text-clr-green text-fs-med flex justify-center mt-2">Cargando...</p>}
 
                     <div className='mx-auto flex gap-5 mb-5'>
                         <Link to={-1}>

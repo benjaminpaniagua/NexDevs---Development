@@ -72,6 +72,7 @@ export function Featured_Profiles({ setIsLoading }) {
                                                 city={user.city}
                                                 number={user.number}
                                                 email={user.email}
+                                                id={user.workId}
                                                 onClick={() => handleCardClick(user.workId)}
                                             />
                                         </SwiperSlide>
