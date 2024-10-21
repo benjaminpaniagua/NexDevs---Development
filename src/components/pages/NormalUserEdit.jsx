@@ -10,7 +10,6 @@ import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Butto
 import { useEditNormalUser } from '../../hooks/EditProfile/useEditNormalProfile.js';
 import { Link } from 'react-router-dom';
 import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';
-import { q } from 'framer-motion/client';
 
 export function NormalUserEdit() {
     const navigate = useNavigate();

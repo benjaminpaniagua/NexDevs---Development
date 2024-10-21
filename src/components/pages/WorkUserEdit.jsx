@@ -9,6 +9,7 @@ import { FormInput, FormSelect, FormTextArea } from '../ui/FormInput.jsx';
 import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons';
 import { useEditWorkProfile } from '../../hooks/EditProfile/useEditWorkProfile.js';
 import { Link } from 'react-router-dom';
+import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';
 
 export function WorkUserEdit() {
     const navigate = useNavigate();
@@ -58,7 +59,6 @@ export function WorkUserEdit() {
         }
     }
 
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({
@@ -67,20 +67,40 @@ export function WorkUserEdit() {
         });
     };
 
-    const stateOptions = [
-        'San José', 'Alajuela', 'Cartago', 'Heredia', 'Guanacaste', 'Puntarenas', 'Limón'
-    ];
-    const cityOptions = {
-        'San José': ['San José', 'Escazú'],
-        'Alajuela': ['Alajuela', 'San Carlos'],
-        'Cartago': ['Cartago', 'Paraíso'],
-        'Heredia': ['Heredia', 'Barva'],
-        'Guanacaste': ['Liberia', 'Santa Cruz'],
-        'Puntarenas': ['Puntarenas', 'Esparza'],
-        'Limón': ['Limón', 'Guápiles']
-    };
+    const { provincias } = useFetchProvincias();
     const [selectedProvince, setSelectedProvince] = useState(formData.province);
-    const [availableCities, setAvailableCities] = useState(cityOptions[selectedProvince] || []);
+    const [availableCities, setAvailableCities] = useState([]);
+
+    //Lista de opciones de los selects
+    const stateOptions = provincias ? Object.values(provincias) : [];
+
+    const provinceIdMap = {
+        'San José': '1',
+        'Alajuela': '2',
+        'Cartago': '3',
+        'Heredia': '4',
+        'Guanacaste': '5',
+        'Puntarenas': '6',
+        'Limón': '7'
+    };
+
+    useEffect(() => {
+        const fetchCities = async (provinceId) => {
+            try {
+                const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                const data = await response.json();
+                const citiesArray = data ? Object.values(data) : [];
+                setAvailableCities(citiesArray);
+                //console.log(citiesArray);
+            } catch (error) {
+                console.error('Error fetching cities:', error);
+            }
+        };
+        if (selectedProvince) {
+            const provinceId = provinceIdMap[selectedProvince];
+            fetchCities(provinceId);
+        }
+    }, [selectedProvince]);
 
     const handleSelectChange = (e) => {
         const { name, value } = e.target;
@@ -90,7 +110,6 @@ export function WorkUserEdit() {
         });
         if (name === 'province') {
             setSelectedProvince(value);
-            setAvailableCities(cityOptions[value] || []);
         }
     };
 
@@ -115,8 +134,25 @@ export function WorkUserEdit() {
                     profilePictureUrl: userData.profilePictureUrl,
                     profileType: 'W',
                 });
+                if (userData.profilePictureUrl !== "ND" && userData.profilePictureUrl !== "default_image_url") {
+                    setPreviewImage(userData.profilePictureUrl);
+                }
                 setSelectedProvince(userData.province);
-                setAvailableCities(cityOptions[userData.province] || []);
+                const fetchCities = async (provinceId) => {
+                    try {
+                        const response = await fetch(`https://ubicaciones.paginasweb.cr/provincia/${provinceId}/cantones.json`);
+                        const data = await response.json();
+                        const citiesArray = data ? Object.values(data) : [];
+                        setAvailableCities(citiesArray);
+                        //console.log(citiesArray);
+                    } catch (error) {
+                        console.error('Error fetching cities:', error);
+                    }
+                };
+                if (selectedProvince) {
+                    const provinceId = provinceIdMap[selectedProvince];
+                    fetchCities(provinceId);
+                }
             } else if (userData.workId !== userId) {
                 window.location.href = '/WorkUserEdit/' + userData.workId;
             }
@@ -125,9 +161,28 @@ export function WorkUserEdit() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("submitted data", formData);
+        //console.log("submitted data", formData);
 
-        const result = await editProfile(formData);
+        const newFormData = new FormData();
+
+        Object.keys(formData).forEach((key) => {
+            if (key !== 'profilePictureUrl') {
+                newFormData.append(key, formData[key]);
+            }
+        });
+
+        if (formData.profilePictureUrl instanceof File) {
+            newFormData.append('profilePictureUrl', formData.profilePictureUrl);
+        } else {
+            newFormData.append('profilePictureUrl', userData.profilePictureUrl);
+        }
+
+                /*for (let pair of newFormData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }*/
+
+
+        const result = await editProfile(newFormData);
         if (result.success) {
             console.log('Perfil editado con éxito', result);
             window.location.href = '/workprofile/' + userData.workId;
