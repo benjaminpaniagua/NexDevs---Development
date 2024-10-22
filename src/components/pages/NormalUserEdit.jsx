@@ -6,7 +6,7 @@ import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { FormInput, FormSelect, FormTextArea } from '../ui/FormInput.jsx';
-import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons.jsx';
+import { MainButton } from '../ui/Buttons.jsx';
 import { useEditNormalUser } from '../../hooks/EditProfile/useEditNormalProfile.js';
 import { Link } from 'react-router-dom';
 import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';

@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { FormInput, FormTextArea } from "../ui/FormInput";
+import { FormTextArea } from "../ui/FormInput";
 import {
   MainButton,
   SecondaryButton,

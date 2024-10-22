@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardProfiles } from '../ui/Cards/CardProfiles';
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination, Autoplay } from 'swiper/modules';
+import {  Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+
 import '../../../index.css';
 import PropTypes from "prop-types";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";

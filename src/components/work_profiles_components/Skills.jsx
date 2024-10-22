@@ -2,7 +2,7 @@ import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
 import { useFetchWorkProfileSkills } from '../../hooks/WorkProfile/useFetchWorkProfileSkills';
 export function Skills({ workId }) {
-    const { skills, loading, error } = useFetchWorkProfileSkills({ workID: workId });
+    const { skills, loading } = useFetchWorkProfileSkills({ workID: workId });
     return (
         <>
             <div className="w-1/2 md:w-full">

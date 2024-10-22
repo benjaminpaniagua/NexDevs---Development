@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
+import { useState} from "react";
+import { BrowserRouter as  Routes, Route,  useLocation, Navigate } from 'react-router-dom';
 import '../../index.css'
 import { BackgroundPattern } from "../access_panel_components/BackgroundPattern";
 import { Link } from "react-router-dom";

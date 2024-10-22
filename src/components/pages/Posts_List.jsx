@@ -1,10 +1,8 @@
 import "../../index.css";
 import { useState, useEffect } from "react";
 import { CardPost } from "../ui/Cards/CardPost";
-import { Modal_Post } from "../ui/Modal_Post/Modal_Post";
 import { SecondaryButtonOutline } from "../ui/Buttons";
 import { useFetchPosts } from "../../hooks/useFetchPosts";
-import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { Loading_Screen } from "../ui/Loading_Screen.jsx";
 import { useNavigate } from "react-router-dom";
 import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";

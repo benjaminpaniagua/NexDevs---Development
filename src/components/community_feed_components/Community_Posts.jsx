@@ -1,7 +1,6 @@
 import "../../index.css";
 import { useState, useEffect } from "react";
 import { CardPost } from "../ui/Cards/CardPost";
-import { Modal_Post } from "../ui/Modal_Post/Modal_Post";
 import { SecondaryButtonOutline } from "../ui/Buttons";
 import { useFetchPosts } from "../../hooks/useFetchPosts";
 import { useNavigate } from "react-router-dom";

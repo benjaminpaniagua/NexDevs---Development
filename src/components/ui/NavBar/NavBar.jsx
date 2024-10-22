@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from "prop-types";
+import  { useState, useEffect } from 'react';
 import NavLinks from './NavLinks';
 import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
-import { Link, Route } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { SecondaryButton } from '../Buttons';
 import { useAuth } from '../../../utils/AuthProvider';
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";

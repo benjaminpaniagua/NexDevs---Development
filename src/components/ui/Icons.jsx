@@ -1,6 +1,4 @@
-// icons.js
-import { WhatsApp } from "@mui/icons-material";
-import React from "react";
+
 
 export const ILLUSTRATIONS = {
   community_search: (

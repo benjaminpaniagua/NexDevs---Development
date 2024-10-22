@@ -1,4 +1,4 @@
-import React from "react";
+
 import { FaInstagram, FaWhatsapp, FaFacebook } from "react-icons/fa";
 import { FooterLink } from "./FooterLink";
 

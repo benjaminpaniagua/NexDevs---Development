@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import{ useState, useEffect } from "react";
 import { ICONS } from "../ICONS";
 import { SecondaryButton } from "../Buttons";
 import { FormInput } from "../FormInput";
@@ -6,7 +6,6 @@ import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { h1 } from "framer-motion/client";
 
 export function CardPost({
   postId,

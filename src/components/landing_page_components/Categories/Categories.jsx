@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import Card from "../../ui/Cards/CardCategories";
 import { Link } from "react-router-dom";
 import { SecondaryButtonOutline } from "../../ui/Buttons";

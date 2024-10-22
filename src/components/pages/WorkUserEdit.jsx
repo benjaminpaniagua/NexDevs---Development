@@ -6,7 +6,7 @@ import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { FormInput, FormSelect, FormTextArea, FormSelectSpecial } from '../ui/FormInput.jsx';
-import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons';
+import { MainButton } from '../ui/Buttons';
 import { useEditWorkProfile } from '../../hooks/EditProfile/useEditWorkProfile.js';
 import { Link } from 'react-router-dom';
 import { useFetchProvincias } from '../../hooks/CostaRica/useFetchProvincias.js';
@@ -20,7 +20,6 @@ import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
 import { useEditSkills } from '../../hooks/EditProfile/useEditSkills.js';
 import { useFetchUserSkills } from '../../hooks/EditProfile/useFetchUserSkills.js';
-import { useDeleteSkill } from '../../hooks/EditProfile/useDeleteSkill.js';
 
 export function WorkUserEdit() {
     const navigate = useNavigate();

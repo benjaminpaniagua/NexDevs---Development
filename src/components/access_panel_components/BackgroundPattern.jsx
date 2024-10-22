@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import '../../index.css'
 export function BackgroundPattern({color}) {
     // Animación del patrón

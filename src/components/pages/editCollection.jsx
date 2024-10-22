@@ -2,12 +2,12 @@ import '../../index.css'
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
-import { ICONS } from "../ui/ICONS";
+
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
-import { MainButton, SecondaryButton, SecondaryButtonOutline } from '../ui/Buttons.jsx';
+import { MainButton} from '../ui/Buttons.jsx';
 import { useFetchCollection } from '../../hooks/EditCollections/useFetchCollection.js';
 import { useAddCollection } from '../../hooks/EditCollections/useAddCollection.js';
 import { useEditCollection } from '../../hooks/EditCollections/useEditCollection.js';
@@ -176,7 +176,7 @@ export function EditCollection() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+       
         const newFormData = new FormData();
         if (previewImage1) {
             if (formData1.CollectionImageUrl instanceof File) {

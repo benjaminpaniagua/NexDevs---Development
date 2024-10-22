@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../../index.css'
-import {
-    MainButton,
-    SecondaryButtonOutline,
-    SecondaryButton,
-} from "../ui/Buttons";
+import { MainButton} from "../ui/Buttons";
 import { useFetchCollection } from '../../hooks/EditCollections/useFetchCollection';
 import { useEffect, useState } from 'react';
 export function Collection({ users, isOwner }) {

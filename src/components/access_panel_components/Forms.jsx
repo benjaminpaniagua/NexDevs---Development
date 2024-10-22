@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../index.css'
 import { FormInput, FormSelect, FormTextArea, FormSelectSpecial } from "../ui/FormInput";
-import { Link } from "react-router-dom";
 import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
 import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWorkProfile";
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
-import { MainButton, SecondaryButton, SecondaryButtonOutline, SimpleButton } from "../ui/Buttons";
+import { MainButton,  SecondaryButtonOutline } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
-import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
