@@ -3,6 +3,7 @@ import '../../index.css'
 import { MainButton} from "../ui/Buttons";
 import { useFetchCollection } from '../../hooks/EditCollections/useFetchCollection';
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 export function Collection({ users, isOwner }) {
 
     const { collections } = useFetchCollection(users.workId);
@@ -94,4 +95,9 @@ export function Collection({ users, isOwner }) {
             </div>
         </>
     );
+}
+
+Collection.propTypes = {
+    users: PropTypes.object,
+    isOwner: PropTypes.bool
 }

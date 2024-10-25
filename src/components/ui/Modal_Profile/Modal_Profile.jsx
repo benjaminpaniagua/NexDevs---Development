@@ -7,6 +7,7 @@ import { useAuth } from "../../../utils/AuthProvider";
 import { MainButton } from "../Buttons";
 import { Link } from "react-router-dom";
 
+
 export function Modal_Profile({ onClose }) {
     const navigate = useNavigate();
     const { userData } = useFetchWorkUserData();
@@ -163,6 +164,7 @@ Modal_Profile.propTypes = {
     city: PropTypes.string.isRequired,
     bio: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired
+
 };
 
 Modal_Profile.defaultProps = {
@@ -172,3 +174,7 @@ Modal_Profile.defaultProps = {
     bio: 'Hola, soy Alejandra Robles, una apasionada por las plantas y amante de las mascotas. ',
     picture: "/images/default_profile_picture.jpg"
 };
+
+Modal_Profile.propTypes = {
+    onClose: PropTypes.func.isRequired
+}

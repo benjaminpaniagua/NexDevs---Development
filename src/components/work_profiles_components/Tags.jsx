@@ -1,4 +1,5 @@
 import '../../index.css'
+import PropTypes from 'prop-types';
 export function Tags({ text }) {
     return (
         <>
@@ -8,3 +9,7 @@ export function Tags({ text }) {
         </>
     );
 }
+// Validación de props con PropTypes
+Tags.propTypes = {
+    text: PropTypes.string.isRequired,
+};

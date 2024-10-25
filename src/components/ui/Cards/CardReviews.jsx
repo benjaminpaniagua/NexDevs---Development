@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 export function CardReviews({ userName, profilePicture, comment, rate, onClick }) {
     return (
         <>
@@ -29,3 +30,11 @@ export function CardReviews({ userName, profilePicture, comment, rate, onClick }
         </>
     )
 }
+
+CardReviews.propTypes = {
+    userName: PropTypes.string.isRequired,
+    profilePicture: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
+    rate: PropTypes.number.isRequired,
+    onClick: PropTypes.func.isRequired,
+}   

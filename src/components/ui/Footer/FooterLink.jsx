@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 export const FooterLink = ({ linkText, linkUrl }) => {
   const navigate = useNavigate();
 
@@ -14,3 +14,8 @@ export const FooterLink = ({ linkText, linkUrl }) => {
     </div>
   );
 };
+
+FooterLink.propTypes = {
+  linkText: PropTypes.string.isRequired,
+  linkUrl: PropTypes.string.isRequired
+}

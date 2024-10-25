@@ -7,7 +7,7 @@ import {
 import { ICONS } from "../ui/ICONS";
 import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
-
+import PropTypes from 'prop-types';
 export function ProfileInfo({ users, loading, isOwner }) {
   const { token } = useAuth();
   //console.log(users, "users");
@@ -118,3 +118,9 @@ export function ProfileInfo({ users, loading, isOwner }) {
     </div>
   );
 }
+
+ProfileInfo.propTypes = {
+  users: PropTypes.object,
+  loading: PropTypes.bool,
+  isOwner: PropTypes.bool,
+};

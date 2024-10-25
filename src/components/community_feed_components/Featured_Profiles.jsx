@@ -9,7 +9,7 @@ import {  Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
-
+import PropTypes from 'prop-types';
 export function Featured_Profiles({ setIsLoading }) {
     const navigate = useNavigate();
     const { users, loading, error } = useFetchWorkUsers();
@@ -89,3 +89,6 @@ export function Featured_Profiles({ setIsLoading }) {
         </>
     );
 }
+Featured_Profiles.propTypes = {
+    setIsLoading: PropTypes.func.isRequired,
+};

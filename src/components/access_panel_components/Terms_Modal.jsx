@@ -1,5 +1,6 @@
 import { MainButton } from '../ui/Buttons'
 import '../../index.css'
+import PropTypes from 'prop-types';
 export function Terms({ closeModal }) {
     return (
         <>
@@ -168,4 +169,8 @@ export function Terms({ closeModal }) {
             </div>
         </>
     );
+}
+
+Terms.propTypes = {
+    closeModal: PropTypes.func
 }

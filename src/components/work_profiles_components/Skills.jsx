@@ -1,6 +1,7 @@
 import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
 import { useFetchWorkProfileSkills } from '../../hooks/WorkProfile/useFetchWorkProfileSkills';
+import PropTypes from 'prop-types';
 export function Skills({ workId }) {
     const { skills, loading } = useFetchWorkProfileSkills({ workID: workId });
     return (
@@ -24,4 +25,8 @@ export function Skills({ workId }) {
             </div>
         </>
     );
+}
+
+Skills.propTypes = {
+    workId: PropTypes.string.isRequired,
 }

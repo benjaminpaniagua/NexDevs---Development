@@ -1,4 +1,5 @@
 import  { useEffect } from "react";
+import PropTypes from 'prop-types';
 
 const Alert = ({ alert, setAlert }) => {
   useEffect(() => {
@@ -27,3 +28,8 @@ const Alert = ({ alert, setAlert }) => {
 };
 
 export default Alert;
+
+Alert.propTypes = {
+  alert: PropTypes.object.isRequired,
+  setAlert: PropTypes.func.isRequired
+}

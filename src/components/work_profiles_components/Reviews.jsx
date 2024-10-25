@@ -2,7 +2,7 @@ import '../../index.css'
 import { useFetchReviews } from '../../hooks/WorkProfile/useFetchWorkProfileReviews';
 import { CardReviews } from '../ui/Cards/CardReviews';
 import { SecondaryButtonOutline } from '../ui/Buttons';
-
+import PropTypes from 'prop-types';
 export function Reviews() {
     const reviews = useFetchReviews().slice(0, 4);
 
@@ -30,4 +30,8 @@ export function Reviews() {
             </div>
         </>
     );
+}
+
+Reviews.propTypes = {
+    reviews: PropTypes.array
 }

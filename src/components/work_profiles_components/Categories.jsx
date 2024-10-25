@@ -1,6 +1,7 @@
 import '../../index.css'
 import { Tags } from '../work_profiles_components/Tags'
 import { useFetchWorkProfileCategories } from '../../hooks/WorkProfile/useFetchWorkProfileCategory';
+import PropTypes from 'prop-types';
 export function Categories({workId}) {
     const { categories, loading } = useFetchWorkProfileCategories({workID: workId});
 
@@ -27,3 +28,7 @@ export function Categories({workId}) {
         </>
     );
 }
+
+Categories.propTypes = {
+    workId: PropTypes.number.isRequired,
+};

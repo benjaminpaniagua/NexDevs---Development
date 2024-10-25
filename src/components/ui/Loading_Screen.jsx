@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../../../public/css/Loading_Screen.css";
+import PropTypes from 'prop-types';
 export function Loading_Screen({ Loading }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAnimating, setIsAnimating] = useState(true);
@@ -38,3 +39,7 @@ export function Loading_Screen({ Loading }) {
     </>
   );
 }
+
+Loading_Screen.propTypes = {
+  Loading: PropTypes.bool.isRequired
+};

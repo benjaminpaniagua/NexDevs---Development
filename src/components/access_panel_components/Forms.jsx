@@ -14,6 +14,7 @@ import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
 import { useAddSkills } from "../../hooks/Access_Panel/useAddSkills";
 import { useDeleteCategory } from '../../hooks/EditProfile/useDeleteCategory.js';
+import PropTypes from 'prop-types';
 
 export function LogIn() {
     const { login, loading, error } = useLogin()
@@ -991,3 +992,31 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         </form>
     );
 }
+
+SignIn_1.propTypes = {
+    onUserDataChange: PropTypes.func.isRequired,
+    handleRegisterContinue: PropTypes.func.isRequired
+};
+
+
+SignIn_2.propTypes = {
+     userData: PropTypes.shape({
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  isRegister2: PropTypes.bool.isRequired,
+  handleRegisterBack: PropTypes.func.isRequired
+};
+
+Company_SignIn_1.propTypes = {
+    onUserDataChange: PropTypes.func.isRequired,
+    handleCompanyContinue: PropTypes.func.isRequired
+};
+
+Company_SignIn_2.propTypes = {
+    userData: PropTypes.shape({
+        password: PropTypes.string.isRequired,
+      }).isRequired,
+    isCompany2: PropTypes.bool.isRequired,
+    handleCompanyBack: PropTypes.func.isRequired
+};
+

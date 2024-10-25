@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 export function FormInput({ type, name, title, minLength, maxLength, value, onChange, className, id, placeholder }) {
     return (
         <>
@@ -49,3 +51,50 @@ export function FormSelectSpecial({ name, title, value, onChange, options, class
         </>
     );
 }
+FormInput.propTypes = {
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    minLength: PropTypes.number,
+    maxLength: PropTypes.number,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+};
+FormTextArea.propTypes = {
+    type: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    title: PropTypes.string,
+    minLength: PropTypes.number,
+    maxLength: PropTypes.number,
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    placeholder: PropTypes.string,
+    maxLenght: PropTypes.number
+};
+
+FormSelect.propTypes = {
+    name: PropTypes.string.isRequired,  
+    title: PropTypes.string.isRequired,      
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    options: PropTypes.array.isRequired,
+    className: PropTypes.string,
+    id: PropTypes.string.isRequired,
+};
+
+FormSelectSpecial.propTypes = {
+    name: PropTypes.string.isRequired,  
+    title: PropTypes.string.isRequired,      
+    value: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+    options: PropTypes.array.isRequired,
+    className: PropTypes.string,
+    id: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    required: PropTypes.bool,
+};

@@ -6,6 +6,7 @@ import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 export function CardPost({
   postId,
@@ -512,3 +513,20 @@ export function CardPost({
     </>
   );
 }
+
+CardPost.propTypes = {
+  postId: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  likesCount: PropTypes.number.isRequired,
+  onClick: PropTypes.func,
+  imageUrl: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  userName: PropTypes.string.isRequired,
+  profilePictureUrl: PropTypes.string.isRequired,
+  commentsCount: PropTypes.number.isRequired,
+  currentLikesCount: PropTypes.number.isRequired,
+  isLiked: PropTypes.bool.isRequired,
+  workId: PropTypes.number.isRequired,
+  userId: PropTypes.number.isRequired,
+  userIdWorker: PropTypes.number.isRequired,
+};

@@ -1,6 +1,7 @@
 import { MainButton } from "../Buttons";
 import { ICONS } from "../ICONS";
 import { useFetchWorkProfileCategories } from "../../../hooks/WorkProfile/useFetchWorkProfileCategory";
+import PropTypes from 'prop-types';
 export function CardProfiles({
   image,
   name,
@@ -95,3 +96,17 @@ export function CardProfiles({
     </>
   );
 }
+
+CardProfiles.propTypes = {
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  category: PropTypes.object.isRequired, 
+  biography: PropTypes.string.isRequired,
+  province: PropTypes.string.isRequired,
+  city: PropTypes.string.isRequired,
+  number: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+};
+

@@ -1,5 +1,6 @@
 import  { useEffect } from "react";
 import '../../index.css'
+import PropTypes from 'prop-types';
 export function BackgroundPattern({color}) {
     // Animación del patrón
     useEffect(() => {
@@ -46,3 +47,7 @@ export function BackgroundPattern({color}) {
         </>
     );
 }
+// Validación de props con PropTypes
+BackgroundPattern.propTypes = {
+  color: PropTypes.string.isRequired,
+};

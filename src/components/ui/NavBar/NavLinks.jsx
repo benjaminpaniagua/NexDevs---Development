@@ -1,7 +1,7 @@
 
 import '../../../index.css';
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 const NavLinks = ({ links }) => {
   return (
     <ul className="flex sm:flex-col gap-8 md:p-2"> {/* Puse sm en vez de md porque el md afecta de forma rara a la vista de tablet */}
@@ -16,6 +16,14 @@ const NavLinks = ({ links }) => {
       ))}
     </ul>
   );
+};
+NavLinks.propTypes = {
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      route: PropTypes.string.isRequired,
+    })
+  ).isRequired, 
 };
 
 export default NavLinks;

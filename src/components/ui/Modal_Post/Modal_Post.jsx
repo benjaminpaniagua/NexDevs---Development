@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { ICONS } from "../ICONS";
 import { SecondaryButton } from "../Buttons";
-
+import PropTypes from 'prop-types';
 export function Modal_Post({ post, onClose }) {
   const [comment, setComment] = useState("");
 
@@ -95,3 +95,8 @@ export function Modal_Post({ post, onClose }) {
     </div>
   );
 }
+
+Modal_Post.propTypes = {
+  post: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired  
+};
