@@ -10,6 +10,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 import PropTypes from 'prop-types';
+import { Pagination} from 'swiper/modules';
 export function Featured_Profiles({ setIsLoading }) {
     const navigate = useNavigate();
     const { users, loading, error } = useFetchWorkUsers();

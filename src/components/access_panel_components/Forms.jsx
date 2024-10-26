@@ -8,6 +8,8 @@ import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWork
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
 import { MainButton,  SecondaryButtonOutline } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
+import { Link } from "react-router-dom";
+import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";

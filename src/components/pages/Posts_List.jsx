@@ -4,8 +4,10 @@ import { CardPost } from "../ui/Cards/CardPost";
 import { SecondaryButtonOutline } from "../ui/Buttons";
 import { useFetchPosts } from "../../hooks/useFetchPosts";
 import { Loading_Screen } from "../ui/Loading_Screen.jsx";
+import { Modal_Post } from "../ui/Modal_Post/Modal_Post";
 import { useNavigate } from "react-router-dom";
 import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
+import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 
 export function Posts_List() {
   const { data: posts, error, loading } = useFetchPosts();

@@ -1,10 +1,11 @@
 import { useState} from "react";
-import { BrowserRouter as  Routes, Route,  useLocation, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom';
 import '../../index.css'
 import { BackgroundPattern } from "../access_panel_components/BackgroundPattern";
 import { Link } from "react-router-dom";
 import { LogIn, SignIn_1, SignIn_2, Company_SignIn_1, Company_SignIn_2, Recovery_EmailVerification, Recovery_Password } from "../access_panel_components/Forms";
 import { useAuth } from "../../utils/AuthProvider";
+
 
 import useScreenWidth from '../../hooks/useScreenWidth';
 
