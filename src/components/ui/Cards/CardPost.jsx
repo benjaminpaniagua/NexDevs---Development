@@ -488,7 +488,7 @@ export function CardPost({
       {/* Modal */}
       {showModal && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-center justify-center z-50 overflow-y-auto"
+          className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-start justify-center z-50 overflow-y-auto"
           onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
