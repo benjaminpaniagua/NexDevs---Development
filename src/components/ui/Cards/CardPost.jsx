@@ -45,15 +45,11 @@ export function CardPost({
       if (userData.profileType === "W") {
         setIsWorker(true);
       }
-      if (userData.profileType === "U") {
-        setIsUser(true);
-      }
+
       if (userData.profileType === "W" && userData.workId === workId) {
         setIsAuthor(true);
       }
-      if (userData.profileType === "U" && userData.userId === userId) {
-        setIsAuthor(true);
-      }
+
     }
   }, [userData]);
 
