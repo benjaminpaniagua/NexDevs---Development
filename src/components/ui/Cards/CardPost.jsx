@@ -492,7 +492,7 @@ export function CardPost({
           onClick={handleOutsideClick}
         >
           <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
-            <div className="flex justify-between items-center w-full pb-4 bg-white sticky top-[-16px] z-10">
+            <div className="flex justify-between items-center w-full pb-4 pt-5 bg-white sticky top-[-10px] z-10">
               <Link to={`/workprofile/${workId}`}>
                 <div className="flex items-center">
                   <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center">
