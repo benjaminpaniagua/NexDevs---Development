@@ -98,7 +98,7 @@ export function CardPost({
       // }
 
       // Construimos la URL con los parámetros correctos
-      const url = `https://localhost:7038/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
+      const url = `http://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
 
       const response = await fetch(url, {
         method: "GET",
@@ -129,7 +129,7 @@ export function CardPost({
     const userId = userData?.userId || 0;
     const workProfileId = userData?.workId || 0;
 
-    const urlLike = `https://localhost:7038/Likes/LikePost`;
+    const urlLike = `http://nexdevsapi.somee.com/Likes/LikePost`;
 
     try {
       const response = await fetch(urlLike, {
@@ -168,7 +168,7 @@ export function CardPost({
     const userId = userData?.userId || 0;
     const workProfileId = userData?.workId || 0;
 
-    const urlDislike = `https://localhost:7038/Likes/DislikePost`;
+    const urlDislike = `http://nexdevsapi.somee.com/Likes/DislikePost`;
 
     try {
       const response = await fetch(urlDislike, {
@@ -208,7 +208,7 @@ export function CardPost({
   }, []);
 
   const fetchComments = async () => {
-    const url = `https://localhost:7038/Comments/ConsultarPorPost?postId=${postId}`;
+    const url = `http://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
 
     try {
       const response = await fetch(url, {
@@ -349,7 +349,7 @@ export function CardPost({
   const handleCommentDelete = async (commentId) => {
     fetch = async () => {
       const response = await fetch(
-        `https://localhost:7038/Comments/Eliminar?commentId=${commentId}`,
+        `http://nexdevsapi.somee.com/Comments/Eliminar?commentId=${commentId}`,
         {
           method: "DELETE",
           headers: {

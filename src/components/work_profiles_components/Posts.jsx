@@ -16,7 +16,7 @@ export function Posts() {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          `https://localhost:7038/Posts/ConsultarWorkId?workId=${userId}`
+          `http://nexdevsapi.somee.com/Posts/ConsultarWorkId?workId=${userId}`
         );
         setPosts(response.data);
       } catch (error) {
