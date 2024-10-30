@@ -16,6 +16,7 @@ import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
 import { useAddSkills } from "../../hooks/Access_Panel/useAddSkills";
 import { useDeleteCategory } from '../../hooks/EditProfile/useDeleteCategory.js';
+import { useSendEmail } from "../../hooks/Access_Panel/useSendEmail.js";
 import PropTypes from 'prop-types';
 
 export function LogIn() {
@@ -419,6 +420,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
 
 export function Recovery_EmailVerification() {
     const [isAnimating, setIsAnimating] = useState(false);
+    const { sendEmail, message, loading, error } = useSendEmail();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -443,10 +445,11 @@ export function Recovery_EmailVerification() {
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsAnimating(true);
+        sendEmail(email);
+        /*setIsAnimating(true);
         setTimeout(() => {
             navigate('/Access_Panel/password');
-        }, 100);
+        }, 100);*/
     };
     return (
         <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
@@ -457,6 +460,13 @@ export function Recovery_EmailVerification() {
             </div>
             {/* Boton de Login */}
             <button id="recovery_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Enviar Correo</button>
+
+            {/* Cargando */}
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {error && <p className="text-red-500 font-bold mt-5">{error}</p>}
+            {/* Exito */}
+            {message && <p className="text-clr-black font-bold mt-5">{message}</p>}
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
