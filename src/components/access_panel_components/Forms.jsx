@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import '../../index.css'
 import { FormInput, FormSelect, FormTextArea, FormSelectSpecial } from "../ui/FormInput";
@@ -6,7 +6,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useLogin } from "../../hooks/Access_Panel/useLogin";
 import { useRegisterWorkProfile } from "../../hooks/Access_Panel/useRegisterWorkProfile";
 import { useRegisterNormalUser } from "../../hooks/Access_Panel/useRegisterNormalUser";
-import { MainButton,  SecondaryButtonOutline } from "../ui/Buttons";
+import { MainButton, SecondaryButtonOutline } from "../ui/Buttons";
 import { Terms } from "./Terms_Modal";
 import { Link } from "react-router-dom";
 import { useFetchCiudades } from "../../hooks/CostaRica/useFetchCiudades";
@@ -16,6 +16,8 @@ import { useAddCategories } from "../../hooks/Access_Panel/useAddCategories";
 import { useFetchSkills } from "../../hooks/useFetchSkills";
 import { useAddSkills } from "../../hooks/Access_Panel/useAddSkills";
 import { useDeleteCategory } from '../../hooks/EditProfile/useDeleteCategory.js';
+import { useSendEmail } from "../../hooks/Access_Panel/useSendEmail.js";
+import { useChangePassword } from "../../hooks/Access_Panel/useChangePassword.js";
 import PropTypes from 'prop-types';
 
 export function LogIn() {
@@ -345,7 +347,6 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
 
         const response = await registerUserProfile(newFormData);
         const result = await login(response.email, userData.password);
-
         if (result.success) {
             window.location.href = (`/Community_Feed/`);
         }
@@ -419,6 +420,7 @@ export function SignIn_2({ userData, isRegister2, handleRegisterBack }) {
 
 export function Recovery_EmailVerification() {
     const [isAnimating, setIsAnimating] = useState(false);
+    const { sendEmail, message, loading, error } = useSendEmail();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -443,10 +445,11 @@ export function Recovery_EmailVerification() {
     //Maneja el envio del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        setIsAnimating(true);
+        sendEmail(email);
+        /*setIsAnimating(true);
         setTimeout(() => {
             navigate('/Access_Panel/password');
-        }, 100);
+        }, 100);*/
     };
     return (
         <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
@@ -457,6 +460,13 @@ export function Recovery_EmailVerification() {
             </div>
             {/* Boton de Login */}
             <button id="recovery_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Enviar Correo</button>
+
+            {/* Cargando */}
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {error && <p className="text-red-500 font-bold mt-5">{error}</p>}
+            {/* Exito */}
+            {message && <p className="text-clr-black font-bold mt-5">{message}</p>}
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
@@ -469,6 +479,8 @@ export function Recovery_EmailVerification() {
 export function Recovery_Password({ }) {
     const [isAnimating, setIsAnimating] = useState(false);
     const navigate = useNavigate();
+    const { changePassword, message, loading, errorChange } = useChangePassword();
+    const { login } = useLogin()
 
     useEffect(() => {
         setIsAnimating(true);
@@ -479,7 +491,7 @@ export function Recovery_Password({ }) {
 
     const [formData, setFormData] = useState({
         password: "",
-        confirmPassword: "",
+        confirmarPassword: "",
     });
     const [error, setError] = useState('');
 
@@ -500,30 +512,45 @@ export function Recovery_Password({ }) {
     }
 
     //Maneja el envio del formulario
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.password !== formData.confirmPassword) {
+        if (formData.password !== formData.confirmarPassword) {
             setError('Las contraseñas no coinciden');
             return;
         }
-        console.log(formData);
-        setFormData({ ...formData, password: '', confirmPassword: '' });
+        //setFormData({ ...formData, password: '', confirmarPassword: '' });
         setError('');
-        setIsAnimating(true);
+
+        const response = await changePassword(formData.password, formData.confirmarPassword);
+
+        if (response) {
+         const result = await login(response, formData.password);
+         if (result.success) {
+            window.location.href = (`/Community_Feed/`);
+        }
+        }
+        /*setIsAnimating(true);
         setTimeout(() => {
             navigate('/Access_Panel/login');
-        }, 100);
+        }, 100);*/
     };
     return (
         <form className={`w-1/2 md:w-[70%] transition-opacity duration-100 ${isAnimating ? 'opacity-0' : 'opacity-100'} `} onSubmit={handleSubmit}>
             <h1 className="text-5xl font-medium sm:text-2xl sm:mt-7">Nueva Contraseña</h1>
             <div className="flex flex-col gap-2 my-10 sm:my-5">
                 <FormInput id="recovery_password" type="password" name="password" title="Contraseña" minLength={8} value={formData.password} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
-                <FormInput id="recovery_confirmpassword" type="password" name="confirmPassword" title="Confirmar contraseña" minLength={8} value={formData.confirmPassword} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
+                <FormInput id="recovery_confirmpassword" type="password" name="confirmarPassword" title="Confirmar contraseña" minLength={8} value={formData.confirmarPassword} onChange={handleInputChange} className="border h-12 bg-clr-white border-black rounded p-1" />
                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </div>
             {/* Boton de Login */}
             <button id="password_confirm" className="rounded-md bg-black text-white w-full h-12 font-medium" type="submit">Cambiar contraseña</button>
+
+            {/* Cargando */}
+            {loading && <p className="text-clr-black font-bold mt-5">Cargando...</p>}
+            {/* Error */}
+            {errorChange && <p className="text-red-500 font-bold mt-5">{errorChange}</p>}
+            {/* Exito */}
+            {message && <p className="text-clr-black font-bold mt-5">{message}</p>}
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
@@ -830,7 +857,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
         } else {
             setSkillIsEqual(false);
         }
-        
+
         //console.log(categoryForm);
         //console.log(skillForm);
         const updatedUserData = {
@@ -854,7 +881,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                     CategoryId: categoryForm.category1,
                 });
             }
-    
+
             if (categoryForm.category2) {
                 if (categoryForm.category2 === "57") {
                 } else {
@@ -864,7 +891,7 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                     });
                 }
             }
-    
+
             if (categoryForm.category3) {
                 if (categoryForm.category3 === "57") {
                 } else {
@@ -874,28 +901,28 @@ export function Company_SignIn_2({ userData, isCompany2, handleCompanyBack }) {
                     });
                 }
             }
-    
+
             if (skillForm.skill1) {
                 await addSkills({
                     WorkId: response.workId,
                     SkillId: skillForm.skill1,
                 });
             }
-    
+
             if (skillForm.skill2) {
                 await addSkills({
                     WorkId: response.workId,
                     SkillId: skillForm.skill2,
                 });
             }
-    
+
             if (skillForm.skill3) {
                 await addSkills({
                     WorkId: response.workId,
                     SkillId: skillForm.skill3,
                 });
             }
-            
+
             const result = await login(response.email, userData.password);
 
             if (result.success) {
@@ -1002,11 +1029,11 @@ SignIn_1.propTypes = {
 
 
 SignIn_2.propTypes = {
-     userData: PropTypes.shape({
-    password: PropTypes.string.isRequired,
-  }).isRequired,
-  isRegister2: PropTypes.bool.isRequired,
-  handleRegisterBack: PropTypes.func.isRequired
+    userData: PropTypes.shape({
+        password: PropTypes.string.isRequired,
+    }).isRequired,
+    isRegister2: PropTypes.bool.isRequired,
+    handleRegisterBack: PropTypes.func.isRequired
 };
 
 Company_SignIn_1.propTypes = {
@@ -1017,7 +1044,7 @@ Company_SignIn_1.propTypes = {
 Company_SignIn_2.propTypes = {
     userData: PropTypes.shape({
         password: PropTypes.string.isRequired,
-      }).isRequired,
+    }).isRequired,
     isCompany2: PropTypes.bool.isRequired,
     handleCompanyBack: PropTypes.func.isRequired
 };
