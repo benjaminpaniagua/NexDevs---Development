@@ -43,7 +43,7 @@ export const useChangePassword = () => {
 
         if (profileType === 'U') {
             try {
-                const response = await axios.post('https://localhost:7038/Users/NuevaContraseña', null, {
+                const response = await axios.post('https://nexdevsapi.somee.com/Users/NuevaContraseña', null, {
                     params: { userId, password, confirmarPassword },
                 });
                 if (response.status === 200) {
@@ -59,7 +59,7 @@ export const useChangePassword = () => {
 
         if (profileType === 'W') {
             try {
-                const response = await axios.post('https://localhost:7038/WorkProfile/NuevaContraseña', null, {
+                const response = await axios.post('https://nexdevsapi.somee.com/WorkProfile/NuevaContraseña', null, {
                     params: { workId, password, confirmarPassword },
                 });
                 if (response.status === 200) {

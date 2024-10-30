@@ -12,13 +12,13 @@ export const useSendEmail = () => {
         setError(null);
 
         try {
-            const response = await axios.post('https://localhost:7038/Users/Restablecer', null, {
+            const response = await axios.post('https://nexdevsapi.somee.com/Users/Restablecer', null, {
                 params: { email },
             });
 
             if (response.data === 'Este correo no se encuentra registrado') {
                 try {
-                    const response = await axios.post('https://localhost:7038/WorkProfile/Restablecer', null, {
+                    const response = await axios.post('https://nexdevsapi.somee.com/WorkProfile/Restablecer', null, {
                         params: { email },
                     });
                     setMessage(response.data);
