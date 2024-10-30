@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 export const useAddCategories = () => {
   const [loading, setLoading] = useState(false);
@@ -10,12 +10,15 @@ export const useAddCategories = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('https://localhost:7038/WorkCategories/Agregar', category);
+      const response = await axios.post(
+        "http://nexdevsapi.somee.com/WorkCategories/Agregar",
+        category
+      );
       //console.log(response.data);
       setMessage(response.data.message);
       return response.data;
     } catch (error) {
-      setError('Error al agregar las categorías');
+      setError("Error al agregar las categorías");
       setMessage("Error al agregar las categorías");
     } finally {
       setLoading(false);

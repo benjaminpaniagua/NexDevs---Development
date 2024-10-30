@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 export const useCreatePost = () => {
   const [loading, setLoading] = useState(false);
@@ -10,13 +10,16 @@ export const useCreatePost = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('https://localhost:7038/Posts/Agregar', post);
+      const response = await axios.post(
+        "http://nexdevsapi.somee.com/Posts/Agregar",
+        post
+      );
       //console.log(response.data);
       setMessage(response.data.message);
       console.log(response.data);
       return response.data;
     } catch (error) {
-      setError('Error al crear la cuenta');
+      setError("Error al crear la cuenta");
       setMessage("Error al crear la publicación");
     } finally {
       setLoading(false);

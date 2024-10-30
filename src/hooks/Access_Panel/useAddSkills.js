@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 export const useAddSkills = () => {
   const [loading, setLoading] = useState(false);
@@ -10,12 +10,15 @@ export const useAddSkills = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('https://localhost:7038/WorkSkills/Agregar', skill);
+      const response = await axios.post(
+        "http://nexdevsapi.somee.com//WorkSkills/Agregar",
+        skill
+      );
       //console.log(response.data);
       setMessage(response.data.message);
       return response.data;
     } catch (error) {
-      setError('Error al agregar los skills');
+      setError("Error al agregar los skills");
       setMessage("Error al agregar los skills");
     } finally {
       setLoading(false);

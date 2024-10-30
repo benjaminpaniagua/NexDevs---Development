@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 export const useRegisterWorkProfile = () => {
   const [loading, setLoading] = useState(false);
@@ -10,13 +10,18 @@ export const useRegisterWorkProfile = () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await axios.post('https://localhost:7038/WorkProfile/CrearCuenta', workProfile);
+      const response = await axios.post(
+        "http://nexdevsapi.somee.com/WorkProfile/CrearCuenta",
+        workProfile
+      );
       //console.log(response.data);
       setMessage(response.data.message);
       return response.data;
     } catch (error) {
-      setError('Error al crear la cuenta');
-      setMessage("Ya existe una cuenta con ese correo o los datos son incorrectos");
+      setError("Error al crear la cuenta");
+      setMessage(
+        "Ya existe una cuenta con ese correo o los datos son incorrectos"
+      );
     } finally {
       setLoading(false);
     }

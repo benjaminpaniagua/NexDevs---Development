@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { useAuth } from '../utils/AuthProvider';
+import { useAuth } from "../utils/AuthProvider";
 
 export const useFetchWorkUserData = () => {
   const { token } = useAuth();
@@ -16,16 +16,20 @@ export const useFetchWorkUserData = () => {
         const decodedToken = jwtDecode(token);
         const userEmail = decodedToken.nameid;
         try {
-          const response = await axios.get(`https://localhost:7038/WorkProfile/BuscarEmail?email=${userEmail}`);
+          const response = await axios.get(
+            `http://nexdevsapi.somee.com/WorkProfile/BuscarEmail?email=${userEmail}`
+          );
           if (response.data === "") {
-            const responseUser = await axios.get(`https://localhost:7038/Users/BuscarEmail?email=${userEmail}`);
+            const responseUser = await axios.get(
+              `http://nexdevsapi.somee.com/Users/BuscarEmail?email=${userEmail}`
+            );
             setUserData(responseUser.data);
-          }else{
+          } else {
             setUserData(response.data);
           }
         } catch (error) {
-          setError('Error al cargar los datos del usuario');
-          console.error('Error fetching user data:', error);
+          setError("Error al cargar los datos del usuario");
+          console.error("Error fetching user data:", error);
         } finally {
           setLoading(false);
         }

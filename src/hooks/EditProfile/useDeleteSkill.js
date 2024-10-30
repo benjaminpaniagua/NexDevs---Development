@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import axios from 'axios';
+import { useState } from "react";
+import axios from "axios";
 
 export const useDeleteSkill = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -10,12 +10,14 @@ export const useDeleteSkill = () => {
     setDeleteLoading(true);
     setDeleteError(null);
     setDeleteMessage(null);
-    
+
     try {
-      const response = await axios.delete(`https://localhost:7038/WorkSkills/Eliminar?id=${id}`);
+      const response = await axios.delete(
+        `http://nexdevsapi.somee.com/WorkSkills/Eliminar?id=${id}`
+      );
       setDeleteMessage(response.data);
     } catch (error) {
-      setDeleteError(error.response?.data || 'Error al eliminar la categoría');
+      setDeleteError(error.response?.data || "Error al eliminar la categoría");
     } finally {
       setDeleteLoading(false);
     }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
-export const useFetchUserSkills = ({workId}) => {
+export const useFetchUserSkills = ({ workId }) => {
   const [userSkills, setUserSkills] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -11,14 +11,16 @@ export const useFetchUserSkills = ({workId}) => {
 
     const fetchSkills = async () => {
       try {
-        const response = await axios.get(`https://localhost:7038/WorkSkills/Consultar?workId=${workId}`, {
-          cancelToken: source.token
-        });
+        const response = await axios.get(
+          `http://nexdevsapi.somee.com/WorkSkills/Consultar?workId=${workId}`,
+          {
+            cancelToken: source.token,
+          }
+        );
         setUserSkills(response.data);
       } catch (err) {
-
         if (axios.isCancel(err)) {
-          console.log('Solicitud Cancelada', err.message);
+          console.log("Solicitud Cancelada", err.message);
         } else {
           setError(err);
         }
@@ -29,10 +31,9 @@ export const useFetchUserSkills = ({workId}) => {
 
     fetchSkills();
     return () => {
-      source.cancel('Solicitud Cancelada');
+      source.cancel("Solicitud Cancelada");
     };
   }, []);
 
   return { userSkills, loading, error };
-
 };

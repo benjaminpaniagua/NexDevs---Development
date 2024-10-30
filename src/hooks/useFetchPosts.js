@@ -8,12 +8,12 @@ export const useFetchPosts = () => {
   const getData = async () => {
     try {
       const response = await fetch(
-        `https://localhost:7038/Posts/ListadoGeneral`
+        `http://nexdevsapi.somee.com/Posts/ListadoGeneral`
       );
 
       // Verificar si la respuesta es exitosa
       if (!response.ok) {
-        throw new Error('Error en la red: ' + response.statusText);
+        throw new Error("Error en la red: " + response.statusText);
       }
 
       const data = await response.json();
@@ -32,11 +32,10 @@ export const useFetchPosts = () => {
 
   return {
     data,
-    error,   // Devolver el error
+    error, // Devolver el error
     loading, // Devolver el estado de carga
   };
 };
-
 
 // const posts = [
 //   {

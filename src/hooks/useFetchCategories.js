@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 export const useFetchCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -11,14 +11,16 @@ export const useFetchCategories = () => {
 
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('https://localhost:7038/Categories/Listado', {
-          cancelToken: source.token
-        });
+        const response = await axios.get(
+          "http://nexdevsapi.somee.com/Categories/Listado",
+          {
+            cancelToken: source.token,
+          }
+        );
         setCategories(response.data);
       } catch (err) {
-
         if (axios.isCancel(err)) {
-          console.log('Solicitud Cancelada', err.message);
+          console.log("Solicitud Cancelada", err.message);
         } else {
           setError(err);
         }
@@ -29,10 +31,9 @@ export const useFetchCategories = () => {
 
     fetchCategories();
     return () => {
-      source.cancel('Solicitud Cancelada');
+      source.cancel("Solicitud Cancelada");
     };
   }, []);
 
   return { categories, loading, error };
-
 };
