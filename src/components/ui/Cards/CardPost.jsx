@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useDeletePost } from "../../../hooks/useDeletePost";
-import { useDeleteComment } from "../../../hooks/useDeleteComments";
+// import { useDeleteComment } from "../../../hooks/useDeleteComments";
 
 export function CardPost({
   postId,
@@ -21,6 +21,7 @@ export function CardPost({
   likesCount,
   commentsCount,
   onClick,
+  onDelete,
 }) {
   const [showModal, setShowModal] = useState(false);
   const [comments, setComments] = useState([]);
@@ -33,10 +34,16 @@ export function CardPost({
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthor, setIsAuthor] = useState(false); // Estado para verificar si el usuario es el autor del post o no
-  const [isWorker, setIsWorker] = useState(false); // Estado para verificar si el usuario es un trabajador o no
-  const [isUser, setIsUser] = useState(false); // Estado para verificar si el usuario es un usuario o no
-  // const [deleteComment] = useDeleteComment(); // Asegúrate de que esto se usa en el cuerpo del componente
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [isWorker, setIsWorker] = useState(false);
+  // const [isUser, setIsUser] = useState(false); 
+  // const [deleteComment] = useDeleteComment(); 
+
+  const handleDeleteClick = () => {
+    onDelete();
+  };
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -57,23 +64,6 @@ export function CardPost({
     setIsMenuOpen((prev) => !prev);
   };
 
-  const { deletePost, loading, error } = useDeletePost();
-
-  const handlePostDelete = async () => {
-    const confirmation = window.confirm(
-      "¿Estás seguro de que deseas eliminar este post?"
-    );
-    if (confirmation) {
-      const result = await deletePost(postId);
-      if (!error) {
-        // Aquí puedes manejar la UI, como remover el post eliminado de la lista
-        alert(result); // Mensaje de éxito
-      } else {
-        alert(`Error: ${error}`); // Manejo de error
-      }
-    }
-  };
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -82,12 +72,12 @@ export function CardPost({
     if (userData) {
       fetchIsLiked();
     }
-  }, [userData]); // Dependencia en userData para asegurarse de que esté cargado
+  }, [userData]);
 
   const fetchIsLiked = async () => {
     try {
-      const userId = userData?.userId || 0; // Obtenemos userId desde userData
-      const workProfileId = userData?.workId || 0; // Obtenemos workProfileId desde userData
+      const userId = userData?.userId || 0;
+      const workProfileId = userData?.workId || 0;
 
       // Validar si ambos son null, no hacer la solicitud
       // if (!userId && !workProfileId) {
@@ -96,8 +86,6 @@ export function CardPost({
       //   );
       //   return;
       // }
-
-      // Construimos la URL con los parámetros correctos
       const url = `http://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
 
       const response = await fetch(url, {
@@ -109,7 +97,7 @@ export function CardPost({
 
       if (response.ok) {
         const data = await response.json();
-        setIsLiked(data); // La respuesta es booleana, actualiza el estado de isLiked
+        setIsLiked(data);
         // console.log("isLiked después de la actualización:", data);
       } else {
         // console.error("Error al verificar si el post ha sido liked");
@@ -393,12 +381,11 @@ export function CardPost({
           )}
           {/* Menu */}
           {isMenuOpen &&
-            isAuthor && ( // Asegúrate de que el menú solo aparezca si es el autor
+            isAuthor && (
               <div className="absolute right-2 top-10 bg-white border rounded shadow-lg w-40">
                 <div className="flex flex-col p-2">
                   <button
                     onClick={() => {
-                      // Lógica para editar
                       console.log("Editar acción");
                       setIsMenuOpen(false);
                     }}
@@ -407,7 +394,7 @@ export function CardPost({
                     Editar
                   </button>
                   <button
-                    onClick={handlePostDelete}
+                    onClick={handleDeleteClick}
                     disabled={loading}
                     className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
                       loading ? "cursor-not-allowed" : ""
