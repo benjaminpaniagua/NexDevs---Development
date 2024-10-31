@@ -1,5 +1,5 @@
 import { MainButton } from "../Buttons";
-import { ICONS } from "../Icons";
+import { ICONS } from "../../ui/Icons";
 import { useFetchWorkProfileCategories } from "../../../hooks/WorkProfile/useFetchWorkProfileCategory";
 import PropTypes from 'prop-types';
 export function CardProfiles({

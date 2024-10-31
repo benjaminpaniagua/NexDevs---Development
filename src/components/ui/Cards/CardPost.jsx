@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ICONS } from "../Icons";
+import { ICONS } from "../../ui/Icons";
 import { SecondaryButton } from "../Buttons";
 import { FormInput } from "../FormInput";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
