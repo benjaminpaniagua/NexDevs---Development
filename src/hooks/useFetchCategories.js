@@ -12,7 +12,7 @@ export const useFetchCategories = () => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://nexdevsapi.somee.com/Categories/Listado",
+          "https://nexdevsapi.somee.com/Categories/Listado",
           {
             cancelToken: source.token,
           }

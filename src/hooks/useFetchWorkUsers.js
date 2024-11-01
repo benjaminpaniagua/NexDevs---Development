@@ -12,7 +12,7 @@ export const useFetchWorkUsers = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://nexdevsapi.somee.com/WorkProfile/Listado",
+          "https://nexdevsapi.somee.com/WorkProfile/Listado",
           {
             cancelToken: source.token,
           }
