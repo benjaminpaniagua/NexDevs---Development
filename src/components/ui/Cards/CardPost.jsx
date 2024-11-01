@@ -208,9 +208,10 @@ export function CardPost({
             className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
           />
           <SecondaryButton
-            text="Comentar"
+            text=""
+            icon={ICONS.send}
             type="submit"
-            extraStyles="py-2 w-[20%]"
+            extraStyles="flex items-center justify-center py-2 w-[20%]"
             disabled={!postComment}
           />
         </form>
@@ -359,136 +360,139 @@ export function CardPost({
       {/* Modal */}
       {showModal && (
         <div
-          className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-start sm:items-start justify-center z-50 overflow-y-auto"
+          className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-70"
           onClick={handleOutsideClick}
         >
-          <div className="bg-white sm:p-4 p-6 rounded-lg m-4 max-w-5xl w-full relative h-fit">
-            <div className="flex justify-between items-center w-full pb-4 pt-5 bg-white sticky top-[-10px] z-10">
-              <Link to={`/workprofile/${workId}`}>
-                <div className="flex items-center">
-                  <div className="h-12 w-12 bg-gray-300 rounded-full flex items-center justify-center">
-                    <img
-                      src={
-                        profilePictureUrl === "ND" ||
-                        profilePictureUrl === "default_image_url"
-                          ? "/images/default_profile_picture.jpg"
-                          : profilePictureUrl
-                      }
-                      alt="Foto de perfil"
-                      className="aspect-square rounded-full border-2 border-white object-cover"
-                    />
+          <div className="absolute top-4 right-10">
+            {/* Botón para cerrar el modal */}
+            <button onClick={closeModal} className="text-black p-3">
+              {ICONS.close_white}
+            </button>
+          </div>
+          <div className="max-w-5xl p-0 overflow-hidden bg-white rounded shadow-lg">
+            <div className="flex h-[80vh]">
+              {/* Left side - Image */}
+              <div className="relative flex-1">
+                <img
+                  className="object-cover h-full w-full bg-gray-300"
+                  src={
+                    imageUrl === "ND" || imageUrl === "default_image_url"
+                      ? "/images/placeholder.jpg"
+                      : imageUrl
+                  }
+                  alt="Post_Image"
+                />
+              </div>
+              {/* Right side - Comments */}
+              <div className="flex flex-col w-[350px] bg-background">
+                {/* Header */}
+                <div className="p-4 border-b">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8">
+                      <img
+                        src={
+                          profilePictureUrl === "ND" ||
+                          profilePictureUrl === "default_image_url"
+                            ? "/images/default_profile_picture.jpg"
+                            : profilePictureUrl
+                        }
+                        alt="Foto de perfil"
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </div>
+                    <h2 className="text-sm font-semibold">{userName}</h2>
                   </div>
-                  <h3 className="text-fs-large font-bold ml-3">{userName}</h3>
                 </div>
-              </Link>
-
-              {/* Botón para cerrar el modal */}
-              <button onClick={closeModal} className="text-black">
-                {ICONS.close}
-              </button>
-            </div>
-            <div className="rounded-lg overflow-hidden">
-              <img
-                className="aspect-[4/3] w-full h-full mb-5"
-                src={
-                  imageUrl === "ND" || imageUrl === "default_image_url"
-                    ? "/images/placeholder.jpg"
-                    : imageUrl
-                }
-                alt="Post_Image"
-              />
-            </div>
-            {/* Icons */}
-            <section className="flex gap-3 xs:gap-2 items-center ml-auto">
-              <div className="flex gap-1 items-center">
-                <button
-                  className="transition-all hover:scale-110"
-                  onClick={isLiked ? handleDislikePost : handleLikePost}
-                >
-                  {isLiked ? ICONS.heart_filled : ICONS.heart}
-                </button>
-                <h4 className="text-clr-black font-bold">
-                  {currentLikesCount}
-                </h4>
-              </div>
-              <div className="flex gap-1 items-center">
-                <button className="transition-all hover:scale-110">
-                  {ICONS.comment}
-                </button>
-                <h4 className="text-clr-black font-bold">{commentsCount}</h4>
-              </div>
-            </section>
-
-            <p>{description}</p>
-            <div className="mt-4">
-              <h4 className="font-bold">Comentarios:</h4>
-
-              <div className="mt-2">
-                {comments.length > 0 ? (
-                  comments
-                    .sort((a, b) => new Date(b.createAt) - new Date(a.createAt))
-                    .map((comment) => (
-                      <div className="flex justify-between">
-                        <div
-                          key={comment.commentId}
-                          className="border-b border-gray-200 py-2"
-                        >
-                          {comment.workId && (
-                            <Link to={`/workprofile/${comment.workId}`}>
-                              <div className="flex items-center">
-                                <img
-                                  src={
-                                    comment.profilePictureUrlWorker === "ND" ||
-                                    !comment.profilePictureUrlWorker
-                                      ? "/images/default_profile_picture.jpg"
-                                      : comment.profilePictureUrlWorker
-                                  }
-                                  alt="Foto de perfil"
-                                  className="w-8 h-8 rounded-full mr-2"
-                                />
-                                <h5 className="font-bold">
+                {/* Comments section */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  {comments.length > 0 ? (
+                    comments
+                      .sort(
+                        (a, b) => new Date(b.createAt) - new Date(a.createAt)
+                      )
+                      .map((comment) => (
+                        <div key={comment.commentId} className="flex gap-2">
+                          <div className="w-8 h-8 ">
+                            <img
+                              src={
+                                comment.profilePictureUrlWorker === "ND" ||
+                                !comment.profilePictureUrlWorker
+                                  ? "/images/default_profile_picture.jpg"
+                                  : comment.profilePictureUrlWorker
+                              }
+                              alt="Foto de perfil"
+                              className="w-full h-full rounded-full object-cover"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                              {comment.workId ? (
+                                <Link
+                                  to={`/workprofile/${comment.workId}`}
+                                  className="text-sm font-semibold truncate"
+                                >
                                   {comment.firstName}{" "}
                                   {comment.lastName || comment.name || ""}
-                                </h5>
-                              </div>
-                            </Link>
-                          )}
-
-                          {comment.userId && (
-                            <div className="flex items-center">
-                              <img
-                                src={
-                                  comment.profilePictureUrlUser === "ND" ||
-                                  !comment.profilePictureUrlUser
-                                    ? "/images/Profile_Placeholder.png"
-                                    : comment.profilePictureUrlUser
-                                }
-                                alt="Foto de perfil"
-                                className="w-8 h-8 rounded-full mr-2"
-                              />
-                              <h5 className="font-bold">
-                                {comment.firstName}{" "}
-                                {comment.lastName || comment.name || ""}
-                              </h5>
+                                </Link>
+                              ) : (
+                                <span className="text-sm font-semibold truncate">
+                                  {comment.firstName}{" "}
+                                  {comment.lastName || comment.name || ""}
+                                </span>
+                              )}
+                              <span className="text-xs text-muted-foreground">
+                                2h
+                              </span>
                             </div>
-                          )}
-                          <p>{comment.contentComment}</p>
+                            <p className="text-sm break-words">
+                              {comment.contentComment}
+                            </p>
+                            <div className="flex gap-4 mt-1">
+                              <button className="text-xs text-muted-foreground">
+                                Like
+                              </button>
+                              <button className="text-xs text-muted-foreground">
+                                Reply
+                              </button>
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <button onClick={handleCommentDelete}>
-                            {ICONS.trash}
-                            {/* <span className="sr-only">Más opciones</span> */}
-                          </button>
-                        </div>
-                      </div>
-                    ))
-                ) : (
-                  <p>No hay comentarios aún.</p>
-                )}
+                      ))
+                  ) : (
+                    <p>No hay comentarios aún.</p>
+                  )}
+                </div>
+
+                {/* Actions */}
+                <div className="p-4 border-t">
+                  <section className="flex gap-3 xs:gap-2 items-center ml-auto">
+                    <div className="flex gap-1 items-center">
+                      <button
+                        className="transition-all hover:scale-110"
+                        onClick={isLiked ? handleDislikePost : handleLikePost}
+                      >
+                        {isLiked ? ICONS.heart_filled : ICONS.heart}
+                      </button>
+                      <h4 className="text-clr-black font-bold">
+                        {currentLikesCount}
+                      </h4>
+                    </div>
+                    <div className="flex gap-1 items-center">
+                      <button className="transition-all hover:scale-110">
+                        {ICONS.comment}
+                      </button>
+                      <h4 className="text-clr-black font-bold">
+                        {commentsCount}
+                      </h4>
+                    </div>
+                  </section>
+                  <div className="text-sm font-semibold mb-2">
+                    {currentLikesCount} likes
+                  </div>
+                  {renderCreateComment()}
+                </div>
               </div>
             </div>
-            {/*Comentar*/}
-            {renderCreateComment()}
           </div>
         </div>
       )}

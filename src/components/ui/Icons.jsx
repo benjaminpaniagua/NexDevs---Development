@@ -449,4 +449,33 @@ export const ICONS = {
       />
     </svg>
   ),
+  send: (
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 28 28"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_1292_1599)">
+        <path
+          d="M1.50837 9.94523C1.50837 7.69325 23.1723 -0.720925 25.9513 2.05591C28.7244 4.82695 20.1969 26.4992 17.9608 26.4992C15.3544 26.4992 13.823 16.5708 13.2058 14.7917C11.4333 14.1655 1.50837 12.5613 1.50837 9.94523Z"
+          stroke="black"
+          stroke-width="3"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_1292_1599">
+          <rect
+            width="28"
+            height="28"
+            fill="white"
+            transform="matrix(-1 0 0 1 28 0)"
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  ),
 };
