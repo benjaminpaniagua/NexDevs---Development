@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ICONS } from "../ICONS";
+import { ICONS } from "../../ui/Icons";
 import { SecondaryButton } from "../Buttons";
 import PropTypes from 'prop-types';
 export function Modal_Post({ post, onClose }) {

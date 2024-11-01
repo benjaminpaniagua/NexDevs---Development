@@ -4,7 +4,8 @@ import {
   SecondaryButtonOutline,
   SecondaryButton,
 } from "../ui/Buttons";
-import { ICONS } from "../ui/ICONS";
+// import { ICONS } from "../ui/ICONS";
+import { ICONS } from "../ui/Icons";
 import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
