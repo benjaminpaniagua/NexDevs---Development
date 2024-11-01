@@ -31,6 +31,7 @@ export function CardPost({
   const [isAuthor, setIsAuthor] = useState(false);
   const [isWorker, setIsWorker] = useState(false);
   const { userData } = useFetchWorkUserData();
+  console.log(userData.workId);
 
   // Estado de interacción del usuario (likes y comentarios)
   const [postComment, setPostComment] = useState("");
@@ -411,18 +412,20 @@ export function CardPost({
                                   {comment.lastName || comment.name || ""}
                                 </span>
                               )}
-                              {comment.workId === userData.workId ||
-                                (comment.userId === userData.userId && (
-                                  <button
-                                    className="text-xs text-muted-foreground"
-                                    onClick={() =>
-                                      handleCommentDelete(comment.commentId)
-                                    }
-                                  >
-                                    {ICONS.trash}
-                                    {/* {console.log(comment.commentId)} */}
-                                  </button>
-                                ))}
+                              {(comment.workId &&
+                                comment.workId === userData.workId) ||
+                              (comment.userId &&
+                                comment.userId === userData.userId) ? (
+                                <button
+                                  className="text-xs text-muted-foreground"
+                                  onClick={() =>
+                                    handleCommentDelete(comment.commentId)
+                                  }
+                                >
+                                  {ICONS.trash}
+                                  {/* {console.log(comment.commentId)} */}
+                                </button>
+                              ) : null}
                             </div>
                             <p className="text-sm break-words">
                               {comment.contentComment}

@@ -8,7 +8,7 @@ export const useFetchPosts = () => {
   const getData = async () => {
     try {
       const response = await fetch(
-        `https://nexdevsapi.somee.com/Posts/ListadoGeneral`
+        `http://nexdevsapi.somee.com/Posts/ListadoGeneral`
       );
 
       // Verificar si la respuesta es exitosa
