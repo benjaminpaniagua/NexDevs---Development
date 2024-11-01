@@ -242,7 +242,7 @@ export function CardPost({
               <div className="flex flex-col p-2">
                 <button
                   onClick={() => {
-                    console.log("Editar acción");
+                    navigate(`/edit-post/${postId}`);
                     setIsMenuOpen(false);
                   }}
                   className="flex items-center p-2 text-left hover:bg-gray-100"

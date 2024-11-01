@@ -23,6 +23,7 @@ import Services from "./components/pages/Services.jsx";
 import FaqPage from "./components/pages/FaqPage.jsx";
 import CreatePost from "./components/pages/CreatePost.jsx";
 import { EditCollection } from "./components/pages/editCollection.jsx";
+import { EditPost } from "./components/pages/PostEdit.jsx";
 
 const MainApp = () => {
   useScrollToTop();
@@ -49,6 +50,7 @@ const MainApp = () => {
           <Route path="/posts" element={<Posts_List />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/editCollection/:userId" element={<EditCollection />} />
+          <Route path="/edit-post/:postId" element={<EditPost />} />
 
           {/* Footer routes */}
           <Route path="/about-us" element={<AboutUs />} />
