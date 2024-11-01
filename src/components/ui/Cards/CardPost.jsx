@@ -411,17 +411,18 @@ export function CardPost({
                                   {comment.lastName || comment.name || ""}
                                 </span>
                               )}
-                              {comment.workId === userData.workId && (
-                                <button
-                                  className="text-xs text-muted-foreground"
-                                  onClick={() =>
-                                    handleCommentDelete(comment.commentId)
-                                  }
-                                >
-                                  {ICONS.trash}
-                                  {/* {console.log(comment.commentId)} */}
-                                </button>
-                              )}
+                              {comment.workId === userData.workId ||
+                                (comment.userId === userData.userId && (
+                                  <button
+                                    className="text-xs text-muted-foreground"
+                                    onClick={() =>
+                                      handleCommentDelete(comment.commentId)
+                                    }
+                                  >
+                                    {ICONS.trash}
+                                    {/* {console.log(comment.commentId)} */}
+                                  </button>
+                                ))}
                             </div>
                             <p className="text-sm break-words">
                               {comment.contentComment}
