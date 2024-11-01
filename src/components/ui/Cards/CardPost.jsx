@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 // import { useDeleteComment } from "../../../hooks/useDeleteComments";
+import useLikePost from "../../../hooks/useLikePost";
 
 export function CardPost({
   postId,
@@ -23,178 +24,95 @@ export function CardPost({
   onClick,
   onDelete,
 }) {
-  const [showModal, setShowModal] = useState(false);
+  // Estado de autenticación y permisos de usuario
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isAuthor, setIsAuthor] = useState(false);
+  const [isWorker, setIsWorker] = useState(false);
+  const { userData } = useFetchWorkUserData();
+
+  // Estado de interacción del usuario (likes y comentarios)
+  // const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
+  // const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState([]);
   const [postComment, setPostComment] = useState("");
   const { createComments } = useCreateComments();
+  // const [deleteComment] = useDeleteComment();
 
-  const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
-  const { userData } = useFetchWorkUserData();
+  const { currentLikesCount, isLiked, handleLikePost, handleDislikePost } =
+    useLikePost(postId, likesCount);
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  // Estado del modal
+  const [showModal, setShowModal] = useState(false);
+
+  // Estado de navegación y carga
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  // Estado de menú de opciones
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthor, setIsAuthor] = useState(false);
-  const [isWorker, setIsWorker] = useState(false);
-  // const [isUser, setIsUser] = useState(false); 
-  // const [deleteComment] = useDeleteComment(); 
 
+  //OPEN AND CLOSE MODAL
+  const openModal = () => {
+    setShowModal(true);
+    fetchComments();
+  };
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  //EVITAR SCRROLL EN EL BODY
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [showModal]);
+
+  //CLOSE MODAL ON OUTSIDE CLICK
+  const handleOutsideClick = (e) => {
+    if (e.target.classList.contains("fixed")) {
+      closeModal();
+    }
+  };
+
+  //CLICK DELETE POST
   const handleDeleteClick = () => {
     onDelete();
   };
 
-  const [loading, setLoading] = useState(false);
+  // //CHECK IF USER IS LOGGED IN AND FETCH IS LIKED
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     setIsLoggedIn(true);
+  //     if (userData) {
+  //       fetchIsLiked();
+  //     }
+  //   }
+  // }, [userData]);
 
-  const navigate = useNavigate();
-
+  //CHECK IF USER IS AUTHOR OR WORKER
   useEffect(() => {
     if (userData) {
       if (userData.profileType === "W") {
         setIsWorker(true);
       }
-
       if (userData.profileType === "W" && userData.workId === workId) {
         setIsAuthor(true);
       }
-
     }
   }, [userData]);
 
+  //POST OPTIONS (EDIT, DELETE) MENU
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-    if (userData) {
-      fetchIsLiked();
-    }
-  }, [userData]);
-
-  const fetchIsLiked = async () => {
-    try {
-      const userId = userData?.userId || 0;
-      const workProfileId = userData?.workId || 0;
-
-      // Validar si ambos son null, no hacer la solicitud
-      // if (!userId && !workProfileId) {
-      //   console.error(
-      //     "No se ha encontrado userId ni workProfileId para verificar el like."
-      //   );
-      //   return;
-      // }
-      const url = `http://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
-
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setIsLiked(data);
-        // console.log("isLiked después de la actualización:", data);
-      } else {
-        // console.error("Error al verificar si el post ha sido liked");
-      }
-    } catch (error) {
-      // console.error("Error al verificar si el post ha sido liked:", error);
-    }
-    // console.log("isLiked", isLiked);
-  };
-
-  const handleLikePost = async () => {
-    if (!isLoggedIn) {
-      navigate("/Access_Panel/login");
-      return;
-    }
-
-    const userId = userData?.userId || 0;
-    const workProfileId = userData?.workId || 0;
-
-    const urlLike = `http://nexdevsapi.somee.com/Likes/LikePost`;
-
-    try {
-      const response = await fetch(urlLike, {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          postId: postId,
-          userId: userId,
-          workProfileId: workProfileId,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al dar like al post");
-      }
-
-      const data = await response.json();
-      setIsLiked(!isLiked);
-      setCurrentLikesCount((prevCount) =>
-        isLiked ? prevCount - 1 : prevCount + 1
-      );
-    } catch (error) {
-      console.error("Error al dar like al post:", error);
-    }
-  };
-
-  const handleDislikePost = async () => {
-    if (!isLoggedIn) {
-      navigate("/Access_Panel/login");
-      return;
-    }
-
-    const userId = userData?.userId || 0;
-    const workProfileId = userData?.workId || 0;
-
-    const urlDislike = `http://nexdevsapi.somee.com/Likes/DislikePost`;
-
-    try {
-      const response = await fetch(urlDislike, {
-        method: "DELETE",
-        headers: {
-          accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          postId: postId,
-          userId: userId,
-          workProfileId: workProfileId,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al dar dislike al post");
-      }
-
-      const data = await response.json();
-      setIsLiked(false);
-      setCurrentLikesCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    } catch (error) {
-      console.error("Error al dar dislike al post:", error);
-    }
-  };
-
-  const handleCommentChange = (e) => {
-    setPostComment(e.target.value);
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
-
+  //FETCH COMMENTS BY POST
   const fetchComments = async () => {
     const url = `http://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
 
@@ -217,15 +135,64 @@ export function CardPost({
     }
   };
 
-  const openModal = () => {
-    setShowModal(true);
-    fetchComments();
+  //HANDLE COMMENT DELETE
+  const handleCommentDelete = async (commentId) => {
+    try {
+      const response = await deleteComment(commentId);
+      console.log("Comentario eliminado exitosamente", response);
+      fetchComments();
+    } catch (error) {
+      console.error("Error al eliminar el comentario", error);
+    }
   };
 
-  const closeModal = () => {
-    setShowModal(false);
+  //CREATE COMMENTS
+  const handleCommentSubmit = async (e) => {
+    e.preventDefault();
+    if (!postComment) {
+      console.log("No hay valor");
+      return;
+    }
+    let commentData;
+    if (userData.profileType === "W") {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: 0,
+        workId: userData.workId,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+    if (userData.profileType === "U") {
+      commentData = {
+        commentId: 0,
+        postId: postId,
+        userId: userData.userId,
+        workId: 0,
+        contentComment: postComment,
+        createAt: new Date().toISOString(),
+        likesCount: 0,
+      };
+    }
+    console.log(userData.profileType);
+    try {
+      const response = await createComments(commentData);
+      console.log("Comentario enviado exitosamente", response);
+      setPostComment("");
+      fetchComments(); // Llama a fetchComments después de enviar el comentario
+    } catch (error) {
+      console.error("Error al enviar el comentario", error);
+    }
   };
 
+  //HANDLE COMMENT CHANGE EVENT
+  const handleCommentChange = (e) => {
+    setPostComment(e.target.value);
+  };
+
+  //RENDER COMMENT FORM OR LOGIN BUTTON
   const renderCreateComment = () => {
     if (userData.profileType) {
       return (
@@ -272,88 +239,6 @@ export function CardPost({
     }
   };
 
-  const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-    if (!postComment) {
-      console.log("No hay valor");
-      return;
-    }
-
-    let commentData;
-
-    if (userData.profileType === "W") {
-      commentData = {
-        commentId: 0,
-        postId: postId,
-        userId: 0,
-        workId: userData.workId,
-        contentComment: postComment,
-        createAt: new Date().toISOString(),
-        likesCount: 0,
-      };
-    }
-    if (userData.profileType === "U") {
-      commentData = {
-        commentId: 0,
-        postId: postId,
-        userId: userData.userId,
-        workId: 0,
-        contentComment: postComment,
-        createAt: new Date().toISOString(),
-        likesCount: 0,
-      };
-    }
-
-    console.log(userData.profileType);
-
-    try {
-      const response = await createComments(commentData);
-      console.log("Comentario enviado exitosamente", response);
-      setPostComment("");
-      fetchComments(); // Llama a fetchComments después de enviar el comentario
-    } catch (error) {
-      console.error("Error al enviar el comentario", error);
-    }
-  };
-
-  useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [showModal]);
-
-  const handleOutsideClick = (e) => {
-    if (e.target.classList.contains("fixed")) {
-      closeModal();
-    }
-  };
-
-  const handleCommentDelete = async (commentId) => {
-    fetch = async () => {
-      const response = await fetch(
-        `http://nexdevsapi.somee.com/Comments/Eliminar?commentId=${commentId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Accept: "text/plain",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Error al eliminar el comentario");
-      }
-
-      return true;
-    };
-  };
-
   return (
     <>
       <div className="h-auto flex flex-col gap-2 transition-all">
@@ -380,31 +265,30 @@ export function CardPost({
             </button>
           )}
           {/* Menu */}
-          {isMenuOpen &&
-            isAuthor && (
-              <div className="absolute right-2 top-10 bg-white border rounded shadow-lg w-40">
-                <div className="flex flex-col p-2">
-                  <button
-                    onClick={() => {
-                      console.log("Editar acción");
-                      setIsMenuOpen(false);
-                    }}
-                    className="flex items-center p-2 text-left hover:bg-gray-100"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={handleDeleteClick}
-                    disabled={loading}
-                    className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
-                      loading ? "cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {loading ? "Eliminando..." : "Eliminar"}
-                  </button>
-                </div>
+          {isMenuOpen && isAuthor && (
+            <div className="absolute right-2 top-10 bg-white border rounded shadow-lg w-40">
+              <div className="flex flex-col p-2">
+                <button
+                  onClick={() => {
+                    console.log("Editar acción");
+                    setIsMenuOpen(false);
+                  }}
+                  className="flex items-center p-2 text-left hover:bg-gray-100"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={handleDeleteClick}
+                  disabled={loading}
+                  className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
+                    loading ? "cursor-not-allowed" : ""
+                  }`}
+                >
+                  {loading ? "Eliminando..." : "Eliminar"}
+                </button>
               </div>
-            )}
+            </div>
+          )}
         </div>
 
         {/* Content */}
@@ -614,7 +498,7 @@ export function CardPost({
 
 CardPost.propTypes = {
   postId: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  // title: PropTypes.string.isRequired,
   likesCount: PropTypes.number.isRequired,
   onClick: PropTypes.func,
   imageUrl: PropTypes.string.isRequired,
@@ -622,9 +506,9 @@ CardPost.propTypes = {
   userName: PropTypes.string.isRequired,
   profilePictureUrl: PropTypes.string.isRequired,
   commentsCount: PropTypes.number.isRequired,
-  currentLikesCount: PropTypes.number.isRequired,
-  isLiked: PropTypes.bool.isRequired,
+  // currentLikesCount: PropTypes.number.isRequired,
+  // isLiked: PropTypes.bool.isRequired,
   workId: PropTypes.number.isRequired,
-  userId: PropTypes.number.isRequired,
-  userIdWorker: PropTypes.number.isRequired,
+  // userId: PropTypes.number.isRequired,
+  // userIdWorker: PropTypes.number.isRequired,
 };

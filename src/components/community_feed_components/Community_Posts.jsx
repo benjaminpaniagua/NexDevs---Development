@@ -4,7 +4,7 @@ import { CardPost } from "../ui/Cards/CardPost";
 import { SecondaryButtonOutline } from "../ui/Buttons";
 import { useFetchPosts } from "../../hooks/useFetchPosts";
 import { useNavigate } from "react-router-dom";
-import { Modal_Post } from "../ui/Modal_Post/Modal_Post";
+// import { Modal_Post } from "../ui/Modal_Post/Modal_Post";
 
 export function Community_Posts() {
   const posts = useFetchPosts();

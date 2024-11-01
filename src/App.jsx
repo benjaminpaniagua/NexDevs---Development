@@ -11,7 +11,7 @@ import { NormalUserEdit } from "./components/pages/NormalUserEdit.jsx";
 import Categories_Page from './components/pages/Categories_Page.jsx';
 import { Community_Feed } from './components/pages/Community_Feed.jsx';
 import { Error_404, Error_503 } from './components/pages/Errors.jsx';
-import { Modal_Post } from './components/ui/Modal_Post/Modal_Post.jsx';
+// import { Modal_Post } from './components/ui/Modal_Post/Modal_Post.jsx';
 import { Community_Posts } from "./components/community_feed_components/Community_Posts.jsx";
 import { Profiles_List } from './components/pages/Profiles_List.jsx';
 import { useScrollToTop } from './hooks/useScrollToTop.js';
@@ -45,7 +45,7 @@ const MainApp = () => {
           <Route path="/community_feed/" element={<Community_Feed />} />
           <Route path="*" element={<Error_404 />} />
           <Route path="/error503" element={<Error_503 />} />
-          <Route path="/post" element={<Modal_Post />} />
+          {/* <Route path="/post" element={<Modal_Post />} /> */}
           <Route path="/posts" element={<Posts_List />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/editCollection/:userId" element={<EditCollection />} />
