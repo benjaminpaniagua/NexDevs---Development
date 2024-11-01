@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import { ICONS } from "../../ui/Icons";
 import { SecondaryButton } from "../Buttons";
 import { FormInput } from "../FormInput";
+
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { useDeletePost } from "../../../hooks/useDeletePost";
-// import { useDeleteComment } from "../../../hooks/useDeleteComments";
+import { useDeleteComment } from "../../../hooks/useDeleteComments";
 import useLikePost from "../../../hooks/useLikePost";
+import { useFetchComments } from "../../../hooks/useFetchComments";
 
 export function CardPost({
   postId,
@@ -31,12 +33,14 @@ export function CardPost({
   const { userData } = useFetchWorkUserData();
 
   // Estado de interacción del usuario (likes y comentarios)
-  // const [currentLikesCount, setCurrentLikesCount] = useState(likesCount);
-  // const [isLiked, setIsLiked] = useState(false);
-  const [comments, setComments] = useState([]);
   const [postComment, setPostComment] = useState("");
   const { createComments } = useCreateComments();
-  // const [deleteComment] = useDeleteComment();
+  const { deleteComment } = useDeleteComment();
+  const {
+    comments,
+    fetchComments,
+    loading: commentsLoading,
+  } = useFetchComments(postId);
 
   const { currentLikesCount, isLiked, handleLikePost, handleDislikePost } =
     useLikePost(postId, likesCount);
@@ -79,21 +83,10 @@ export function CardPost({
     }
   };
 
-  //CLICK DELETE POST
+  // //CLICK DELETE POST
   const handleDeleteClick = () => {
     onDelete();
   };
-
-  // //CHECK IF USER IS LOGGED IN AND FETCH IS LIKED
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setIsLoggedIn(true);
-  //     if (userData) {
-  //       fetchIsLiked();
-  //     }
-  //   }
-  // }, [userData]);
 
   //CHECK IF USER IS AUTHOR OR WORKER
   useEffect(() => {
@@ -112,37 +105,15 @@ export function CardPost({
     setIsMenuOpen((prev) => !prev);
   };
 
-  //FETCH COMMENTS BY POST
-  const fetchComments = async () => {
-    const url = `http://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "GET",
-        headers: {
-          accept: "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al obtener los comentarios");
-      }
-
-      const data = await response.json();
-      setComments(data);
-    } catch (error) {
-      console.error("Error al obtener los comentarios:", error);
-    }
-  };
-
   //HANDLE COMMENT DELETE
   const handleCommentDelete = async (commentId) => {
-    try {
-      const response = await deleteComment(commentId);
-      console.log("Comentario eliminado exitosamente", response);
-      fetchComments();
-    } catch (error) {
-      console.error("Error al eliminar el comentario", error);
+    const wasDeleted = await deleteComment(commentId);
+
+    if (wasDeleted) {
+      console.log("Comentario eliminado exitosamente");
+      fetchComments(); // Actualiza los comentarios si se eliminó correctamente
+    } else {
+      console.error("No se pudo eliminar el comentario");
     }
   };
 
@@ -425,7 +396,7 @@ export function CardPost({
                             />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-6">
                               {comment.workId ? (
                                 <Link
                                   to={`/workprofile/${comment.workId}`}
@@ -440,21 +411,29 @@ export function CardPost({
                                   {comment.lastName || comment.name || ""}
                                 </span>
                               )}
-                              <span className="text-xs text-muted-foreground">
-                                2h
-                              </span>
+                              {comment.workId === userData.workId && (
+                                <button
+                                  className="text-xs text-muted-foreground"
+                                  onClick={() =>
+                                    handleCommentDelete(comment.commentId)
+                                  }
+                                >
+                                  {ICONS.trash}
+                                  {/* {console.log(comment.commentId)} */}
+                                </button>
+                              )}
                             </div>
                             <p className="text-sm break-words">
                               {comment.contentComment}
                             </p>
-                            <div className="flex gap-4 mt-1">
+                            {/* <div className="flex gap-4 mt-1">
                               <button className="text-xs text-muted-foreground">
                                 Like
                               </button>
                               <button className="text-xs text-muted-foreground">
                                 Reply
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       ))

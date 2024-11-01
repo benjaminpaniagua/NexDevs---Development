@@ -23,10 +23,11 @@ export const useDeleteComment = () => {
         throw new Error("Error al eliminar el comentario");
       }
 
-      // No se espera contenido en la respuesta, solo un código 200
-      return true; // Retorna true para indicar éxito
+      // Si la eliminación es exitosa, devuelve true
+      return true;
     } catch (err) {
       setError(err.message);
+      return false; // En caso de error, devuelve false
     } finally {
       setLoading(false);
     }
