@@ -71,7 +71,7 @@ const NavBar = () => {
     { label: "Inicio", route: "/Community_Feed/" },
     { label: "Explorar", route: "/profiles/" },
     { label: "Publicaciones", route: "/posts/" },
-    { label: "Contáctanos", route: "/contact-us/" },
+    { label: "Contáctaanos", route: "/contact-us/" },
   ];
 
   const renderProfilePicture = () => {
