@@ -130,18 +130,18 @@ export function ProfileInfo({ users, loading, isOwner }) {
       {renderContactInfo()}
 
       {isModalOpen && (
-        <div className={`absolute z-30`}>
-          <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal}>
-            {/* Contenedor del modal centrado */}
-            <div className={`flex items-center justify-center h-full`}>
-              <div className={`rounded-lg -mt-32 transition-transform ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
-                <Modal_Review onClose={handleCloseModal} />
-              </div>
-            </div>
+        <div className={`absolute z-30 inset-0 flex items-center justify-center`}>
+          <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal}></div>
+          {/* Contenedor del modal centrado */}
+          <div className={`fixed rounded-lg transition-transform shadow-lg ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
+            <Modal_Review onClose={handleCloseModal} />
           </div>
         </div>
-      )}
-    </div>
+  )
+}
+
+
+    </div >
   );
 }
 

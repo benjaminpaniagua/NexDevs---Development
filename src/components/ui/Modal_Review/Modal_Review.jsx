@@ -61,8 +61,7 @@ export function Modal_Review({ onClose }) {
 
     return (
         <>
-                <div className="mt-44 flex flex-col items-center bg-clr-white rounded-lg h-auto w-[30rem] md1:w-[22rem]">
-
+                <div className="flex flex-col items-center bg-clr-white rounded-lg h-auto w-[30rem] md1:w-[22rem]">
                     <div className="pt-5 pb-2">
                         <h4>Tu opinión es importante</h4>
                     </div>
@@ -110,5 +109,3 @@ export function Modal_Review({ onClose }) {
     )
 
 }
-
-//id={id} name={name} minLength={minLength} maxLength={maxLenght} value={value}
