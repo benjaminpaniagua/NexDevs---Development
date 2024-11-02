@@ -1,4 +1,5 @@
 import "../../index.css";
+import { useState } from "react";
 import {
   MainButton,
   SecondaryButtonOutline,
@@ -9,26 +10,36 @@ import { ICONS } from "../ui/Icons";
 import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
+import { Modal_Review } from "../ui/Modal_Review/Modal_Review";
 export function ProfileInfo({ users, loading, isOwner }) {
   const { token } = useAuth();
-  //console.log(users, "users");
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleOpenModal = () => {
+    setIsAnimating(true);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsAnimating(false);
+    setTimeout(() => setIsModalOpen(false), 305);
+  };
 
   const renderProfilePicture = () => {
+    return (
+      <div className="absolute md:left-1/2 transform md:-translate-x-1/2 translate-x-2 -translate-y-1/2">
+        <img
+          src={
+            users.profilePictureUrl === "ND" || users.profilePictureUrl === "default_image_url"
+              ? "/images/default_profile_picture.jpg"
+              : users.profilePictureUrl}
+          alt="Foto de perfil"
+          className="w-56 h-56 md:w-40 md:h-40 rounded-full border-4 border-white object-cover"
+        />
+      </div>
+    )
 
-      return (
-        <div className="absolute md:left-1/2 transform md:-translate-x-1/2 translate-x-2 -translate-y-1/2">
-          <img
-            src={
-              users.profilePictureUrl === "ND" || users.profilePictureUrl === "default_image_url"
-                ? "/images/default_profile_picture.jpg"
-                : users.profilePictureUrl} 
-            alt="Foto de perfil"
-            className="w-56 h-56 md:w-40 md:h-40 rounded-full border-4 border-white object-cover"
-          />
-        </div>
-      )
-    
   };
 
   const renderUserInfo = () => (
@@ -93,6 +104,7 @@ export function ProfileInfo({ users, loading, isOwner }) {
           text={"Dejar una Reseña"}
           extraStyles={"w-full py-2"}
           disabled={!token}
+          onClick={handleOpenModal}
         />
       )}
     </div>
@@ -116,6 +128,19 @@ export function ProfileInfo({ users, loading, isOwner }) {
       {renderButtons()}
       {renderAboutMe()}
       {renderContactInfo()}
+
+      {isModalOpen && (
+        <div className={`absolute z-30`}>
+          <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal}>
+            {/* Contenedor del modal centrado */}
+            <div className={`flex items-center justify-center h-full`}>
+              <div className={`rounded-lg -mt-32 transition-transform ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
+                <Modal_Review onClose={handleCloseModal} />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
