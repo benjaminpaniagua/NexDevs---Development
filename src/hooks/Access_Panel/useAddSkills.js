@@ -11,7 +11,7 @@ export const useAddSkills = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com//WorkSkills/Agregar",
+        "https://nexdevsapi.somee.com/WorkSkills/Agregar",
         skill
       );
       //console.log(response.data);

@@ -11,7 +11,7 @@ export const useAddCategories = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com/WorkCategories/Agregar",
+        "https://nexdevsapi.somee.com/WorkCategories/Agregar",
         category
       );
       //console.log(response.data);

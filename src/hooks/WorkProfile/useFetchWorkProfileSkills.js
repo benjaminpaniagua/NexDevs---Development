@@ -12,7 +12,7 @@ export const useFetchWorkProfileSkills = ({ workID }) => {
     const fetchSkills = async () => {
       try {
         const response = await axios.get(
-          `http://nexdevsapi.somee.com/WorkSkills/Consultar?workId=${workID}`,
+          `https://nexdevsapi.somee.com/WorkSkills/Consultar?workId=${workID}`,
           {
             cancelToken: source.token,
           }

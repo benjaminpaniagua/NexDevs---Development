@@ -9,7 +9,7 @@ export const useEditCategories = () => {
     setEditLoading(true);
     try {
       const response = await axios.put(
-        "http://nexdevsapi.somee.com/WorkCategories/Editar",
+        "https://nexdevsapi.somee.com/WorkCategories/Editar",
         category,
         {
           headers: {

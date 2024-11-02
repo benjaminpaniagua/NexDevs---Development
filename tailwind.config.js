@@ -33,6 +33,7 @@ export default {
         "clr-black": "hsla(20, 8%, 7%, 1)",
         "clr-black-hover": "hsla(20, 8%, 7%, .33)",
         "clr-grey": "hsla(0, 0%, 24%, 75)",
+        "clr-grey-light": "hsla(0, 1%, 67%, 100)",
         "clr-blue": "hsla(217, 81%, 43%, 1)",
         "clr-blue-hover": "hsla(217, 79%, 31%, 1)",
         "clr-green": "hsla(149, 60%, 42%, 1)",

@@ -11,7 +11,7 @@ export const useLogin = () => {
 
     try {
       const workUserResponse = await axios.post(
-        "http://nexdevsapi.somee.com/WorkProfile/Login",
+        "https://nexdevsapi.somee.com/WorkProfile/Login",
         {
           email: email,
           password: password,
@@ -28,7 +28,7 @@ export const useLogin = () => {
     } catch (err) {
       try {
         const normalUserResponse = await axios.post(
-          "http://nexdevsapi.somee.com/Users/Login",
+          "https://nexdevsapi.somee.com/Users/Login",
           {
             email: email,
             password: password,

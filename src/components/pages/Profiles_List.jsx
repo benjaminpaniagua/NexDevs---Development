@@ -1,26 +1,36 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Search_Input } from "../ui/Search_Input";
 import { useFetchWorkUsers } from "../../hooks/useFetchWorkUsers";
 import { CardProfiles } from "../ui/Cards/CardProfiles";
-import { useNavigate } from "react-router-dom";
-import { Loading_Screen } from '../ui/Loading_Screen.jsx'
-import { useParams } from "react-router-dom";
+import { Loading_Screen } from '../ui/Loading_Screen.jsx';
+import { useFetchCategories } from "../../hooks/useFetchCategories";
+import { useFetchConsultCategory } from "../../hooks/useFetchConsultCategory";
 
 export function Profiles_List() {
     const navigate = useNavigate();
-    const { users, loading, error } = useFetchWorkUsers();
+    const location = useLocation();
+    const { users, loading: usersLoading, error: usersError } = useFetchWorkUsers();
+    const { categories, loading: categoriesLoading, error: categoriesError } = useFetchCategories();
+    const [selectedCategoryId, setSelectedCategoryId] = useState("");
+    const { data: filteredUsersByCategory, loading: categoryLoading } = useFetchConsultCategory(selectedCategoryId);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const {search} = useParams();
-
+    // Captura el parámetro de la URL al cargar el componente
     useEffect(() => {
-        if (search) {
-            setSearchTerm(search.toLowerCase());
+        const params = new URLSearchParams(location.search);
+        const categoryParam = params.get('category');
+
+        if (categoryParam && categories.length > 0) {
+            const category = categories.find(cat => cat.categoryName === categoryParam);
+            if (category) {
+                setSelectedCategoryId(category.categoryId);
+            }
         }
-    }, [search]);
+    }, [location, categories]);
 
     const handleCardClick = (title) => {
-        console.log(`Usuario seleccionada: ${title}`);
+        console.log(`Usuario seleccionado: ${title}`);
         navigate(`/workprofile/${title}`);
     };
 
@@ -28,31 +38,59 @@ export function Profiles_List() {
         setSearchTerm(search.toLowerCase());
     };
 
-    const filteredUsers = users.filter((user) =>
-        user.name.toLowerCase().includes(searchTerm) ||
-        user.workDescription.toLowerCase().includes(searchTerm) ||
-        user.province.toLowerCase().includes(searchTerm) ||
-        user.city.toLowerCase().includes(searchTerm)
-    );
+    const handleCategoryChange = (event) => {
+        setSelectedCategoryId(event.target.value);
+    };
 
-    if (error) {
+    const filteredUsers = (selectedCategoryId && filteredUsersByCategory)
+        ? filteredUsersByCategory.filter((user) =>
+            user.name.toLowerCase().includes(searchTerm) ||
+            user.workDescription.toLowerCase().includes(searchTerm) ||
+            user.province.toLowerCase().includes(searchTerm) ||
+            user.city.toLowerCase().includes(searchTerm)
+        )
+        : users.filter((user) =>
+            user.name.toLowerCase().includes(searchTerm) ||
+            user.workDescription.toLowerCase().includes(searchTerm) ||
+            user.province.toLowerCase().includes(searchTerm) ||
+            user.city.toLowerCase().includes(searchTerm)
+        );
+
+    if (usersError || categoriesError) {
         navigate('/error503');
     }
 
     return (
         <>
             <div className="flex flex-col gap-4 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+                {/* Pantalla de carga */}
+                <Loading_Screen Loading={usersLoading || categoriesLoading || categoryLoading} />
+                {/* Pantalla de carga */}
 
-                {/* Loading Screen */}
-                <Loading_Screen Loading={loading} />
-                {/* Loading Screen */}
-
-                <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-16 mb-4 items-center justify-between">
+                <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-16 mb-4 items-center justify-between md:items-start">
                     <h2 className="font-clash font-semibold text-4xl">Perfiles</h2>
+                    <div className="flex md:flex-col md:w-full gap-4">
                     <Search_Input search={handleSearch} />
-                </div>
-                {loading ? (
-                    <h3 className="text-center">Cargando Perfiles...</h3>
+                    <div className="flex md:flex-col gap-4 items-center md:items-start">
+                            <h4 className="text-sm">Filter:</h4>
+                            <select 
+                            onChange={handleCategoryChange} 
+                            value={selectedCategoryId} 
+                            className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full p-4 text-clr-grey-light">
+                                <option value="">Todas las categorías</option>
+                                {categories.map((category) => (
+                                <option key={category.categoryId} value={category.categoryId}>
+                                {category.categoryName}
+                                </option>
+                            ))}
+                            </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                {usersLoading || categoryLoading ? (
+                    <Loading_Screen Loading={usersLoading || categoriesLoading || categoryLoading} />
                 ) : (
                     <div className="grid gap-10">
                         {filteredUsers.length > 0 ? (
@@ -82,4 +120,4 @@ export function Profiles_List() {
             </div>
         </>
     );
-};
+}

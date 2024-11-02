@@ -9,7 +9,7 @@ export const useEditWorkProfile = () => {
     setEditLoading(true);
     try {
       const response = await axios.put(
-        "http://nexdevsapi.somee.com/WorkProfile/Editar",
+        "https://nexdevsapi.somee.com/WorkProfile/Editar",
         formData,
         {
           headers: {

@@ -11,7 +11,7 @@ export const useDeletePost = () => {
 
     try {
       const response = await fetch(
-        `http://nexdevsapi.somee.com/Posts/Eliminar?postId=${postId}`,
+        `https://nexdevsapi.somee.com/Posts/Eliminar?postId=${postId}`,
         {
           method: "DELETE",
           headers: {

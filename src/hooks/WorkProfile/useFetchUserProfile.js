@@ -14,7 +14,7 @@ export const useFetchUserProfile = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `http://nexdevsapi.somee.com/WorkProfile/BuscarID?id=${userId}`,
+          `https://nexdevsapi.somee.com/WorkProfile/BuscarID?id=${userId}`,
           {
             cancelToken: source.token,
           }

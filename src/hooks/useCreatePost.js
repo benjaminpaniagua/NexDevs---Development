@@ -11,7 +11,7 @@ export const useCreatePost = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com/Posts/Agregar",
+        "https://nexdevsapi.somee.com/Posts/Agregar",
         post
       );
       //console.log(response.data);

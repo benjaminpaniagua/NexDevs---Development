@@ -13,7 +13,7 @@ export const useDeleteCategory = () => {
 
     try {
       const response = await axios.delete(
-        `http://nexdevsapi.somee.com/WorkCategories/Eliminar?id=${id}`
+        `https://nexdevsapi.somee.com/WorkCategories/Eliminar?id=${id}`
       );
       setDeleteMessage(response.data);
     } catch (error) {

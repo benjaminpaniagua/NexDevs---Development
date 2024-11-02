@@ -19,7 +19,7 @@ export const useAddCollection = () => {
 
     try {
       const response = await axios.post(
-        `http://nexdevsapi.somee.com/Collections/Agregar?WorkId=${workId}`,
+        `https://nexdevsapi.somee.com/Collections/Agregar?WorkId=${workId}`,
         formData,
         {
           headers: {

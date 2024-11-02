@@ -19,7 +19,7 @@ export const useEditCollection = () => {
 
     try {
       const response = await axios.put(
-        `http://nexdevsapi.somee.com/Collections/Editar?CollectionId=${collectionId}&WorkId=${workId}`,
+        `https://nexdevsapi.somee.com/Collections/Editar?CollectionId=${collectionId}&WorkId=${workId}`,
         formData,
         {
           headers: {
