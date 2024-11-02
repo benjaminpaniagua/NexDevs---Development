@@ -12,7 +12,7 @@ export const useFetchUserCategories = ({ workId }) => {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          `http://nexdevsapi.somee.com/WorkCategories/Consultar?workId=${workId}`,
+          `https://nexdevsapi.somee.com/WorkCategories/Consultar?workId=${workId}`,
           {
             cancelToken: source.token,
           }

@@ -12,7 +12,7 @@ export const useEditPost = () => {
     console.log("Datos del post que se enviarán:", postData);
 
     try {
-      const response = await fetch(`http://nexdevsapi.somee.com/Posts/Editar`, {
+      const response = await fetch(`https://nexdevsapi.somee.com/Posts/Editar`, {
         method: "PUT",
         body: postData, // Cambiado a FormData
       });

@@ -12,7 +12,7 @@ export const useFetchSkills = () => {
     const fetchSkills = async () => {
       try {
         const response = await axios.get(
-          "http://nexdevsapi.somee.com/Skills/Listado",
+          "https://nexdevsapi.somee.com/Skills/Listado",
           {
             cancelToken: source.token,
           }

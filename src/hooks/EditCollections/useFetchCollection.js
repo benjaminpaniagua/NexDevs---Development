@@ -12,7 +12,7 @@ export const useFetchCollection = (workId) => {
 
       try {
         const response = await fetch(
-          `http://nexdevsapi.somee.com/Collections/Consultar?workId=${workId}`,
+          `https://nexdevsapi.somee.com/Collections/Consultar?workId=${workId}`,
           {
             method: "GET",
             headers: {

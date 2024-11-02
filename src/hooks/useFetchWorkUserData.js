@@ -17,11 +17,11 @@ export const useFetchWorkUserData = () => {
         const userEmail = decodedToken.nameid;
         try {
           const response = await axios.get(
-            `http://nexdevsapi.somee.com/WorkProfile/BuscarEmail?email=${userEmail}`
+            `https://nexdevsapi.somee.com/WorkProfile/BuscarEmail?email=${userEmail}`
           );
           if (response.data === "") {
             const responseUser = await axios.get(
-              `http://nexdevsapi.somee.com/Users/BuscarEmail?email=${userEmail}`
+              `https://nexdevsapi.somee.com/Users/BuscarEmail?email=${userEmail}`
             );
             setUserData(responseUser.data);
           } else {

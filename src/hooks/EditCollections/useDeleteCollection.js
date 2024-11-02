@@ -13,7 +13,7 @@ export const useDeleteCollection = () => {
 
     try {
       const response = await axios.delete(
-        `http://nexdevsapi.somee.com/Collections/Eliminar?id=${collectionId}`
+        `https://nexdevsapi.somee.com/Collections/Eliminar?id=${collectionId}`
       );
 
       if (response.status === 200) {

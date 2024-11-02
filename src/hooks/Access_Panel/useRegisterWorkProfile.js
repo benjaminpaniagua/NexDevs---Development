@@ -11,7 +11,7 @@ export const useRegisterWorkProfile = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com/WorkProfile/CrearCuenta",
+        "https://nexdevsapi.somee.com/WorkProfile/CrearCuenta",
         workProfile
       );
       //console.log(response.data);

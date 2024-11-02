@@ -39,7 +39,7 @@ export function EditPost() {
     const fetchPostData = async () => {
       try {
         const response = await fetch(
-          `http://nexdevsapi.somee.com/Posts/Consultar?postId=${postId}`
+          `https://nexdevsapi.somee.com/Posts/Consultar?postId=${postId}`
         );
         if (response.ok) {
           const data = await response.json();

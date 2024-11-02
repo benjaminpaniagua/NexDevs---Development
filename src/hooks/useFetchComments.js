@@ -7,7 +7,7 @@ export const useFetchComments = (postId) => {
 
   const fetchComments = async () => {
     setLoading(true);
-    const url = `http://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
+    const url = `https://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
 
     try {
       const response = await fetch(url, { method: "GET", headers: { accept: "application/json" } });

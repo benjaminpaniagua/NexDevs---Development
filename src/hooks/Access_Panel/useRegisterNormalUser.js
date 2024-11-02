@@ -11,7 +11,7 @@ export const useRegisterNormalUser = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com/Users/CrearCuenta",
+        "https://nexdevsapi.somee.com/Users/CrearCuenta",
         userProfile
       );
       //console.log(response.data);

@@ -10,7 +10,7 @@ export const useCreateComments = () => {
     setError(null);
     try {
       const response = await axios.post(
-        "http://nexdevsapi.somee.com/Comments/Agregar",
+        "https://nexdevsapi.somee.com/Comments/Agregar",
         comment
       );
       //console.log(response.data);

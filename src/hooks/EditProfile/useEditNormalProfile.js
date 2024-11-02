@@ -9,7 +9,7 @@ export const useEditNormalUser = () => {
     setEditLoading(true);
     try {
       const response = await axios.put(
-        "http://nexdevsapi.somee.com/Users/Editar",
+        "https://nexdevsapi.somee.com/Users/Editar",
         formData,
         {
           headers: {

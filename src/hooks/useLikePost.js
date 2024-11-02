@@ -26,7 +26,7 @@ const useLikePost = (postId, initialLikesCount) => {
     try {
       const userId = userData?.userId || 0;
       const workProfileId = userData?.workId || 0;
-      const url = `http://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
+      const url = `https://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
       const response = await fetch(url, {
         method: "GET",
         headers: {
@@ -56,7 +56,7 @@ const useLikePost = (postId, initialLikesCount) => {
     }
     const userId = userData?.userId || 0;
     const workProfileId = userData?.workId || 0;
-    const urlLike = `http://nexdevsapi.somee.com/Likes/LikePost`;
+    const urlLike = `https://nexdevsapi.somee.com/Likes/LikePost`;
 
     try {
       const response = await fetch(urlLike, {
@@ -87,7 +87,7 @@ const useLikePost = (postId, initialLikesCount) => {
     }
     const userId = userData?.userId || 0;
     const workProfileId = userData?.workId || 0;
-    const urlDislike = `http://nexdevsapi.somee.com/Likes/DislikePost`;
+    const urlDislike = `https://nexdevsapi.somee.com/Likes/DislikePost`;
 
     try {
       const response = await fetch(urlDislike, {

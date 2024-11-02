@@ -10,7 +10,7 @@ export const useDeleteComment = () => {
 
     try {
       const response = await fetch(
-        `http://nexdevsapi.somee.com/Comments/Eliminar?commentId=${commentId}`,
+        `https://nexdevsapi.somee.com/Comments/Eliminar?commentId=${commentId}`,
         {
           method: "DELETE",
           headers: {

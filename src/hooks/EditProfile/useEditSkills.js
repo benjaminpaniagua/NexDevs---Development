@@ -9,7 +9,7 @@ export const useEditSkills = () => {
     setEditLoading(true);
     try {
       const response = await axios.put(
-        "http://nexdevsapi.somee.com/WorkSkills/Editar",
+        "https://nexdevsapi.somee.com/WorkSkills/Editar",
         skills,
         {
           headers: {
