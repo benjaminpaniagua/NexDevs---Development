@@ -92,7 +92,7 @@ export function Access_Panel() {
                 {/* Logo */}
 
                 {/* Formularios de Ingreso */}
-                <div className="relative w-full h-full">
+                <div className="relative w-full h-full overflow-scroll">
                     <Routes>
                         {/* Formulario de Login */}
                         <Route
