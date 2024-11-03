@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useFetchWorkUserData } from "./useFetchWorkUserData";
 import { useNavigate } from "react-router-dom";
 
@@ -26,18 +27,20 @@ const useLikePost = (postId, initialLikesCount) => {
     try {
       const userId = userData?.userId || 0;
       const workProfileId = userData?.workId || 0;
-      const url = `https://nexdevsapi.somee.com/Likes/CheckIfIsLiked?postId=${postId}&userId=${userId}&workProfileId=${workProfileId}`;
-      const response = await fetch(url, {
-        method: "GET",
+      const url = `https://nexdevsapi.somee.com/Likes/CheckIfIsLiked`;
+      
+      const response = await axios.get(url, {
+        params: {
+          postId,
+          userId,
+          workProfileId,
+        },
         headers: {
           accept: "application/json",
         },
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setIsLiked(data);
-      }
+      setIsLiked(response.data);
     } catch (error) {
       console.error("Error fetching liked status:", error);
     }
@@ -59,18 +62,12 @@ const useLikePost = (postId, initialLikesCount) => {
     const urlLike = `https://nexdevsapi.somee.com/Likes/LikePost`;
 
     try {
-      const response = await fetch(urlLike, {
-        method: "POST",
+      await axios.post(urlLike, { postId, userId, workProfileId }, {
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postId, userId, workProfileId }),
       });
-
-      if (!response.ok) {
-        throw new Error("Error al dar like al post");
-      }
 
       setIsLiked(true);
       setCurrentLikesCount((prevCount) => prevCount + 1);
@@ -90,18 +87,13 @@ const useLikePost = (postId, initialLikesCount) => {
     const urlDislike = `https://nexdevsapi.somee.com/Likes/DislikePost`;
 
     try {
-      const response = await fetch(urlDislike, {
-        method: "DELETE",
+      await axios.delete(urlDislike, {
+        data: { postId, userId, workProfileId },
         headers: {
           accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ postId, userId, workProfileId }),
       });
-
-      if (!response.ok) {
-        throw new Error("Error al dar dislike al post");
-      }
 
       setIsLiked(false);
       setCurrentLikesCount((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
@@ -109,6 +101,7 @@ const useLikePost = (postId, initialLikesCount) => {
       console.error("Error al dar dislike al post:", error);
     }
   };
+
   return {
     currentLikesCount,
     isLiked,
