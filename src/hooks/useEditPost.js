@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export const useEditPost = () => {
   const [loading, setLoading] = useState(false);
@@ -12,23 +13,23 @@ export const useEditPost = () => {
     console.log("Datos del post que se enviarán:", postData);
 
     try {
-      const response = await fetch(`https://nexdevsapi.somee.com/Posts/Editar`, {
-        method: "PUT",
-        body: postData, // Cambiado a FormData
-      });
+      const response = await axios.put(
+        `https://nexdevsapi.somee.com/Posts/Editar`,
+        postData, // Aquí se envía el FormData directamente
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      const responseText = await response.text();
-      console.log("Texto de la respuesta:", responseText);
+      console.log("Texto de la respuesta:", response.data);
 
-      if (!response.ok) {
-        throw new Error(`Error al editar el post: ${responseText}`);
-      }
-
-      console.log("Mensaje de éxito después de editar:", responseText);
+      console.log("Mensaje de éxito después de editar:", response.data);
       return true;
     } catch (err) {
-      setError(err.message);
-      console.error("Error capturado:", err.message);
+      setError(err.response?.data || err.message);
+      console.error("Error capturado:", err.response?.data || err.message);
       return false;
     } finally {
       setLoading(false);

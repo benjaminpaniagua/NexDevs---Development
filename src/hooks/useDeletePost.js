@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useFetchPosts } from "./useFetchPosts";
+import axios from "axios";
 
 export const useDeletePost = () => {
   const [loading, setLoading] = useState(false);
@@ -10,25 +10,20 @@ export const useDeletePost = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `https://nexdevsapi.somee.com/Posts/Eliminar?postId=${postId}`,
+      const response = await axios.delete(
+        `https://nexdevsapi.somee.com/Posts/Eliminar`,
         {
-          method: "DELETE",
+          params: { postId },
           headers: {
             Accept: "text/plain",
           },
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Error al eliminar el post");
-      }
-
-      const result = await response.text();
-      console.log(result); // Para verificar la respuesta del servidor
-      return result; // Puedes retornar el resultado o manejarlo según lo necesites
+      console.log(response.data); // Para verificar la respuesta del servidor
+      return response.data; // Devuelve la respuesta del servidor
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || "Error al eliminar el post");
     } finally {
       setLoading(false);
     }

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 export const useDeleteComment = () => {
   const [loading, setLoading] = useState(false);
@@ -9,24 +10,20 @@ export const useDeleteComment = () => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `https://nexdevsapi.somee.com/Comments/Eliminar?commentId=${commentId}`,
+      const response = await axios.delete(
+        `https://nexdevsapi.somee.com/Comments/Eliminar`,
         {
-          method: "DELETE",
+          params: { commentId },
           headers: {
             Accept: "text/plain",
           },
         }
       );
 
-      if (!response.ok) {
-        throw new Error("Error al eliminar el comentario");
-      }
-
       // Si la eliminación es exitosa, devuelve true
-      return true;
+      return response.status === 200;
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || "Error al eliminar el comentario");
       return false; // En caso de error, devuelve false
     } finally {
       setLoading(false);

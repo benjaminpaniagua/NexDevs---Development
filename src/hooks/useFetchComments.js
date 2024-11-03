@@ -1,5 +1,5 @@
-// Custom Hook for Fetching Comments
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export const useFetchComments = (postId) => {
   const [comments, setComments] = useState([]);
@@ -10,13 +10,13 @@ export const useFetchComments = (postId) => {
     const url = `https://nexdevsapi.somee.com/Comments/ConsultarPorPost?postId=${postId}`;
 
     try {
-      const response = await fetch(url, { method: "GET", headers: { accept: "application/json" } });
-      if (!response.ok) throw new Error("Error fetching comments");
+      const response = await axios.get(url, {
+        headers: { accept: "application/json" },
+      });
 
-      const data = await response.json();
-      setComments(data);
+      setComments(response.data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error fetching comments:", error.response?.data || error.message);
     } finally {
       setLoading(false);
     }

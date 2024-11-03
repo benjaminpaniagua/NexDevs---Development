@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export const useFetchConsultCategory = (categoryId) => {
   const [data, setData] = useState(null);
@@ -15,14 +16,13 @@ export const useFetchConsultCategory = (categoryId) => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://nexdevsapi.somee.com/WorkCategories/ConsultarCategory?categoryId=${categoryId}`);
-        if (!response.ok) {
-          throw new Error('Error en la petición');
-        }
-        const result = await response.json();
-        setData(result);
+        const response = await axios.get(`https://nexdevsapi.somee.com/WorkCategories/ConsultarCategory`, {
+          params: { categoryId },
+        });
+
+        setData(response.data);
       } catch (err) {
-        setError(err.message);
+        setError(err.response?.data?.message || "Error en la petición");
       } finally {
         setLoading(false);
       }

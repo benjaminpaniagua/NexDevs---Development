@@ -8,6 +8,7 @@ import {
   SecondaryButtonOutline,
   SecondaryButton,
 } from "../ui/Buttons";
+import axios from "axios"; // Import Axios
 
 export function EditPost() {
   const navigate = useNavigate();
@@ -38,25 +39,20 @@ export function EditPost() {
   useEffect(() => {
     const fetchPostData = async () => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `https://nexdevsapi.somee.com/Posts/Consultar?postId=${postId}`
         );
-        if (response.ok) {
-          const data = await response.json();
-          setPostData({
-            content: data.contentPost,
-            imageUrl: data.postImageUrl,
-            workId: data.workId,
-            paymentReceipt: data.paymentReceipt,
-            createAt: data.createAt,
-            likesCount: data.likesCount,
-            commentsCount: data.commentsCount,
-            approved: data.approved,
-          });
-          setSelectedFile(data.postImageUrl);
-        } else {
-          throw new Error("Error al cargar los datos del post");
-        }
+        setPostData({
+          content: response.data.contentPost,
+          imageUrl: response.data.postImageUrl,
+          workId: response.data.workId,
+          paymentReceipt: response.data.paymentReceipt,
+          createAt: response.data.createAt,
+          likesCount: response.data.likesCount,
+          commentsCount: response.data.commentsCount,
+          approved: response.data.approved,
+        });
+        setSelectedFile(response.data.postImageUrl);
       } catch (error) {
         setFetchError(error.message);
       } finally {
@@ -102,11 +98,11 @@ export function EditPost() {
       formData.append("PostImageUrl", imageFile);
     }
 
-    const success = await editPost(postId, formData);
-    if (success) {
+    try {
+      await editPost(postId, formData);
       alert("¡Publicación editada exitosamente!");
       navigate(`/posts`);
-    } else {
+    } catch (error) {
       alert("Hubo un error al editar la publicación.");
     }
   };
@@ -203,7 +199,7 @@ export function EditPost() {
             {/* Instrucciones visibles solo en pantallas grandes */}
             <div className="md:hidden block space-y-3 border-solid border-[2px] border-black py-3 px-4 mt-8 rounded-lg">
               <h2 className="text-xl font-semibold mb-4">
-                Instrucciones para el Pago y Publicación
+                Instrucciones para Editar Publicación
               </h2>
               <EditPublicationInstructions />
             </div>
@@ -222,13 +218,13 @@ export function EditPost() {
               <div className="fixed inset-0 flex px-5 items-start justify-center z-50 bg-black bg-opacity-50">
                 <div className="bg-white p-6 rounded-lg max-w-lg mt-3 overflow-y-auto max-h-[95vh]">
                   <h2 className="text-xl md:text-fs-large font-bold mb-4">
-                    Instrucciones para el Pago y Publicación
+                    Instrucciones para Editar Publicación
                   </h2>
                   <EditPublicationInstructions />
-                  <div className="flex justify-end mt-6">
-                    <MainButton
-                      extraStyles={"px-6"}
+                  <div className="flex justify-end mt-4">
+                    <SecondaryButton
                       text="Cerrar"
+                      extraStyles={"px-4 py-1"}
                       onClick={toggleModal}
                     />
                   </div>
@@ -238,8 +234,6 @@ export function EditPost() {
           </section>
         </div>
       </form>
-
-      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
