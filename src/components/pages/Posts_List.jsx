@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
 import { useDeletePost } from "../../hooks/useDeletePost";
 import Alert from "../ui/Alert";
+import AddIcon from "@mui/icons-material/Add";
 
 export function Posts_List() {
   const { data: posts, error, loading } = useFetchPosts();
@@ -55,14 +56,27 @@ export function Posts_List() {
     }
   };
 
+  const renderIcon = () => {
+    return <AddIcon className="text-white bg-black rounded-full w-6 h-6 sm:w-4 sm:h-4" />;
+  };
+
   const renderTop = () => {
     return (
-      <div className="flex justify-between">
-        <h2 className="font-clash font-semibold text-4xl">Publicaciones</h2>
+      <div className="flex justify-between gap-8">
+        <h2 className="font-clash font-semibold text-4xl md:text-2xl">
+          Publicaciones
+        </h2>
         {userData.profileType === "W" && isLoggedIn && (
           <SecondaryButtonOutline
-            text="Crear publicación"
-            extraStyles={"px-16 py-2"}
+            text={
+              <span className="sm:hidden inline text-center">
+                Crear publicación
+              </span> // Oculta el texto en pantallas sm o menores
+            }
+            icon={renderIcon()}
+            extraStyles={
+              "max-w-26 sm:w-[10rem] px-6 py- md:text-sm flex items-center place-content-center gap-2"
+            }
             onClick={() => navigate("/create-post")}
           />
         )}
