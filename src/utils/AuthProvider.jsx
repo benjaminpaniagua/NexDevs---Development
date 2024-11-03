@@ -1,4 +1,5 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import axios from "axios";
 
 import PropTypes from 'prop-types';
 const AuthContext = createContext();
@@ -11,6 +12,17 @@ export const AuthProvider = ({ children }) => {
     if (storedToken) {
       setToken(storedToken);
     }
+
+    axios.interceptors.request.use((config) => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+      (error) => {
+        return Promise.reject(error);
+      });
   }, []);
 
   const login = (newToken) => {
