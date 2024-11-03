@@ -1,15 +1,16 @@
 
-import { FaInstagram, FaWhatsapp, FaFacebook } from "react-icons/fa";
+import { FaInstagram, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { FooterLink } from "./FooterLink";
 
 const Footer = () => {
   return (
     <footer className="bg-gradient-to-t from-clr-green-light via-clr-white to-clr-white p-10 pt-24 font-montserrat">
-      <div className="max-w-screen-xl mx-auto gap-6 text-center flex items-start md:grid md:grid-cols-1 justify-between">
+      <div className="max-w-[100rem] px-20 mx-auto gap-6 text-center flex items-start md:grid md:grid-cols-1 justify-between">
+      {/* <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10"> */}
         <div className="flex gap-64 md:flex-col md:gap-6">
           <div className="flex flex-col space-y-4 md:items-center items-start">
             <FooterLink linkText="Servicios" linkUrl="/services" />
-            <FooterLink linkText="Comunidad" linkUrl="/posts" />
+            <FooterLink linkText="Publicaciones" linkUrl="/posts" />
             <FooterLink linkText="Contáctanos" linkUrl="/contact-us" />
           </div>
 
@@ -22,13 +23,13 @@ const Footer = () => {
 
         <div className="flex flex-col md:items-center space-y-4 items-end">
           <div className="flex space-x-4">
-            <a href="#" className="text-clr-black text-xl">
+            <a href="https://www.instagram.com/2024_network?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="text-clr-black text-xl" target="_blank" rel="noopener noreferrer">
               <FaInstagram />
             </a>
-            <a href="#" className="text-clr-black text-xl">
-              <FaWhatsapp />
+            <a href="https://www.linkedin.com/in/network-app-b83708333/" className="text-clr-black text-xl" target="_blank" rel="noopener noreferrer">
+              <FaLinkedin />
             </a>
-            <a href="#" className="text-clr-black text-xl">
+            <a href="https://www.facebook.com/share/ev3AkoQH8vPZND9y/?mibextid=LQQJ4d" className="text-clr-black text-xl" target="_blank" rel="noopener noreferrer">
               <FaFacebook />
             </a>
           </div>

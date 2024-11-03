@@ -1,9 +1,9 @@
-import  { useState, useEffect } from 'react';
-import NavLinks from './NavLinks';
-import { Modal_Profile } from '../Modal_Profile/Modal_Profile';
-import { Link, Route} from 'react-router-dom';
-import { SecondaryButton } from '../Buttons';
-import { useAuth } from '../../../utils/AuthProvider';
+import { useState, useEffect } from "react";
+import NavLinks from "./NavLinks";
+import { Modal_Profile } from "../Modal_Profile/Modal_Profile";
+import { Link, Route } from "react-router-dom";
+import { SecondaryButton } from "../Buttons";
+import { useAuth } from "../../../utils/AuthProvider";
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 
 const NavBar = () => {
@@ -39,7 +39,7 @@ const NavBar = () => {
   };
 
   const handleMenuClose = () => {
-    const checkbox = document.getElementById('menu-toggle');
+    const checkbox = document.getElementById("menu-toggle");
     if (checkbox.checked) {
       checkbox.checked = false;
       setIsMenuAnimating(false);
@@ -61,9 +61,9 @@ const NavBar = () => {
       }
       setScrollPosition(newScrollPosition);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [scrollPosition]);
 
@@ -71,68 +71,101 @@ const NavBar = () => {
     { label: "Inicio", route: "/Community_Feed/" },
     { label: "Explorar", route: "/profiles/" },
     { label: "Publicaciones", route: "/posts/" },
-    { label: "Contáctaanos", route: "/contact-us/" },
+    { label: "Contáctanos", route: "/contact-us/" },
   ];
 
   const renderProfilePicture = () => {
     if (!token) {
       return (
         <Link to="/Access_Panel/login">
-          <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
+          <SecondaryButton
+            text="Únete"
+            extraStyles={"px-4 py-2 text-fs-med font-bold"}
+          />
         </Link>
-      )
+      );
     }
     return (
-      <a className='cursor-pointer transition-all hover:scale-110' onClick={handleOpenModal}>
-        <img src={
-          userData.profilePictureUrl === "ND" || userData.profilePictureUrl === "default_image_url"
-            ? "/images/default_profile_picture.jpg"
-            : userData.profilePictureUrl}
-          alt="Foto de perfil" className="w-14 h-14 rounded-full object-cover" />
+      <a
+        className="cursor-pointer transition-all hover:scale-110"
+        onClick={handleOpenModal}
+      >
+        <img
+          src={
+            userData.profilePictureUrl === "ND" ||
+            userData.profilePictureUrl === "default_image_url"
+              ? "/images/default_profile_picture.jpg"
+              : userData.profilePictureUrl
+          }
+          alt="Foto de perfil"
+          className="w-14 h-14 rounded-full object-cover"
+        />
       </a>
-    )
-
+    );
   };
 
   const renderProfilePictureMovil = () => {
     if (!token) {
       return (
         <Link to="/Access_Panel/login">
-          <SecondaryButton text="Únete" extraStyles={"px-4 py-2 text-fs-med font-bold"} />
+          <SecondaryButton
+            text="Únete"
+            extraStyles={"px-4 py-2 text-fs-med font-bold"}
+          />
         </Link>
-      )
+      );
     }
 
-    if (userData.profilePictureUrl === 'ND') {
+    if (userData.profilePictureUrl === "ND") {
       return (
-        <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-          <img src="/images/default_profile_picture.jpg" alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+        <a
+          className="sm:flex hidden cursor-pointer transition-all hover:scale-110"
+          onClick={handleOpenModal}
+        >
+          <img
+            src="/images/default_profile_picture.jpg"
+            alt="Foto de perfil"
+            className="w-10 h-10 rounded-full object-cover"
+          />
         </a>
-      )
+      );
     }
-    if (userData.profilePictureUrl !== 'ND') {
+    if (userData.profilePictureUrl !== "ND") {
       return (
-        <a className="sm:flex hidden cursor-pointer transition-all hover:scale-110" onClick={handleOpenModal}>
-          <img src={userData.profilePictureUrl} alt="Foto de perfil" className="w-10 h-10 rounded-full object-cover" />
+        <a
+          className="sm:flex hidden cursor-pointer transition-all hover:scale-110"
+          onClick={handleOpenModal}
+        >
+          <img
+            src={userData.profilePictureUrl}
+            alt="Foto de perfil"
+            className="w-10 h-10 rounded-full object-cover"
+          />
         </a>
-      )
+      );
     }
   };
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-white ${isScrolled ? '-translate-y-36' : 'translate-y-0'}`}>
-        <div className="flex items-center">
-          <Link to="/">
-            <img src="/logo/Logo.svg" alt="Logo" className="h-12 sm:h-9" />
-          </Link>
-        </div>
-        <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
-          <NavLinks links={links} />
-          {renderProfilePicture()}
+      <nav
+        className={`fixed top-0 left-0 w-full flex items-center justify-between p-5 z-20 transition-all duration-300 shadow-lg bg-clr-white ${
+          isScrolled ? "-translate-y-36" : "translate-y-0"
+        }`}
+      >
+        <div className="w-full max-w-[100rem] flex items-center justify-between px-20 mx-auto ">
+          <div className="flex items-center">
+            <Link to="/">
+              <img src="/logo/Logo.svg" alt="Logo" className="h-12 sm:h-9" />
+            </Link>
+          </div>
+          <div className="w-full flex justify-end items-center gap-4 tracking-wide font-medium sm:hidden">
+            <NavLinks links={links} />
+            {renderProfilePicture()}
+          </div>
         </div>
 
-        <div className='sm:flex items-center gap-10 hidden'>
+        <div className="sm:flex items-center gap-10 hidden">
           {renderProfilePictureMovil()}
           <label className="flex-col gap-2 w-8 sm:flex hidden">
             <input
@@ -148,7 +181,11 @@ const NavBar = () => {
         </div>
 
         {isOpen && (
-          <div className={`absolute top-full left-0 z-10 right-0 bg-clr-white p-4 sm:flex hidden md:justify-start md:items-start transition-all shadow-lg duration-300 ${isMenuAnimating ? 'animate-menu-open' : 'animate-menu-close'}`}>
+          <div
+            className={`absolute top-full left-0 z-10 right-0 bg-clr-white p-4 sm:flex hidden md:justify-start md:items-start transition-all shadow-lg duration-300 ${
+              isMenuAnimating ? "animate-menu-open" : "animate-menu-close"
+            }`}
+          >
             <NavLinks links={links} />
           </div>
         )}
@@ -156,9 +193,18 @@ const NavBar = () => {
         {isModalOpen && (
           <div className={`absolute top-0 right-0 z-30 sm:m-auto`}>
             {/* Fondo oscuro para el modal */}
-            <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal} ></div>
+            <div
+              className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${
+                isAnimating ? "opacity-100" : "opacity-0"
+              }`}
+              onClick={handleCloseModal}
+            ></div>
             {/* Modal de la esquina */}
-            <div className={`mt-5 mr-5 w-[22rem] sm:mx-3 transform transition-transform duration-300 ease-out scale-0 origin-center ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
+            <div
+              className={`mt-5 mr-5 w-[22rem] sm:mx-3 transform transition-transform duration-300 ease-out scale-0 origin-center ${
+                isAnimating ? "animate-modal-open" : "animate-modal-close"
+              }`}
+            >
               <Modal_Profile onClose={handleCloseModal} />
             </div>
           </div>
