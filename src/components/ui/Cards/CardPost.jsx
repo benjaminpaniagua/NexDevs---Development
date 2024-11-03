@@ -177,13 +177,13 @@ export function CardPost({
             placeholder="Añadir comentario..."
             value={postComment}
             onChange={handleCommentChange}
-            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
+            className="border h-10 w-[80%] bg-clr-white border-black rounded p-1"
           />
           <SecondaryButton
             text=""
             icon={ICONS.send}
             type="submit"
-            extraStyles="flex items-center justify-center py-2 w-[20%]"
+            extraStyles="flex items-center justify-center py-1 w-[20%]"
             disabled={!postComment}
           />
         </form>
@@ -332,21 +332,23 @@ export function CardPost({
       {/* Modal */}
       {showModal && (
         <div
-          className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-70"
+          className="fixed inset-0 flex items-center justify-center z-50 bg-gray-800 bg-opacity-70 p-6"
           onClick={handleOutsideClick}
         >
-          <div className="absolute top-4 right-10">
+          <div className="relative max-w-7xl w-full p-0 overflow-hidden bg-white rounded-lg shadow-lg">
             {/* Botón para cerrar el modal */}
-            <button onClick={closeModal} className="text-black p-3">
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 text-white p-2 z-10"
+            >
               {ICONS.close_white}
             </button>
-          </div>
-          <div className="max-w-5xl p-0 overflow-hidden bg-white rounded shadow-lg">
-            <div className="flex h-[80vh]">
-              {/* Left side - Image */}
-              <div className="relative flex-1">
+
+            <div className="flex flex-row w-full lg:flex-col h-[80vh] lg:h-[90vh] overflow-hidden">
+              {/* Lado izquierdo - Imagen */}
+              <div className="flex flex-1 bg-gray-300">
                 <img
-                  className="object-cover h-full w-full bg-gray-300"
+                  className="object-cover h-full w-full aspect-square lg:aspect-video"
                   src={
                     imageUrl === "ND" || imageUrl === "default_image_url"
                       ? "/images/placeholder.jpg"
@@ -355,9 +357,10 @@ export function CardPost({
                   alt="Post_Image"
                 />
               </div>
-              {/* Right side - Comments */}
-              <div className="flex flex-col w-[350px] bg-background">
-                {/* Header */}
+
+              {/* Lado derecho - Comentarios */}
+              <div className="flex flex-col lg:w-full w-[30%] md:w-[80%] bg-background overflow-y-auto">
+                {/* Encabezado */}
                 <div className="p-4 border-b">
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8">
@@ -375,7 +378,8 @@ export function CardPost({
                     <h2 className="text-sm font-semibold">{userName}</h2>
                   </div>
                 </div>
-                {/* Comments section */}
+
+                {/* Sección de comentarios */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4">
                   {comments.length > 0 ? (
                     comments
@@ -384,7 +388,7 @@ export function CardPost({
                       )
                       .map((comment) => (
                         <div key={comment.commentId} className="flex gap-2">
-                          <div className="w-8 h-8 ">
+                          <div className="w-8 h-8">
                             <img
                               src={
                                 comment.profilePictureUrlWorker === "ND" ||
@@ -423,21 +427,12 @@ export function CardPost({
                                   }
                                 >
                                   {ICONS.trash}
-                                  {/* {console.log(comment.commentId)} */}
                                 </button>
                               ) : null}
                             </div>
                             <p className="text-sm break-words">
                               {comment.contentComment}
                             </p>
-                            {/* <div className="flex gap-4 mt-1">
-                              <button className="text-xs text-muted-foreground">
-                                Like
-                              </button>
-                              <button className="text-xs text-muted-foreground">
-                                Reply
-                              </button>
-                            </div> */}
                           </div>
                         </div>
                       ))
@@ -446,9 +441,9 @@ export function CardPost({
                   )}
                 </div>
 
-                {/* Actions */}
+                {/* Acciones */}
                 <div className="p-4 border-t">
-                  <section className="flex gap-3 xs:gap-2 items-center ml-auto">
+                  <section className="flex gap-3 items-center ml-auto">
                     <div className="flex gap-1 items-center">
                       <button
                         className="transition-all hover:scale-110"

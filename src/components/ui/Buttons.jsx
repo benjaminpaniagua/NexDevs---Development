@@ -118,6 +118,7 @@ export function SecondaryButtonOutline({
 }) {
   const baseStyles =
     "text-clr-black rounded-lg border-2 transition-all duration-300";
+  const iconElement = icon ? <span className="">{icon}</span> : null;
 
   if (disabled) {
     return (
@@ -125,6 +126,7 @@ export function SecondaryButtonOutline({
         type="button"
         className={`${baseStyles} bg-clr-white border-clr-black opacity-50 cursor-default ${extraStyles}`}
       >
+        {iconElement}
         {text}
       </button>
     );
@@ -136,6 +138,7 @@ export function SecondaryButtonOutline({
         rel="noopener noreferrer"
         className={`${baseStyles} bg-clr-white border-clr-black hover:bg-clr-black hover:text-clr-white ${extraStyles}`}
       >
+        {iconElement}
         {text}
       </a>
     );
@@ -147,6 +150,7 @@ export function SecondaryButtonOutline({
         onClick={onClick}
         className={`${baseStyles} bg-clr-white border-clr-black hover:bg-clr-black hover:text-clr-white ${extraStyles}`}
       >
+        {iconElement}
         {text}
       </button>
     );
