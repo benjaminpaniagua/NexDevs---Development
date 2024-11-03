@@ -253,9 +253,8 @@ export function CardPost({
                 <button
                   onClick={handleDeleteClick}
                   disabled={loading}
-                  className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
-                    loading ? "cursor-not-allowed" : ""
-                  }`}
+                  className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${loading ? "cursor-not-allowed" : ""
+                    }`}
                 >
                   {loading ? "Eliminando..." : "Eliminar"}
                 </button>
@@ -284,7 +283,7 @@ export function CardPost({
                 <img
                   src={
                     profilePictureUrl === "ND" ||
-                    profilePictureUrl === "default_image_url"
+                      profilePictureUrl === "default_image_url"
                       ? "/images/default_profile_picture.jpg"
                       : profilePictureUrl
                   }
@@ -367,7 +366,7 @@ export function CardPost({
                       <img
                         src={
                           profilePictureUrl === "ND" ||
-                          profilePictureUrl === "default_image_url"
+                            profilePictureUrl === "default_image_url"
                             ? "/images/default_profile_picture.jpg"
                             : profilePictureUrl
                         }
@@ -391,14 +390,17 @@ export function CardPost({
                           <div className="w-8 h-8">
                             <img
                               src={
-                                comment.profilePictureUrlWorker === "ND" ||
-                                !comment.profilePictureUrlWorker
+                                (comment.profilePictureUrlWorker === "ND" || !comment.profilePictureUrlWorker) &&
+                                  (comment.profilePictureUrlUser === "ND" || !comment.profilePictureUrlUser)
                                   ? "/images/default_profile_picture.jpg"
-                                  : comment.profilePictureUrlWorker
+                                  : comment.profilePictureUrlWorker && comment.profilePictureUrlWorker !== "ND"
+                                    ? comment.profilePictureUrlWorker
+                                    : comment.profilePictureUrlUser
                               }
                               alt="Foto de perfil"
                               className="w-full h-full rounded-full object-cover"
                             />
+
                           </div>
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-6">
@@ -418,8 +420,8 @@ export function CardPost({
                               )}
                               {(comment.workId &&
                                 comment.workId === userData.workId) ||
-                              (comment.userId &&
-                                comment.userId === userData.userId) ? (
+                                (comment.userId &&
+                                  comment.userId === userData.userId) ? (
                                 <button
                                   className="text-xs text-muted-foreground"
                                   onClick={() =>

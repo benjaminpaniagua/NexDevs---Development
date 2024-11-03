@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 export const useFetchCollection = (workId) => {
   const [collections, setCollections] = useState([]);
@@ -11,22 +12,17 @@ export const useFetchCollection = (workId) => {
       setError(null);
 
       try {
-        const response = await fetch(
-          `https://nexdevsapi.somee.com/Collections/Consultar?workId=${workId}`,
+        const response = await axios.get(
+          `https://nexdevsapi.somee.com/Collections/Consultar`,
           {
-            method: "GET",
+            params: { workId },
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Error en la petición: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setCollections(data);
+        setCollections(response.data);
       } catch (err) {
         setError(err.message);
       } finally {
