@@ -8,9 +8,8 @@ import { MainButton } from "../Buttons";
 import { Link } from "react-router-dom";
 
 
-export function Modal_Profile({ onClose }) {
+export function Modal_Profile({ onClose, userData }) {
     const navigate = useNavigate();
-    const { userData } = useFetchWorkUserData();
     const { logout } = useAuth();
 
     const handleLogout = () => {
@@ -104,8 +103,6 @@ export function Modal_Profile({ onClose }) {
                         <Link to={`/UserEdit/${userData.userId}`}>
                             <MainButton id="modal_edit_profile" text="Editar perfil" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
                         </Link>
-                    </div>
-                    <div className='flex gap-5 justify-center transition-all duration-500 items-center my-4'>
                         <Link to={`/posts/?liked=true`}>
                             <MainButton id="modal_edit_profile" text="Lista de likes" extraStyles="text-fs-xsmall px-3 py-2" onClick={onClose} />
                         </Link>

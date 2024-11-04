@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 export const useFetchLikedPosts = (userId, workProfileId) => {
   const [likedPosts, setLikedPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const liked = queryParams.get('liked')
 
   useEffect(() => {
     const fetchLikedPosts = async () => {
@@ -31,7 +36,7 @@ export const useFetchLikedPosts = (userId, workProfileId) => {
     if (userId || workProfileId) {
       fetchLikedPosts();
     }
-  }, [userId, workProfileId]);
+  }, [userId, workProfileId, liked]);
 
   return { likedPosts, loading, error };
 };
