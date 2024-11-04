@@ -3,21 +3,29 @@ import { useState, useEffect } from "react";
 import { CardPost } from "../ui/Cards/CardPost";
 import { SecondaryButtonOutline } from "../ui/Buttons";
 import { useFetchPosts } from "../../hooks/useFetchPosts";
+import { useFetchLikedPosts } from "../../hooks/useFetchLikedPosts";
 import { Loading_Screen } from "../ui/Loading_Screen.jsx";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
 import { useDeletePost } from "../../hooks/useDeletePost";
 import Alert from "../ui/Alert";
 import AddIcon from "@mui/icons-material/Add";
 
 export function Posts_List() {
+  const { userData } = useFetchWorkUserData();
   const { data: posts, error, loading } = useFetchPosts();
+  const { likedPosts: likedPosts, error: likedError, loading: likedLoading } = useFetchLikedPosts(userData?.userId ?? 0, userData?.workId ?? 0);
+
   const {
     deletePost,
     loading: loadingDelete,
     error: errorDelete,
   } = useDeletePost();
-  const { userData } = useFetchWorkUserData();
+
+  console.log(likedPosts);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const liked = queryParams.get('liked')
 
   const [postList, setPostList] = useState([]); // Estado local para manejar la lista de publicaciones
   const navigate = useNavigate();
@@ -33,12 +41,17 @@ export function Posts_List() {
 
   // Sincroniza el estado local `postList` con los datos iniciales de `posts`
   useEffect(() => {
-    console.log("Datos de publicaciones recibidos:", posts);
+    //console.log("Datos de publicaciones recibidos:", posts);
     if (posts) {
-      setPostList(posts);
-      console.log("Lista de publicaciones actualizada:", posts);
+      if (liked) {
+        setPostList(likedPosts);
+        //console.log("Lista de publicaciones actualizada:", likedPosts);
+      }else {
+        setPostList(posts);
+      }
+      //console.log("Lista de publicaciones actualizada:", posts);
     }
-  }, [posts]);
+  }, [posts, likedPosts, liked]);
 
   const handlePostDelete = async (postId) => {
     const result = await deletePost(postId);
@@ -94,7 +107,7 @@ export function Posts_List() {
         <Alert alert={alert} setAlert={setAlert} />
         <Loading_Screen Loading={loading || loadingDelete} />
         {renderTop()}
-        <div className="grid grid-cols-auto-350 md:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
+        <div className="grid grid-cols-3 md:grid-cols-1 gap-12 md:gap-8 xs:gap-10">
           {Array.isArray(postList) && postList.length > 0 ? (
             postList.map((post) => (
               <CardPost

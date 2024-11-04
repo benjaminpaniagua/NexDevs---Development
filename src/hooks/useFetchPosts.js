@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
 export const useFetchPosts = () => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const liked = queryParams.get('liked')
 
   const getData = async () => {
     try {
@@ -25,7 +30,7 @@ export const useFetchPosts = () => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [liked]);
 
   return {
     data,
