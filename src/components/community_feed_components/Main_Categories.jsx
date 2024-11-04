@@ -22,7 +22,7 @@ export function Main_Categories() {
         window.addEventListener("resize", updateCategories);
         return () => window.removeEventListener("resize", updateCategories);
     }, [loading]);
-
+    
     const handleCardClick = (title) => {
         navigate(`/profiles?category=${encodeURIComponent(title)}`);
     };
