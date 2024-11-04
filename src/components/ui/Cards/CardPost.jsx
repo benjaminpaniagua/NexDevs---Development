@@ -253,8 +253,9 @@ export function CardPost({
                 <button
                   onClick={handleDeleteClick}
                   disabled={loading}
-                  className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${loading ? "cursor-not-allowed" : ""
-                    }`}
+                  className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
+                    loading ? "cursor-not-allowed" : ""
+                  }`}
                 >
                   {loading ? "Eliminando..." : "Eliminar"}
                 </button>
@@ -283,7 +284,7 @@ export function CardPost({
                 <img
                   src={
                     profilePictureUrl === "ND" ||
-                      profilePictureUrl === "default_image_url"
+                    profilePictureUrl === "default_image_url"
                       ? "/images/default_profile_picture.jpg"
                       : profilePictureUrl
                   }
@@ -366,7 +367,7 @@ export function CardPost({
                       <img
                         src={
                           profilePictureUrl === "ND" ||
-                            profilePictureUrl === "default_image_url"
+                          profilePictureUrl === "default_image_url"
                             ? "/images/default_profile_picture.jpg"
                             : profilePictureUrl
                         }
@@ -378,66 +379,105 @@ export function CardPost({
                   </div>
                 </div>
 
-                {/* Sección de comentarios */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                <div className="flex-1 overflow-y-auto p-4 space-y-8">
                   {comments.length > 0 ? (
                     comments
-                      .sort(
-                        (a, b) => new Date(b.createAt) - new Date(a.createAt)
-                      )
-                      .map((comment) => (
-                        <div key={comment.commentId} className="flex gap-2">
-                          <div className="w-8 h-8">
-                            <img
-                              src={
-                                (comment.profilePictureUrlWorker === "ND" || !comment.profilePictureUrlWorker) &&
-                                  (comment.profilePictureUrlUser === "ND" || !comment.profilePictureUrlUser)
-                                  ? "/images/default_profile_picture.jpg"
-                                  : comment.profilePictureUrlWorker && comment.profilePictureUrlWorker !== "ND"
-                                    ? comment.profilePictureUrlWorker
-                                    : comment.profilePictureUrlUser
-                              }
-                              alt="Foto de perfil"
-                              className="w-full h-full rounded-full object-cover"
-                            />
-
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-center gap-6">
-                              {comment.workId ? (
-                                <Link
-                                  to={`/workprofile/${comment.workId}`}
-                                  className="text-sm font-semibold truncate"
-                                >
-                                  {comment.firstName}{" "}
-                                  {comment.lastName || comment.name || ""}
-                                </Link>
-                              ) : (
-                                <span className="text-sm font-semibold truncate">
-                                  {comment.firstName}{" "}
-                                  {comment.lastName || comment.name || ""}
-                                </span>
-                              )}
-                              {(comment.workId &&
-                                comment.workId === userData.workId) ||
-                                (comment.userId &&
-                                  comment.userId === userData.userId) ? (
-                                <button
-                                  className="text-xs text-muted-foreground"
-                                  onClick={() =>
-                                    handleCommentDelete(comment.commentId)
+                      .sort((a, b) => b.commentId - a.commentId)
+                      .map((comment, index) => {
+                        const commentDate = new Date(comment.createAt);
+                        const today = new Date();
+                        const yesterday = new Date();
+                        yesterday.setDate(today.getDate() - 1);
+                        let formattedDate;
+                        if (
+                          commentDate.getDate() === today.getDate() &&
+                          commentDate.getMonth() === today.getMonth() &&
+                          commentDate.getFullYear() === today.getFullYear()
+                        ) {
+                          formattedDate = "Hoy";
+                        } else if (
+                          commentDate.getDate() === yesterday.getDate() &&
+                          commentDate.getMonth() === yesterday.getMonth() &&
+                          commentDate.getFullYear() === yesterday.getFullYear()
+                        ) {
+                          formattedDate = "Ayer";
+                        } else {
+                          formattedDate = commentDate.toLocaleDateString(
+                            "es-ES",
+                            {
+                              day: "numeric",
+                              month: "short",
+                            }
+                          );
+                        }
+                        return (
+                          <div key={comment.commentId}>
+                            <div className="flex gap-2">
+                              <div className="w-8 h-8">
+                                <img
+                                  src={
+                                    (comment.profilePictureUrlWorker === "ND" ||
+                                      !comment.profilePictureUrlWorker) &&
+                                    (comment.profilePictureUrlUser === "ND" ||
+                                      !comment.profilePictureUrlUser)
+                                      ? "/images/default_profile_picture.jpg"
+                                      : comment.profilePictureUrlWorker &&
+                                        comment.profilePictureUrlWorker !== "ND"
+                                      ? comment.profilePictureUrlWorker
+                                      : comment.profilePictureUrlUser
                                   }
-                                >
-                                  {ICONS.trash}
-                                </button>
-                              ) : null}
+                                  alt="Foto de perfil"
+                                  className="w-full h-full rounded-full object-cover"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between">
+                                  <div className="flex items-center gap-6">
+                                    {comment.workId ? (
+                                      <Link
+                                        to={`/workprofile/${comment.workId}`}
+                                        className="text-sm font-semibold truncate"
+                                      >
+                                        {comment.firstName}{" "}
+                                        {comment.lastName || comment.name || ""}
+                                      </Link>
+                                    ) : (
+                                      <span className="text-sm font-semibold truncate">
+                                        {comment.firstName}{" "}
+                                        {comment.lastName || comment.name || ""}
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  {(comment.workId &&
+                                    comment.workId === userData.workId) ||
+                                  (comment.userId &&
+                                    comment.userId === userData.userId) ? (
+                                    <button
+                                      className="text-xs text-muted-foreground"
+                                      onClick={() =>
+                                        handleCommentDelete(comment.commentId)
+                                      }
+                                    >
+                                      {ICONS.trash}
+                                    </button>
+                                  ) : null}
+                                  <p className="text-xs text-gray-500">
+                                    {formattedDate}
+                                  </p>
+                                </div>
+                                <p className="text-sm break-words">
+                                  {comment.contentComment}
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-sm break-words">
-                              {comment.contentComment}
-                            </p>
+                            {/* Línea divisoria */}
+                            {index < comments.length - 1 && ( // No mostrar la línea después del último comentario
+                              <div className="border-t border-gray-300 my-3 w-[85%] m-auto" />
+                            )}
                           </div>
-                        </div>
-                      ))
+                        );
+                      })
                   ) : (
                     <p>No hay comentarios aún.</p>
                   )}
