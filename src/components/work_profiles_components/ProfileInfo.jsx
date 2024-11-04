@@ -11,7 +11,7 @@ import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { Modal_Review } from "../ui/Modal_Review/Modal_Review";
-export function ProfileInfo({ users, loading, isOwner }) {
+export function ProfileInfo({ users, loading, isOwner, userData }) {
   const { token } = useAuth();
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,36 +79,51 @@ export function ProfileInfo({ users, loading, isOwner }) {
     </div>
   );
 
-  const renderButtons = () => (
-    <div className="flex my-2 md:justify-center gap-4">
-      {isOwner ? (
-        <>
-          <Link
-            to={`/WorkUserEdit/${users.workId}`}
-            className="w-[25%] lg:w-full"
-          >
-            <SecondaryButtonOutline
-              text="Editar Perfil"
-              extraStyles={"py-2 w-full"}
-            />
-          </Link>
-          <Link to={"/create-post/"} className="w-[25%] lg:w-full">
-            <SecondaryButton
-              text={"Publicar"}
-              extraStyles={"py-2 w-full"}
-            />
-          </Link>
-        </>
-      ) : (
-        <SecondaryButtonOutline
-          text={"Dejar una Reseña"}
-          extraStyles={"w-full py-2"}
-          disabled={!token}
-          onClick={handleOpenModal}
-        />
-      )}
-    </div>
-  );
+  const renderButtons = () => {
+    
+    if (userData.profileType === 'W') {
+      return (
+        <div className="flex my-2 md:justify-center gap-4">
+        {isOwner ? (
+          <>
+            <Link
+              to={`/WorkUserEdit/${users.workId}`}
+              className="w-[25%] lg:w-full"
+            >
+              <SecondaryButtonOutline
+                text="Editar Perfil"
+                extraStyles={"py-2 w-full"}
+              />
+            </Link>
+            <Link to={"/create-post/"} className="w-[25%] lg:w-full">
+              <SecondaryButton
+                text={"Publicar"}
+                extraStyles={"py-2 w-full"}
+              />
+            </Link>
+          </>
+        ) : (
+          <>
+          </>
+        )}
+      </div>
+      )
+    }
+
+    if (userData.profileType === 'U') {
+      return (
+        <div className="flex my-2 md:justify-center gap-4">
+          <SecondaryButtonOutline
+            text={"Dejar una Reseña"}
+            extraStyles={"w-full py-2"}
+            disabled={!token}
+            onClick={handleOpenModal}
+          />
+        </div>
+      )
+    }
+
+  };
 
   if (loading) {
     return <h3 className="text-center">Cargando perfiles...</h3>;
@@ -137,8 +152,8 @@ export function ProfileInfo({ users, loading, isOwner }) {
             <Modal_Review onClose={handleCloseModal} />
           </div>
         </div>
-  )
-}
+      )
+      }
 
 
     </div >

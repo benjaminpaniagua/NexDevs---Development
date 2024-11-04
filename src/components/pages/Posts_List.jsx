@@ -6,13 +6,11 @@ import { useFetchPosts } from "../../hooks/useFetchPosts";
 import { useFetchLikedPosts } from "../../hooks/useFetchLikedPosts";
 import { Loading_Screen } from "../ui/Loading_Screen.jsx";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFetchWorkUserData } from "../../hooks/useFetchWorkUserData.js";
 import { useDeletePost } from "../../hooks/useDeletePost";
 import Alert from "../ui/Alert";
 import AddIcon from "@mui/icons-material/Add";
 
-export function Posts_List() {
-  const { userData } = useFetchWorkUserData();
+export function Posts_List({userData}) {
   const { data: posts, error, loading } = useFetchPosts();
   const { likedPosts: likedPosts, error: likedError, loading: likedLoading } = useFetchLikedPosts(userData?.userId ?? 0, userData?.workId ?? 0);
 
