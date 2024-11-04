@@ -12,7 +12,7 @@ export function Modal_Review({ onClose, workId, userData, onNewReview }) {
         userId: userData,
         workId: workId,
         rating: rating,
-        CreateAt: new Date(),
+        CreateAt: new Date().toISOString(),
     });
 
     const handleInputChange = (e) => {
