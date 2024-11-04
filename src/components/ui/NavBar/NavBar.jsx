@@ -206,7 +206,7 @@ const NavBar = () => {
                   isAnimating ? "animate-modal-open" : "animate-modal-close"
                 }`}
               >
-                <Modal_Profile onClose={handleCloseModal} />
+                <Modal_Profile onClose={handleCloseModal} userData={userData} />
               </div>
             </div>
           )}

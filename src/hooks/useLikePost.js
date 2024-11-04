@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useFetchWorkUserData } from "./useFetchWorkUserData";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const useLikePost = (postId, initialLikesCount) => {
   const { userData } = useFetchWorkUserData();
@@ -9,6 +9,10 @@ const useLikePost = (postId, initialLikesCount) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const liked = queryParams.get('liked')
 
   //CHECK IF USER IS LOGGED IN
   useEffect(() => {
