@@ -30,8 +30,8 @@ export function Reviews({ workId, isAddedReview }) {
           <h5>Error al cargar reseñas.</h5>
         </div>
       ) : (
-        <div className="flex flex-col gap-4">
-          {reviews.slice(0, reviewsToShow).map((review, index) => (
+        <div className="flex flex-col gap-4 overflow-y-auto max-h-[690px] md1:max-h-[24rem]">
+          {reviews.map((review, index) => (
             <CardReviews
               key={index}
               userName={review.firstName + " " + review.lastName}
@@ -44,17 +44,6 @@ export function Reviews({ workId, isAddedReview }) {
               rate={review.rating}
             />
           ))}
-
-          {/* Conditionally render the "Ver más" button */}
-          {reviews.length > 6 && (
-            <div className="flex justify-center">
-              <SecondaryButtonOutline
-                text={showAllReviews ? "Ver menos" : "Ver más"}
-                extraStyles={"px-16 py-2 mt-5"}
-                onClick={() => setShowAllReviews(!showAllReviews)}
-              />
-            </div>
-          )}
         </div>
       )}
     </div>
