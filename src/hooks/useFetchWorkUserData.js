@@ -24,8 +24,10 @@ export const useFetchWorkUserData = () => {
               `https://nexdevsapi.somee.com/Users/BuscarEmail?email=${userEmail}`
             );
             setUserData(responseUser.data);
+            console.log(userData.data);
           } else {
             setUserData(response.data);
+            console.log(userData.data);
           }
         } catch (error) {
           setError("Error al cargar los datos del usuario");

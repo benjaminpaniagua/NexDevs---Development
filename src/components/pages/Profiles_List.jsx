@@ -123,6 +123,7 @@ export function Profiles_List() {
                     city={user.city}
                     number={user.number}
                     email={user.email}
+                    rating={user.averageRating}
                     id={user.workId}
                     onClick={() => handleCardClick(user.workId)}
                   />
