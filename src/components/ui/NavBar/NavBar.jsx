@@ -4,15 +4,12 @@ import { Modal_Profile } from "../Modal_Profile/Modal_Profile";
 import { Link, Route } from "react-router-dom";
 import { SecondaryButton } from "../Buttons";
 import { useAuth } from "../../../utils/AuthProvider";
-import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
-
-const NavBar = () => {
+export function NavBar ({ userData }) {
   const { token } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [isMenuAnimating, setIsMenuAnimating] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { userData } = useFetchWorkUserData();
   // Funciones para abrir y cerrar el modal
   const handleOpenModal = () => {
     setIsAnimating(true);
@@ -215,5 +212,3 @@ const NavBar = () => {
     </>
   );
 };
-
-export default NavBar;

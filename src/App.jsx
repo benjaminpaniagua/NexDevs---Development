@@ -1,7 +1,7 @@
 import "./index.css";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './utils/AuthProvider.jsx';
-import NavBar from './components/ui/NavBar/NavBar.jsx';
+import { NavBar } from './components/ui/NavBar/NavBar.jsx';
 import Footer from './components/ui/Footer/Footer.jsx'
 import { Landing_Page } from './components/pages/Landing_Page.jsx';
 import { Access_Panel } from './components/pages/Access_Panel.jsx';
@@ -24,15 +24,17 @@ import FaqPage from "./components/pages/FaqPage.jsx";
 import CreatePost from "./components/pages/CreatePost.jsx";
 import { EditCollection } from "./components/pages/editCollection.jsx";
 import { EditPost } from "./components/pages/PostEdit.jsx";
+import { useFetchWorkUserData } from "./hooks/useFetchWorkUserData.js";
 
 const MainApp = () => {
   useScrollToTop();
   const location = useLocation();
   const showNavbar = !location.pathname.startsWith("/Access_Panel");
+  const { userData } = useFetchWorkUserData();
 
   return (
     <div>
-      {showNavbar && <NavBar />}
+      {showNavbar && <NavBar userData={userData} />}
       <div className={`flex-1 ${showNavbar ? "mt-[75px]" : ""}`}>
         <Routes>
           <Route path="/" element={<Landing_Page />} />
@@ -40,14 +42,14 @@ const MainApp = () => {
           <Route path="/categories/" element={<Categories_Page />} />
           <Route path="/profiles/" element={<Profiles_List />} />
           <Route path="/profiles/:search" element={<Profiles_List />} />
-          <Route path="/workProfile/:userId" element={<Work_Profiles />} />
+          <Route path="/workProfile/:userId" element={<Work_Profiles  userData={userData}/>} />
           <Route path="/WorkUserEdit/:userId" element={<WorkUserEdit />} />
           <Route path="/UserEdit/:userId" element={<NormalUserEdit />} />
           <Route path="/community_feed/" element={<Community_Feed />} />
           <Route path="*" element={<Error_404 />} />
           <Route path="/error503" element={<Error_503 />} />
           {/* <Route path="/post" element={<Modal_Post />} /> */}
-          <Route path="/posts" element={<Posts_List />} />
+          <Route path="/posts" element={<Posts_List userData={userData}/>} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/editCollection/:userId" element={<EditCollection />} />
           <Route path="/edit-post/:postId" element={<EditPost />} />
