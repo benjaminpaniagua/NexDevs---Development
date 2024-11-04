@@ -96,8 +96,6 @@ export function WorkUserEdit() {
   const [availableCities, setAvailableCities] = useState([]);
 
     //Lista de opciones de los selects
-    const stateOptions = provincias ? Object.values(provincias) : [];
-
     const provinceIdMap = {
         'San José': '1',
         'Alajuela': '2',
@@ -107,6 +105,8 @@ export function WorkUserEdit() {
         'Puntarenas': '6',
         'Limón': '7'
     };
+    
+    const stateOptions = Object.keys(provinceIdMap);
 
 
   useEffect(() => {
