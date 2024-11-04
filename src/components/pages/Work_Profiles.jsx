@@ -10,12 +10,16 @@ import { useFetchUserProfile } from '../../hooks/WorkProfile/useFetchUserProfile
 import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import { useFetchWorkUserData } from '../../hooks/useFetchWorkUserData.js';
 
-export function Work_Profiles({userData}) {
+export function Work_Profiles({}) {
     const navigate = useNavigate();
     const { users, loading, error } = useFetchUserProfile(); 
     const [ isOwner, setIsOwner ] = useState(false);
     const { userId } = useParams();
+
+    const { userData, loadingUserData, errorUserData } = useFetchWorkUserData();
+    console.log("Test",userData);
 
     const [isAddedReview, setIsAddedReview] = useState(false);
     const handleIsAddedReviewChange = (newValue) => {
