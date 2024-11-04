@@ -1,5 +1,5 @@
-
-
+import React from "react";
+import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 const ContactUs = () => {
   return (
     <div className="flex flex-col py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
@@ -30,9 +30,9 @@ const ContactUs = () => {
           <h2 className="text-xl font-semibold mb-2">Soporte Técnico</h2>
           <p>
             Si tienes problemas técnicos o necesitas ayuda con tu cuenta o los
-            servicios de <strong>network</strong>, por favor, visita nuestra página de Soporte
-            Técnico donde podrás encontrar respuestas a preguntas frecuentes y
-            enviarnos tus consultas.
+            servicios de <strong>network</strong>, por favor, visita nuestra
+            página de Soporte Técnico donde podrás encontrar respuestas a
+            preguntas frecuentes y enviarnos tus consultas.
           </p>
         </div>
 
@@ -71,24 +71,30 @@ const ContactUs = () => {
             <br />
             Facebook:{" "}
             <a
-              href="https://facebook.com/networkapp"
+              href="https://www.facebook.com/share/ev3AkoQH8vPZND9y/?mibextid=LQQJ4d"
               className="text-blue-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               facebook.com/networkapp
             </a>
             <br />
-            Twitter:{" "}
+            LinkedIn:{" "}
             <a
-              href="https://twitter.com/networkapp"
+              href="https://www.linkedin.com/in/network-app-b83708333/"
               className="text-blue-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              twitter.com/networkapp
+              linkedin.com/networkapp
             </a>
             <br />
             Instagram:{" "}
             <a
-              href="https://instagram.com/networkapp"
+              href="https://www.instagram.com/2024_network?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
               className="text-blue-600 underline"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               instagram.com/networkapp
             </a>
