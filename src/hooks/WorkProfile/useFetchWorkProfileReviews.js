@@ -1,63 +1,31 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
-export const useFetchReviews = () => {
-    /*const [data, setData] = useState([]);
-  
-    const getData = async () => {
+export const useFetchReviews = ({ workID }) => {
+  const [reviews, setReviews] = useState([]);
+  const [loading, setLoading] = useState(true); // State for loading
+  const [error, setError] = useState(null); // State for error
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      setLoading(true); // Set loading to true before fetching
       try {
-        const response = await fetch(``);
-        const data = await response.json();
-        setData(data);
+        const response = await axios.get(
+          `https://nexdevsapi.somee.com/Reviews/ConsultarWorkId?workId=${workID}`
+        );
+        setReviews(response.data); // Set reviews data from response
       } catch (error) {
-        console.log(error);
+        console.error("Error fetching reviews: ", error);
+        setError(error.message); // Set error message if fetch fails
+      } finally {
+        setLoading(false); // Set loading to false after fetching
       }
     };
-  
-    useEffect(() => {
-      getData();
-    }, []);
-  
-    return {
-      data,
-    };*/
 
-    const reviews = [
-        {
-            userName: "John Doe",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'Muy buen precio.',
-            rate: 5,
-        },
-        {
-            userName: "Jane Smith",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'Excelente servicio, muy satisfecho.',
-            rate: 4,
-        },
-        {
-            userName: "Carlos López",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'Rápido y eficiente, lo recomiendo.',
-            rate: 5,
-        },
-        {
-            userName: "Laura García",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'La atención al cliente podría mejorar.',
-            rate: 3,
-        },
-        {
-            userName: "Carlos García",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'Muy buenprecio.',
-            rate: 5,
-        },
-        {
-            userName: "Carmen Puentes",
-            profilePicture: "/images/default_profile_picture.jpg",
-            comment: 'Excelente servicio, muy satisfecho.',
-            rate: 4,
-        },
-    ];
-    return reviews;
+    if (workID) {
+      fetchReviews(); // Fetch reviews only if workID is available
+    }
+  }, [workID]); // Run effect when workID changes
+
+  return { reviews, loading, error }; // Return reviews, loading state, and error
 };
