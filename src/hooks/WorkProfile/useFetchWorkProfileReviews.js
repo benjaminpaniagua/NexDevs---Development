@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export const useFetchReviews = ({ workID }) => {
+export const useFetchReviews = ({ workID, updated }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true); // State for loading
   const [error, setError] = useState(null); // State for error
@@ -25,7 +25,7 @@ export const useFetchReviews = ({ workID }) => {
     if (workID) {
       fetchReviews(); // Fetch reviews only if workID is available
     }
-  }, [workID]); // Run effect when workID changes
+  }, [workID, updated]); // Run effect when workID changes
 
   return { reviews, loading, error }; // Return reviews, loading state, and error
 };

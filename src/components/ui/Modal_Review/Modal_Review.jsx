@@ -1,29 +1,21 @@
 import '../../../index.css';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MainButton } from "../Buttons";
-import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
+import { useAddReview } from "../../../hooks/WorkProfile/useAddReview";
 
-export function Modal_Review({ onClose }) {
-    const { userData, loading } = useFetchWorkUserData();
+export function Modal_Review({ onClose, workId, userData, onNewReview }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
 
+    const { addReview, loading, error, message } = useAddReview();
+
     const [formData, setFormData] = useState({
         reviewComment: '',
-        userId: 0,
-        workId: 0,
+        userId: userData,
+        workId: workId,
+        rating: rating,
+        CreateAt: new Date(),
     });
-
-    useEffect(() => {
-        if (userData) {
-            setFormData({
-                ...formData,
-                userId: userData?.userId || 0,
-                workId: userData?.workId || 0,
-            });
-        }
-    }, [loading]);
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -42,21 +34,20 @@ export function Modal_Review({ onClose }) {
     };
 
     const handleClick = (index) => {
-        setRating(rating === index ? 0 : index);
+        const newRating = rating === index ? 0 : index;
+        setRating(newRating);
+        setFormData((prevData) => ({
+            ...prevData,
+            rating: newRating
+        }));
     };
+    
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        console.log(rating, formData);
-
-        /*if (formData.userId != "0") {
-            alert("Es usuario");
-        }
-
-        if (formData.workId != "0") {
-            alert("Es trabajador");
-        }*/
+        addReview(formData);
+        onNewReview();
+        onClose();
     };
 
     return (

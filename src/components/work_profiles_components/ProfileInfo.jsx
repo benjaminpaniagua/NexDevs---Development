@@ -11,10 +11,22 @@ import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { Modal_Review } from "../ui/Modal_Review/Modal_Review";
-export function ProfileInfo({ users, loading, isOwner, userData }) {
+export function ProfileInfo({ users, loading, isOwner, userData, isAddedReview, onIsAddedReviewChange}) {
   const { token } = useAuth();
   const [isAnimating, setIsAnimating] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [localIsAddedReview, setLocalIsAddedReview] = useState(isAddedReview);
+
+  const toggleReviewStatus = () => {
+    const newValue = !localIsAddedReview;
+    setLocalIsAddedReview(newValue);
+    onIsAddedReviewChange(newValue); 
+};
+
+const handleNewReview = () => {
+    toggleReviewStatus();
+};
 
   const handleOpenModal = () => {
     setIsAnimating(true);
@@ -149,7 +161,7 @@ export function ProfileInfo({ users, loading, isOwner, userData }) {
           <div className={`fixed inset-0 h-screen transition-opacity duration-300 bg-black bg-opacity-50 ${isAnimating ? 'opacity-100' : 'opacity-0'}`} onClick={handleCloseModal}></div>
           {/* Contenedor del modal centrado */}
           <div className={`fixed rounded-lg transition-transform shadow-lg ${isAnimating ? 'animate-modal-open' : 'animate-modal-close'}`}>
-            <Modal_Review onClose={handleCloseModal} />
+            <Modal_Review onClose={handleCloseModal} workId={users.workId} userData={userData.userId} onNewReview={handleNewReview} />
           </div>
         </div>
       )

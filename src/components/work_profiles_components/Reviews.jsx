@@ -5,9 +5,10 @@ import { SecondaryButtonOutline } from "../ui/Buttons";
 import PropTypes from "prop-types";
 import { useState } from "react";
 
-export function Reviews({ workId }) {
-  const { reviews, loading, error } = useFetchReviews({ workID: workId });
+export function Reviews({ workId, isAddedReview }) {
+  const { reviews, loading, error } = useFetchReviews({ workID: workId, updated: isAddedReview });
   const [showAllReviews, setShowAllReviews] = useState(false);
+
 
   // Define the number of reviews to display by default
   const reviewsToShow = showAllReviews ? reviews.length : 6;
@@ -40,7 +41,7 @@ export function Reviews({ workId }) {
                   : review.profilePictureUrlUser
               }
               comment={review.reviewComment}
-              rate={review.rate}
+              rate={review.rating}
             />
           ))}
 

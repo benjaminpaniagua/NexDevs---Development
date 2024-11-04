@@ -17,6 +17,11 @@ export function Work_Profiles({userData}) {
     const [ isOwner, setIsOwner ] = useState(false);
     const { userId } = useParams();
 
+    const [isAddedReview, setIsAddedReview] = useState(false);
+    const handleIsAddedReviewChange = (newValue) => {
+        setIsAddedReview(newValue);
+      };
+
     if (error) {
         navigate('/error503');
     }
@@ -58,7 +63,7 @@ export function Work_Profiles({userData}) {
                     <div className="flex md:flex-col gap-8 md:gap-0">
                         {/* Profile */}
                         <div className="w-[50%] md:w-full flex flex-col">
-                            <ProfileInfo users={users} loading={loading} isOwner={isOwner} userData={userData} />
+                            <ProfileInfo users={users} loading={loading} isOwner={isOwner} userData={userData} isAddedReview={isAddedReview} onIsAddedReviewChange={handleIsAddedReviewChange} />
                         </div>
                         {/* Profile */}
                         <div className="w-[50%] md:w-full pl-10 md:pl-0 pt-5 flex flex-col md:flex-col-reverse md:gap-20">
@@ -91,7 +96,7 @@ export function Work_Profiles({userData}) {
 
                         {/* Reviews */}
                         <div className="w-[50%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
-                            <Reviews workId={users.workId}/>
+                            <Reviews workId={users.workId} isAddedReview={isAddedReview}/>
                         </div>
                         {/* Reviews */}
                     </div>
