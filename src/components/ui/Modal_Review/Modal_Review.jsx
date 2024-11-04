@@ -89,6 +89,7 @@ export function Modal_Review({ onClose, workId, userData, onNewReview }) {
 
                         <textarea style={{ resize: "none" }} type="text" name='reviewComment' id="review"
                             value={formData.reviewComment} required
+                            maxLength={60}
                             onChange={handleInputChange} className="w-full border-2 border-clr-black rounded-lg text-sm p-2 h-24 md1:h-32"
                             placeholder="Escribe tu opinion" />
 
