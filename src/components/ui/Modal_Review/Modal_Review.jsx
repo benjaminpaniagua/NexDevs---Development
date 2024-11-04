@@ -6,9 +6,7 @@ import { useAddReview } from "../../../hooks/WorkProfile/useAddReview";
 export function Modal_Review({ onClose, workId, userData, onNewReview }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
-
-    const { addReview, loading, error, message } = useAddReview();
-
+    const { addReview } = useAddReview();
     const [formData, setFormData] = useState({
         reviewComment: '',
         userId: userData,
