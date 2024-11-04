@@ -14,6 +14,7 @@ export const useAddReview = () => {
     try {
       const response = await axios.post('https://nexdevsapi.somee.com/Reviews/Agregar', reviewData);
       setMessage(response.data);
+      return response.data;
     } catch (err) {
       setError(`Error: ${err.response?.data || err.message}`);
     } finally {

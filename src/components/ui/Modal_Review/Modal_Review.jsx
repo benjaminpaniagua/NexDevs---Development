@@ -43,11 +43,14 @@ export function Modal_Review({ onClose, workId, userData, onNewReview }) {
     };
     
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        addReview(formData);
-        onNewReview();
-        onClose();
+        
+        const response = await addReview(formData);
+        if (response) {
+            onNewReview();
+            onClose();
+        }
     };
 
     return (
