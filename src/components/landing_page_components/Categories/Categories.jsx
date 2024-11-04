@@ -3,9 +3,11 @@ import Card from "../../ui/Cards/CardCategories";
 import { Link } from "react-router-dom";
 import { SecondaryButtonOutline } from "../../ui/Buttons";
 import { useFetchCategories } from "../../../hooks/useFetchCategories";
+import { useNavigate } from 'react-router-dom';
 
 const Categories = () => {
-  const { categories, loading } = useFetchCategories();
+  const navigate = useNavigate();
+  const { categories, loading, error } = useFetchCategories();
   const [categoriesToShow, setCategoriesToShow] = useState(categories);
 
   useEffect(() => {
@@ -26,6 +28,10 @@ const Categories = () => {
   const handleCardClick = (title) => {
     console.log(`Categoría seleccionada: ${title}`);
   };
+
+  if (error) {
+    navigate('/error503');
+}
 
   return (
     <div className="mt-10 grid gap-12 mx-auto px-20 max-w-[100rem] md:flex-col md:p-4">

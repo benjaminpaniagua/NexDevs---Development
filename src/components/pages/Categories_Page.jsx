@@ -28,14 +28,16 @@ const Categories_Page = () => {
 
   return (
     <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+      
 
       {/* Loading Screen */}
       <Loading_Screen Loading={loading} />
       {/* Loading Screen */}
-
-      <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-20 mb-4 items-center justify-between">
-        <h2 className="font-clash font-medium md:text-[1.5rem]">Categorías</h2>
+      <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-12 md:mt-2 mb-4 items-center justify-between md:items-start">
+        <h2 className="font-clash font-semibold text-4xl md:text-2xl">Categorías</h2>
+        <div className="md:w-full">
         <Search_Input search={handleSearch} />
+        </div>
       </div>
       {loading ? (
         <h3 className="text-center">Cargando Categorias...</h3>

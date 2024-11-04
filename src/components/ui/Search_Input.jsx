@@ -17,7 +17,7 @@ export function Search_Input({ search }) {
           placeholder="Buscar"
           value={searchTerm}
           onChange={handleInputChange}
-          className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full p-4 placeholder:text-clr-grey-light text-clr-grey-light"
+          className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full px-4 py-2 placeholder:text-clr-grey-light text-clr-grey-light"
         />
       </form>
     </div>

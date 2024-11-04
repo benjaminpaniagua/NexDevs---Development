@@ -7,6 +7,7 @@ import { Loading_Screen } from "../ui/Loading_Screen.jsx";
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useFetchConsultCategory } from "../../hooks/useFetchConsultCategory";
 
+
 export function Profiles_List() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,7 +26,6 @@ export function Profiles_List() {
     useFetchConsultCategory(selectedCategoryId);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Captura el parámetro de la URL al cargar el componente
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const categoryParam = params.get("category");
@@ -76,23 +76,23 @@ export function Profiles_List() {
 
   return (
     <>
-      <div className="flex flex-col gap-4 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
+      <div className="flex flex-col gap-12 py-10 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10">
         {/* Pantalla de carga */}
         <Loading_Screen
           Loading={usersLoading || categoriesLoading || categoryLoading}
         />
         {/* Pantalla de carga */}
 
-        <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-16 mb-4 items-center justify-between md:items-start">
-          <h2 className="font-clash font-semibold text-4xl">Perfiles</h2>
+        <div className="flex sm:flex-col sm:gap-5 sm:mb-0 mt-12 md:mt-2 mb-4 items-center justify-between md:items-start">
+          <h2 className="font-clash font-semibold text-4xl md:text-2xl">Perfiles</h2>
           <div className="flex md:flex-col md:w-full gap-4">
             <Search_Input search={handleSearch} />
             <div className="flex md:flex-col gap-4 items-center md:items-start">
-              <h4 className="text-sm">Filter:</h4>
+              <h4 className="text-sm">Filtrar:</h4>
               <select
                 onChange={handleCategoryChange}
                 value={selectedCategoryId}
-                className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full p-4 text-clr-grey-light"
+                className="font-montserrat font-semibold border-2 border-clr-black rounded-lg text-sm w-full px-4 py-2 text-clr-grey-light"
               >
                 <option value="">Todas las categorías</option>
                 {categories.map((category) => (
