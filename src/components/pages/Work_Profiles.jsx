@@ -91,7 +91,7 @@ export function Work_Profiles({userData}) {
 
                         {/* Reviews */}
                         <div className="w-[50%] md:w-full pl-10 md:pl-0 flex flex-col gap-4">
-                            <Reviews />
+                            <Reviews workId={users.workId}/>
                         </div>
                         {/* Reviews */}
                     </div>
