@@ -11,13 +11,13 @@ import { Loading_Screen } from '../ui/Loading_Screen.jsx'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from 'react';
 
-export function Work_Profiles({userData}) {
+export function Work_Profiles({ userData }) {
     const navigate = useNavigate();
-    const { users, loading, error } = useFetchUserProfile(); 
+    const [isAddedReview, setIsAddedReview] = useState(false);
+    const { users, loading, error } = useFetchUserProfile({ updated: isAddedReview }); 
     const [ isOwner, setIsOwner ] = useState(false);
     const { userId } = useParams();
 
-    const [isAddedReview, setIsAddedReview] = useState(false);
     const handleIsAddedReviewChange = (newValue) => {
         setIsAddedReview(newValue);
       };

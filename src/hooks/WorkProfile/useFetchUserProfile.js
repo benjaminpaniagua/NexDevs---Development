@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export const useFetchUserProfile = () => {
+export const useFetchUserProfile = ({ updated }) => {
   const { userId } = useParams();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,7 @@ export const useFetchUserProfile = () => {
     return () => {
       source.cancel("Solicitud Cancelada");
     };
-  }, []);
+  }, [updated]);
 
   return { users, loading, error };
 };
