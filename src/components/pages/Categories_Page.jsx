@@ -11,8 +11,8 @@ const Categories_Page = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleCardClick = (title) => {
-    console.log(`Categoría seleccionada: ${title}`);
-  };
+    navigate(`/profiles?category=${encodeURIComponent(title)}`);
+};
 
   const handleSearch = (search) => {
     setSearchTerm(search.toLowerCase());
