@@ -26,9 +26,8 @@ const Categories = () => {
   }, [loading]);
 
   const handleCardClick = (title) => {
-    console.log(`Categoría seleccionada: ${title}`);
-  };
-
+    navigate(`/profiles?category=${encodeURIComponent(title)}`);
+};
   if (error) {
     navigate('/error503');
 }
