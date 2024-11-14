@@ -8,12 +8,41 @@ import {
   SecondaryButtonOutline,
   SecondaryButton,
 } from "../ui/Buttons";
-import axios from "axios"; // Import Axios
+import axios from "axios";
+import Alert from "../ui/Alert";
 
 export function EditPost() {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { editPost, loading, error } = useEditPost();
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false); // Para controlar si estamos enviando datos
+
+  const handleSaveClick = (e) => {
+    e.preventDefault(); // Prevenir el comportamiento por defecto
+    setIsModalOpen(true); // Abrir el modal
+  };
+
+  // Función para confirmar y guardar los cambios
+  const handleConfirmSave = async () => {
+    setIsModalOpen(false); // Cerrar el modal
+    setIsSubmitting(true); // Empezar el proceso de guardado
+
+    try {
+      // Aquí va tu lógica para guardar los cambios
+      await handleSubmit();
+      // Si todo es exitoso, puedes agregar algún mensaje o redireccionar al usuario.
+    } catch (error) {
+      console.error("Error al guardar cambios:", error);
+    }
+
+    setIsSubmitting(false); // Termina el proceso de guardado
+  };
+
+  // Función para cancelar la acción
+  const handleCancelSave = () => {
+    setIsModalOpen(false); // Cerrar el modal sin hacer nada
+  };
 
   const [postData, setPostData] = useState({
     content: "",
@@ -100,10 +129,21 @@ export function EditPost() {
 
     try {
       await editPost(postId, formData);
-      alert("¡Publicación editada exitosamente!");
-      navigate(`/posts`);
+      setAlert({
+        show: true,
+        type: "success",
+        message: "Publicación editada exitosamente.",
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500);
     } catch (error) {
-      alert("Hubo un error al editar la publicación.");
+      setAlert({
+        show: true,
+        type: "error",
+        message: "Ocurrió un error al editar la publicación.",
+      });
+      console.error(error);
     }
   };
 
@@ -145,7 +185,16 @@ export function EditPost() {
 
   return (
     <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-8">
-      <form onSubmit={handleSubmitPost}>
+      <form onSubmit={handleSaveClick}>
+        <ConfirmationModal
+          isOpen={isModalOpen}
+          onCancel={handleCancelSave}
+          onConfirm={handleConfirmSave}
+          title="Confirmar cambios"
+          message="¿Estás seguro de que deseas guardar los cambios?"
+          cancelText="Cancelar"
+          confirmText="Guardar cambios"
+        />
         <h1 className="text-4xl font-bold mb-8">Editar Publicación</h1>
         <div className="flex gap-12 md:flex-col-reverse md:gap-7">
           <section className="w-1/2 md:w-full">
@@ -234,6 +283,7 @@ export function EditPost() {
           </section>
         </div>
       </form>
+      <Alert alert={alert} setAlert={setAlert} />
     </div>
   );
 }

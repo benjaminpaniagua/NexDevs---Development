@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import ConfirmationModal from "../ConfirmationAlert";
 import { ICONS } from "../../ui/Icons";
-import { SecondaryButton } from "../Buttons";
+import {
+  MainButton,
+  SecondaryButton,
+  SecondaryButtonOutline,
+} from "../Buttons";
 import { FormInput } from "../FormInput";
 
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
@@ -31,7 +35,12 @@ export function CardPost({
   const [isAuthor, setIsAuthor] = useState(false);
   const [isWorker, setIsWorker] = useState(false);
   const { userData } = useFetchWorkUserData();
-  console.log(userData.workId);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleConfirmDelete = () => {
+    handleDeleteClick(); // Llama la función de eliminación
+    setIsModalOpen(false); // Cierra el modal
+  };
 
   // Estado de interacción del usuario (likes y comentarios)
   const [postComment, setPostComment] = useState("");
@@ -55,6 +64,7 @@ export function CardPost({
 
   // Estado de menú de opciones
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   //OPEN AND CLOSE MODAL
   const openModal = () => {
@@ -64,6 +74,21 @@ export function CardPost({
   const closeModal = () => {
     setShowModal(false);
   };
+
+  //HANDLE OUTSIDE CLICK ON MENU AND MODAL
+  const handleClickOutside = (event) => {
+    if (menuRef.current && !menuRef.current.contains(event.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  //USEEFFECT TO HANDLE OUTSIDE CLICK
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   //EVITAR SCRROLL EN EL BODY
   useEffect(() => {
@@ -217,18 +242,16 @@ export function CardPost({
       <div className="h-auto flex flex-col gap-2 transition-all">
         {/* Post Picture */}
         <div className="relative rounded-lg overflow-hidden">
-         
-            <img
-              className="aspect-[4/3] w-full h-full object-cover"
-              src={
-                imageUrl === "ND" || imageUrl === "default_image_url"
-                  ? "/images/placeholder.jpg"
-                  : imageUrl
-              }
-              alt="Post_Image"
-              onClick={openModal}
-            />
-          
+          <img
+            className="aspect-[4/3] w-full h-full object-cover"
+            src={
+              imageUrl === "ND" || imageUrl === "default_image_url"
+                ? "/images/placeholder.jpg"
+                : imageUrl
+            }
+            alt="Post_Image"
+            onClick={openModal}
+          />
           {/* Dropdown Menu */}
           {/* Menu Button */}
           {isAuthor && (
@@ -242,7 +265,10 @@ export function CardPost({
           )}
           {/* Menu */}
           {isMenuOpen && isAuthor && (
-            <div className="absolute right-2 top-10 bg-white border rounded shadow-lg w-40">
+            <div
+              ref={menuRef}
+              className="absolute right-2 top-10 bg-white border rounded shadow-lg w-40"
+            >
               <div className="flex flex-col p-2">
                 <button
                   onClick={() => {
@@ -254,7 +280,10 @@ export function CardPost({
                   Editar
                 </button>
                 <button
-                  onClick={handleDeleteClick}
+                  onClick={() => {
+                    setIsModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
                   disabled={loading}
                   className={`flex items-center p-2 text-red-600 hover:bg-red-100 ${
                     loading ? "cursor-not-allowed" : ""
@@ -265,6 +294,15 @@ export function CardPost({
               </div>
             </div>
           )}
+          <ConfirmationModal
+            isOpen={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            onConfirm={handleConfirmDelete}
+            title="¿Estás seguro?"
+            message="¿Deseas eliminar este post? Esta acción no se puede deshacer."
+            cancelText="Cancelar"
+            confirmText="Eliminar"
+          />
         </div>
 
         {/* Content */}
@@ -340,7 +378,10 @@ export function CardPost({
         >
           <div className="relative max-w-7xl w-full p-0 overflow-hidden bg-white rounded-lg shadow-lg">
             {/* Botón para cerrar el modal */}
-            <button onClick={closeModal} className="absolute bg-white rounded-full top-3 right-4 drop-shadow-lg">
+            <button
+              onClick={closeModal}
+              className="absolute bg-white rounded-full top-3 right-4 drop-shadow-lg"
+            >
               {ICONS.close}
             </button>
 
