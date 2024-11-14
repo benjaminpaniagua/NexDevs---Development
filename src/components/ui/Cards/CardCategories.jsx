@@ -16,7 +16,7 @@ const CardCategories = ({ title, imageUrl, onClick }) => {
         className="w-full h-40 object-cover transition-opacity duration-300 ease-in-out group-hover:opacity-100"
       />
       <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300 ease-in-out group-hover:bg-opacity-10">
-        <span className="text-white text-fs-med font-semibold transition-opacity duration-300 ease-in-out group-hover:opacity-0">
+        <span className="text-white font-montserrat text-fs-med font-semibold transition-opacity duration-300 ease-in-out group-hover:opacity-0">
           {title}
         </span>
       </div>
@@ -27,7 +27,7 @@ const CardCategories = ({ title, imageUrl, onClick }) => {
 CardCategories.propTypes = {
   title: PropTypes.string.isRequired,
   imageUrl: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
 export default CardCategories;
