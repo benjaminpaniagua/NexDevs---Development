@@ -217,15 +217,18 @@ export function CardPost({
       <div className="h-auto flex flex-col gap-2 transition-all">
         {/* Post Picture */}
         <div className="relative rounded-lg overflow-hidden">
-          <img
-            className="aspect-[4/3] w-full h-full object-cover"
-            src={
-              imageUrl === "ND" || imageUrl === "default_image_url"
-                ? "/images/placeholder.jpg"
-                : imageUrl
-            }
-            alt="Post_Image"
-          />
+         
+            <img
+              className="aspect-[4/3] w-full h-full object-cover"
+              src={
+                imageUrl === "ND" || imageUrl === "default_image_url"
+                  ? "/images/placeholder.jpg"
+                  : imageUrl
+              }
+              alt="Post_Image"
+              onClick={openModal}
+            />
+          
           {/* Dropdown Menu */}
           {/* Menu Button */}
           {isAuthor && (
@@ -337,11 +340,8 @@ export function CardPost({
         >
           <div className="relative max-w-7xl w-full p-0 overflow-hidden bg-white rounded-lg shadow-lg">
             {/* Botón para cerrar el modal */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-white p-2 z-10"
-            >
-              {ICONS.close_white}
+            <button onClick={closeModal} className="absolute bg-white rounded-full top-3 right-4 drop-shadow-lg">
+              {ICONS.close}
             </button>
 
             <div className="flex flex-row w-full lg:flex-col h-[80vh] lg:h-[90vh] overflow-hidden">
