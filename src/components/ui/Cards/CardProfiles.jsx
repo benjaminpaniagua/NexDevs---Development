@@ -44,11 +44,13 @@ export function CardProfiles({
           </div>
           <div className="flex gap-2">
             {categories.map((category) => (
-              <h6 className="text-black font-bold">
-                {category.categoryName.length > 12
-                  ? category.categoryName.substring(0, 12) + "..."
-                  : category.categoryName}
-              </h6>
+              <h6
+              key={category.id}
+              className="text-black text-xs italic font-bold whitespace-nowrap overflow-hidden text-ellipsis"
+              title={category.categoryName} // Esto muestra el nombre completo al pasar el cursor
+            >
+              {category.categoryName}
+            </h6>
             ))}
           </div>
           <p className="text-black h-16 sm:h-fit text-fs-small lg:text-fs-small">

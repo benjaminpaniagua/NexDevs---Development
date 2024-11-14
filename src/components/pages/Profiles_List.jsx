@@ -112,7 +112,7 @@ export function Profiles_List() {
         ) : (
           <div className="grid gap-10">
             {filteredUsers.length > 0 ? (
-              <div className="grid grid-cols-4 xl:grid-cols-auto-250 gap-8">
+              <div className="grid grid-cols-3 lg:grid-cols-3 xl:grid-cols-auto-250 gap-8">
                 {filteredUsers.map((user) => (
                   <CardProfiles
                     key={user.workId}
