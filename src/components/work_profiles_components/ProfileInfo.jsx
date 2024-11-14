@@ -90,13 +90,13 @@ export function ProfileInfo({
 
   const renderContactInfo = () => (
     <div className="flex flex-col gap-2 mt-5 font-bold">
-      <div className="flex gap-2">
+      <div className="flex gap-2 items-center">
         {ICONS.phone}
-        <h4>+506 {users.number}</h4>
+        <h4 className="text-lg font-semibold">+506 {users.number}</h4>
       </div>
       <div className="flex gap-2">
         {ICONS.email}
-        <h4>{users.email}</h4>
+        <h4 className="text-lg font-semibold">{users.email}</h4>
       </div>
       <MainButton
         text={"Contactar por WhatsApp"}

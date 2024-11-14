@@ -45,12 +45,12 @@ export function CardProfiles({
           <div className="flex gap-2">
             {categories.map((category) => (
               <h6
-              key={category.id}
-              className="text-black text-xs italic font-bold whitespace-nowrap overflow-hidden text-ellipsis"
-              title={category.categoryName} // Esto muestra el nombre completo al pasar el cursor
-            >
-              {category.categoryName}
-            </h6>
+                key={category.id}
+                className="text-black text-xs italic font-bold whitespace-nowrap overflow-hidden text-ellipsis"
+                title={category.categoryName}
+              >
+                {category.categoryName}
+              </h6>
             ))}
           </div>
           <p className="text-black h-16 sm:h-fit text-fs-small lg:text-fs-small">
@@ -67,7 +67,7 @@ export function CardProfiles({
           {/* Contact Info */}
           <div className="flex flex-col w-full gap-2">
             <div className="flex gap-2 items-center">
-              <img className="w-5" src="/images/icons/gps.svg" alt="icon-gps" />
+              {ICONS.location}
               <div className="flex flex-col gap-1">
                 <h5 className="text-black font-bold text-fs-med">
                   {city}, {province}
@@ -75,13 +75,9 @@ export function CardProfiles({
               </div>
             </div>
             <div className="flex gap-2 items-end justify-between">
-              <div className="flex gap-2">
-                <img
-                  className="w-5"
-                  src="/images/icons/phone.svg"
-                  alt="icon-phone"
-                />
-                <h5 className="text-black font-bold text-fs-med">{number}</h5>
+              <div className="flex gap-2 items-center">
+                {ICONS.phone}
+                <h5 className="text-black font-bold text-fs-med">+506 {number}</h5>
               </div>
               <div className="flex">
                 {[1, 2, 3, 4, 5].map((star) => (
