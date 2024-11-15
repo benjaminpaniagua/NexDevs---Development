@@ -4,8 +4,8 @@ import { FooterLink } from "./FooterLink";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-t from-clr-green-light via-clr-white to-clr-white p-10 pt-24 font-montserrat">
-      <div className="max-w-[100rem] px-20 mx-auto gap-6 text-center flex items-start md:grid md:grid-cols-1 justify-between">
+    <footer className="bg-gradient-to-t from-clr-green-light via-clr-white to-clr-white p-10 sm:p-5 pt-24 font-montserrat">
+      <div className="max-w-[100rem] px-20 md:px-10 sm:px-0 mx-auto gap-6 text-center flex items-start md:grid md:grid-cols-1 justify-between">
       {/* <div className="flex flex-col gap-6 py-14 h-auto mx-auto px-20 max-w-[100rem] min-h-screen xs:px-7 md:px-10"> */}
         <div className="flex gap-64 md:flex-col md:gap-6">
           <div className="flex flex-col space-y-4 md:items-center items-start">

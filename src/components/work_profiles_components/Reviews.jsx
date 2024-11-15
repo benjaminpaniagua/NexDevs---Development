@@ -51,5 +51,5 @@ export function Reviews({ workId, isAddedReview }) {
 }
 
 Reviews.propTypes = {
-  workId: PropTypes.number.isRequired, // Ensure workId is passed as a prop
+  workId: PropTypes.number.isRequired,
 };

@@ -89,7 +89,7 @@ export function Posts() {
               )}
             </>
           ) : (
-            <h5>No hay publicaciones disponibles.</h5>
+            <h5 className="text-center">No hay publicaciones disponibles.</h5>
           )}
         </section>
       </div>
