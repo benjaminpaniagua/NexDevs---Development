@@ -9,7 +9,7 @@ const Header = () => {
       style={{ backgroundImage: `url(${backgroundImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
     >
       <div className="relative z-10 flex flex-col gap-12 mx-auto px-20 max-w-[100rem] md:flex-col lg:px-6">
-        <h1 className="w-full text-7xl lg:text-5xl">
+        <h1 className="font-clash w-full text-7xl lg:text-5xl">
           Conecta tus habilidades y encuentra tu próximo proyecto
         </h1>
         <div className="flex gap-6">
