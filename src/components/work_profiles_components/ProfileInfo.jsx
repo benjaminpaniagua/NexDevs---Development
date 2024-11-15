@@ -166,12 +166,12 @@ export function ProfileInfo({
     <div className="h-auto">
       {renderProfilePicture()}
       {renderUserInfo()}
-      <div className="flex gap-2">
+      <div className="flex gap-2 md:justify-center">
         <div className="flex my-2 md:justify-center">
           {[1, 2, 3, 4, 5].map((star) => (
             <svg
               key={star}
-              className={`w-8 h-8 md1:w-3 md1:h-3 ${
+              className={`w-6 h-6 ${
                 star <= roundedRating
                   ? "fill-current text-[#2BAC69]"
                   : "stroke-current text-[#2BAC69]"
