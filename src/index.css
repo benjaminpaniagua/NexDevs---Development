@@ -17,7 +17,7 @@ html, body {
 }
 
 
-h1, h2, h3, h4, h5, h6, p, button {
+h2, h3, h4, h5, h6, p, button {
   color: hsla(20, 8%, 7%, 1);
   font-family: 'Montserrat', sans-serif;
   font-weight: 400; 
@@ -27,6 +27,7 @@ h1, h2, h3, h4, h5, h6, p, button {
 h1 {
   font-family: 'Clash Display', sans-serif;
   font-weight: 600;
+  color: hsla(20, 8%, 7%, 1);
 }
 
 h3, h4 {

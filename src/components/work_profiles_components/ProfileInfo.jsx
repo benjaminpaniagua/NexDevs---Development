@@ -11,7 +11,6 @@ import { useAuth } from "../../utils/AuthProvider";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Modal_Review } from "../ui/Modal_Review/Modal_Review";
-import { div } from "framer-motion/client";
 export function ProfileInfo({
   users,
   loading,
