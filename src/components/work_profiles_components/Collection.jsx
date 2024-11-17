@@ -80,7 +80,7 @@ export function Collection({ users, isOwner }) {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-1 justify-items-center pt-2 gap-2">
-          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video">
+          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video transition-all hover:scale-[1.02] cursor-pointer">
             <img
               onClick={() => {
                 if (
@@ -101,7 +101,7 @@ export function Collection({ users, isOwner }) {
             />
           </div>
 
-          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video">
+          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video transition-all hover:scale-[1.02] cursor-pointer">
             <img
               onClick={() => {
                 if (
@@ -122,7 +122,7 @@ export function Collection({ users, isOwner }) {
             />
           </div>
 
-          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video">
+          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video transition-all hover:scale-[1.02] cursor-pointer">
             <img
               onClick={() => {
                 if (
@@ -142,7 +142,7 @@ export function Collection({ users, isOwner }) {
               alt="collection image"
             />
           </div>
-          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video">
+          <div className="rounded-md overflow-hidden max-w-[400px] w-full h-full object-cover aspect-video transition-all hover:scale-[1.02] cursor-pointer">
             <img
               onClick={() => {
                 if (
