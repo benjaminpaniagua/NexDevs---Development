@@ -9,8 +9,6 @@ import { ICONS } from "../ui/Icons";
 export function Collection({ users, isOwner }) {
   const { collections } = useFetchCollection(users.workId);
 
-  console.log("Colecciones", collections);
-
   const [previewImage1, setPreviewImage1] = useState(null);
   const [previewImage2, setPreviewImage2] = useState(null);
   const [previewImage3, setPreviewImage3] = useState(null);

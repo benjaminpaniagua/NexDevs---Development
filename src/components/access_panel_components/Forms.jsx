@@ -52,6 +52,13 @@ export function LogIn() {
             navigate('/Access_Panel/register-1');
         }, 100);
     };
+
+    const handleRegisterEmpresaClick = () => {
+        setIsAnimating(true);
+        setTimeout(() => {
+            navigate('/Access_Panel/company-1');
+        }, 100);
+    };
     const handleRecovertClick = () => {
         setIsAnimating(true);
         setTimeout(() => {
@@ -96,7 +103,11 @@ export function LogIn() {
 
             {/* Registrarse */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿Aún no tienes una cuenta? <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate</a></p>
+                <p className="mt-10 md:mt-5">¿Aún no tienes una cuenta?</p>
+            </div>
+            <div className="flex flex-col items-center mt-3 gap-3">
+                <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístra un Usuario</a>
+                <a onClick={handleRegisterEmpresaClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístra una Empresa</a>
             </div>
         </form>
     );

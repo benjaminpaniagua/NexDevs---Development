@@ -218,13 +218,9 @@ export function CardPost({
     if (!userData.profileType) {
       return (
         <div className="flex gap-2 my-5">
-          <FormInput
-            id="create_comment"
-            name="comment"
-            minLength={0}
-            value="Inicia sesion para comentar"
-            className="border h-12 w-[80%] bg-clr-white border-black rounded p-1"
-          />
+          <div className="border h-12 w-[80%] bg-clr-white border-black rounded p-1 content-center">
+            <p>Inicia sesion para comentar</p>
+          </div>
           <Link className="w-[20%]" to="/Access_Panel/login">
             <SecondaryButton
               text="Únete"
