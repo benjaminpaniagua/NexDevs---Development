@@ -184,7 +184,7 @@ export function NavBar ({ userData }) {
                 isMenuAnimating ? "animate-menu-open" : "animate-menu-close"
               }`}
             >
-              <NavLinks links={links} />
+              <NavLinks links={links} onClick={handleMenuClose}/>
             </div>
           )}
           {/* Modal de perfil */}
