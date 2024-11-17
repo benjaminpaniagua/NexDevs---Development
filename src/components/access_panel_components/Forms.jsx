@@ -103,7 +103,7 @@ export function LogIn() {
 
             {/* Registrarse */}
             <div className="flex flex-col items-center">
-                <p className="mt-10 md:mt-5">¿Aún no tienes una cuenta?</p>
+                <p className="mt-10 md:mt-5 font-bold">¿Aún no tienes una cuenta?</p>
             </div>
             <div className="flex flex-col items-center mt-3 gap-3">
                 <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístra un Usuario</a>
@@ -198,11 +198,11 @@ export function SignIn_1({ onUserDataChange, handleRegisterContinue }) {
 
             {/* Iniciar Sesión */}
             <div className="flex flex-col items-center">
-                <p className="mt-10 md:mt-5">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesión</a></p>
+                <p className="mt-10 md:mt-5 font-bold">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesión</a></p>
             </div>
             {/* Registrar Empresa */}
             <div className="flex flex-col items-center">
-                <p className="mt-5">¿Quieres registrar tu empresa? <a onClick={handleCompanyClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrala aquí</a></p>
+                <p className="mt-5 font-bold">¿Quieres registrar tu empresa? <a onClick={handleCompanyClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrala aquí</a></p>
             </div>
         </form>
     );
@@ -481,7 +481,7 @@ export function Recovery_EmailVerification() {
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿No quieres recuperar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Inicia Sesión</a></p>
+                <p className="mt-10 font-bold">¿No quieres recuperar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Inicia Sesión</a></p>
             </div>
         </form>
     );
@@ -565,7 +565,7 @@ export function Recovery_Password({ }) {
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿No quieres cambiar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
+                <p className="mt-10 font-bold">¿No quieres cambiar tu contraseña? <a onClick={handleBack} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
             </div>
         </form>
     );
@@ -651,11 +651,11 @@ export function Company_SignIn_1({ onUserDataChange, handleCompanyContinue }) {
 
             {/* Iniciar Sesion */}
             <div className="flex flex-col items-center">
-                <p className="mt-10">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
+                <p className="mt-10 font-bold">¿Ya tienes una cuenta? <a onClick={handeLoginClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Iniciar Sesion</a></p>
             </div>
             {/* Registrar Usuario */}
             <div className="flex flex-col items-center">
-                <p className="mt-5">¿Quieres registrar un usuario normal? <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate aquí</a></p>
+                <p className="mt-5 font-bold">¿Quieres registrar un usuario normal? <a onClick={handleRegisterClick} className="text-clr-blue underline cursor-pointer sm:flex sm:flex-col sm:items-center">Regístrate aquí</a></p>
             </div>
         </form>
     );
