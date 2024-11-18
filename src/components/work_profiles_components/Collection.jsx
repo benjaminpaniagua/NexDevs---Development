@@ -61,7 +61,7 @@ export function Collection({ users, isOwner }) {
               <img
                 src={selectedImage}
                 alt="Imagen de colección"
-                className="max-w-full p-2 max-h-screen object-contain rounded-3xl"
+                className="max-w-full p-2 max-h-screen bg-white object-contain rounded-3xl"
               />
             </div>
           </div>
