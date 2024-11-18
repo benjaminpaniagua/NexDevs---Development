@@ -16,6 +16,7 @@ import { useEditWorkProfile } from "../../hooks/EditProfile/useEditWorkProfile.j
 import { Link } from "react-router-dom";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias.js";
 import ConfirmationAlert from "../ui/ConfirmationAlert.jsx";
+import Alert from "../ui/Alert.jsx";
 
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useEditCategories } from "../../hooks/EditProfile/useEditCategories.js";
@@ -36,6 +37,7 @@ export function WorkUserEdit() {
 
   const { editCategory } = useEditCategories();
   const { editSkills } = useEditSkills();
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
   const { addCategories } = useAddCategories();
 
@@ -326,6 +328,11 @@ export function WorkUserEdit() {
     const result = await editProfile(newFormData);
 
     if (result.success) {
+      setAlert({
+        show: true,
+        type: "success",
+        message: "Perfil editado con éxito",
+      });
       if (categoryForm.category1) {
         await editCategory({
           ID: categoryForm.id1,
@@ -394,11 +401,16 @@ export function WorkUserEdit() {
       //console.log('Perfil editado con éxito', result);
       window.location.href = "/workprofile/" + userData.workId;
     } else if (editError) {
-      //console.error('Error al editar el perfil', editError);
+      setAlert({
+        show: true,
+        type: "error",
+        message: "Error al editar el perfil",
+      });
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500);
     }
   };
-
-  /* className='bg-[url("/logo/Logo_BG.svg")] bg-repeat bg-[length:150px_150px]'*/
 
   return (
     <>
@@ -622,6 +634,7 @@ export function WorkUserEdit() {
             cancelText="Cancelar"
             confirmText="Guardar"
           />
+          <Alert alert={alert} setAlert={setAlert} />
         </form>
       </div>
     </>
