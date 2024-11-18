@@ -70,7 +70,7 @@ export function ProfileInfo({
               : users.profilePictureUrl
           }
           alt="Foto de perfil"
-          className="w-56 h-56 md:w-40 md:h-40 rounded-full border-4 border-white object-cover cursor-pointer"
+          className="w-56 h-56 md:w-40 md:h-40 rounded-full border-4 border-white bg-white object-cover cursor-pointer"
         />
       </div>
     );

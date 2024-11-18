@@ -31,7 +31,7 @@ export function CardProfiles({
                 ? "/images/default_profile_picture.jpg"
                 : image
             }
-            className="aspect-[4/3] w-full h-full rounded-lg object-cover"
+            className="aspect-[4/3] w-full h-full bg-white rounded-lg object-cover"
             alt="Profile_Picture"
           />
         </div>

@@ -95,7 +95,7 @@ export function NavBar ({ userData }) {
               : userData.profilePictureUrl
           }
           alt="Foto de perfil"
-          className="w-14 h-14 rounded-full object-cover"
+          className="w-14 h-14 rounded-full bg-white object-cover"
         />
       </a>
     );
@@ -122,7 +122,7 @@ export function NavBar ({ userData }) {
           <img
             src="/images/default_profile_picture.jpg"
             alt="Foto de perfil"
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-10 h-10 rounded-full bg-white object-cover"
           />
         </a>
       );

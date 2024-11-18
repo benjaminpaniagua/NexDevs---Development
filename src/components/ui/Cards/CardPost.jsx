@@ -343,7 +343,7 @@ export function CardPost({
                       : profilePictureUrl
                   }
                   alt="Foto de perfil"
-                  className="max-w-10 aspect-square rounded-full border-2 border-white object-cover"
+                  className="max-w-10 aspect-square rounded-full border-2 border-white bg-white object-cover"
                 />
                 <h5 className="ml-2 text-clr-black font-bold flex items-center sm:text-fs-small">
                   {userName}
@@ -426,7 +426,7 @@ export function CardPost({
                             : profilePictureUrl
                         }
                         alt="Foto de perfil"
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-full bg-white object-cover"
                       />
                     </div>
                     <h2 className="text-sm font-semibold">{userName}</h2>
@@ -481,7 +481,7 @@ export function CardPost({
                                       : comment.profilePictureUrlUser
                                   }
                                   alt="Foto de perfil"
-                                  className="w-full h-full rounded-full object-cover"
+                                  className="w-full h-full rounded-full bg-white object-cover"
                                 />
                               </div>
                               <div className="flex-1 min-w-0">

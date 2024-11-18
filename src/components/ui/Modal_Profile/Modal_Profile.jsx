@@ -54,7 +54,7 @@ export function Modal_Profile({ onClose, userData }) {
                     userData.profilePictureUrl === "ND" || userData.profilePictureUrl === "default_image_url"
                         ? "/images/default_profile_picture.jpg"
                         : userData.profilePictureUrl}
-                    alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white object-cover" />
+                    alt="Foto de perfil" className="w-28 h-28 rounded-full border-4 border-white bg-clr-white object-cover" />
             </div>
         )
     };
