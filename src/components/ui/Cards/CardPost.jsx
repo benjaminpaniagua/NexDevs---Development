@@ -9,6 +9,7 @@ import {
   SecondaryButtonOutline,
 } from "../Buttons";
 import { FormInput } from "../FormInput";
+import Alert from "../Alert";
 
 import { useFetchWorkUserData } from "../../../hooks/useFetchWorkUserData";
 import { useCreateComments } from "../../../hooks/useCreateComments";
@@ -37,6 +38,7 @@ export function CardPost({
   const { userData } = useFetchWorkUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [alert, setAlert] = useState({ show: false, type: "", message: "" });
 
   const handleConfirmCommentDelete = (commentId) => {
     handleCommentDelete(commentId); // Llama la función de eliminación
@@ -142,9 +144,18 @@ export function CardPost({
     const wasDeleted = await deleteComment(commentId);
 
     if (wasDeleted) {
-      console.log("Comentario eliminado exitosamente");
+      setAlert({
+        show: true,
+        type: "success",
+        message: "Comentario eliminado correctamente",
+      });
       fetchComments(); // Actualiza los comentarios si se eliminó correctamente
     } else {
+      setAlert({
+        show: true,
+        type: "error",
+        message: "No se pudo eliminar el comentario",
+      });
       console.error("No se pudo eliminar el comentario");
     }
   };
@@ -570,6 +581,7 @@ export function CardPost({
                   </div>
                   {renderCreateComment()}
                 </div>
+                <Alert alert={alert} setAlert={setAlert} />
               </div>
             </div>
           </div>
