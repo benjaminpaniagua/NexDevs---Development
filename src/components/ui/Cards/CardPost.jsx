@@ -239,7 +239,7 @@ export function CardPost({
         {/* Post Picture */}
         <div className="relative rounded-lg overflow-hidden">
           <img
-            className="aspect-[4/3] w-full h-full object-cover"
+            className="aspect-[4/3] w-full h-full bg-white object-cover"
             src={
               imageUrl === "ND" || imageUrl === "default_image_url"
                 ? "/images/placeholder.jpg"
@@ -383,9 +383,9 @@ export function CardPost({
 
             <div className="flex flex-row w-full lg:flex-col h-[80vh] lg:h-[90vh] overflow-hidden">
               {/* Lado izquierdo - Imagen */}
-              <div className="flex flex-1 bg-gray-300">
+              <div className="flex flex-1 bg-white">
                 <img
-                  className="object-cover h-full w-full aspect-square lg:aspect-video"
+                  className="object-cover h-full w-full bg-white aspect-square lg:aspect-video"
                   src={
                     imageUrl === "ND" || imageUrl === "default_image_url"
                       ? "/images/placeholder.jpg"

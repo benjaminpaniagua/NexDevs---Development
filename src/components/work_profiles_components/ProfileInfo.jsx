@@ -211,7 +211,7 @@ export function ProfileInfo({
                   : users.profilePictureUrl
               }
               alt="Foto de perfil ampliada"
-              className="max-w-full p-4 rounded-3xl max-h-screen object-contain"
+              className="max-w-full p-4 rounded-3xl bg-white max-h-screen object-contain"
             />
           </div>
         </div>
