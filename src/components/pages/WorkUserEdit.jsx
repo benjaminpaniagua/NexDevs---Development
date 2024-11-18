@@ -15,6 +15,7 @@ import { MainButton } from "../ui/Buttons";
 import { useEditWorkProfile } from "../../hooks/EditProfile/useEditWorkProfile.js";
 import { Link } from "react-router-dom";
 import { useFetchProvincias } from "../../hooks/CostaRica/useFetchProvincias.js";
+import ConfirmationAlert from "../ui/ConfirmationAlert.jsx";
 
 import { useFetchCategories } from "../../hooks/useFetchCategories";
 import { useEditCategories } from "../../hooks/EditProfile/useEditCategories.js";
@@ -37,6 +38,13 @@ export function WorkUserEdit() {
   const { editSkills } = useEditSkills();
 
   const { addCategories } = useAddCategories();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleConfirmModal = () => {
+    handleSubmit(); // Ejecuta la función de editar perfil al confirmar
+    setIsModalOpen(false); // Cierra el modal
+  };
 
   const { deleteCategory } = useDeleteCategory();
 
@@ -95,19 +103,18 @@ export function WorkUserEdit() {
   const [selectedProvince, setSelectedProvince] = useState(formData.province);
   const [availableCities, setAvailableCities] = useState([]);
 
-    //Lista de opciones de los selects
-    const provinceIdMap = {
-        'San José': '1',
-        'Alajuela': '2',
-        'Cartago': '3',
-        'Heredia': '4',
-        'Guanacaste': '5',
-        'Puntarenas': '6',
-        'Limón': '7'
-    };
-    
-    const stateOptions = Object.keys(provinceIdMap);
+  //Lista de opciones de los selects
+  const provinceIdMap = {
+    "San José": "1",
+    Alajuela: "2",
+    Cartago: "3",
+    Heredia: "4",
+    Guanacaste: "5",
+    Puntarenas: "6",
+    Limón: "7",
+  };
 
+  const stateOptions = Object.keys(provinceIdMap);
 
   useEffect(() => {
     const fetchCities = async (provinceId) => {
@@ -273,6 +280,7 @@ export function WorkUserEdit() {
   const [skillisEqual, setSkillIsEqual] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsModalOpen(false);
     e.preventDefault();
 
     const { category1, category2, category3 } = categoryForm;
@@ -582,11 +590,6 @@ export function WorkUserEdit() {
               {editError}
             </p>
           )}
-          {editLoading && (
-            <p className="text-clr-green text-fs-med flex justify-center mt-2">
-              Cargando...
-            </p>
-          )}
           {skillisEqual && (
             <p className="text-red-500 text-fs-med flex justify-center mt-2">
               Las habilidades no pueden ser iguales
@@ -609,11 +612,21 @@ export function WorkUserEdit() {
             </Link>
             <MainButton
               id="save"
-              type="submit"
+              // type="submit"
+              onClick={() => setIsModalOpen(true)}
               text="Guardar"
               extraStyles="mt-8 p-2"
             />
           </div>
+          <ConfirmationAlert
+            isOpen={isModalOpen}
+            onCancel={() => setIsModalOpen(false)}
+            onConfirm={handleSubmit}
+            title="¿Estás seguro?"
+            message="Esta acción no se puede deshacer."
+            cancelText="Cancelar"
+            confirmText="Guardar"
+          />
         </form>
       </div>
     </>

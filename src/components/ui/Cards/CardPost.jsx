@@ -36,6 +36,12 @@ export function CardPost({
   const [isWorker, setIsWorker] = useState(false);
   const { userData } = useFetchWorkUserData();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+  const handleConfirmCommentDelete = (commentId) => {
+    handleCommentDelete(commentId); // Llama la función de eliminación
+    setIsDeleteOpen(false); // Cierra el modal
+  };
 
   const handleConfirmDelete = () => {
     handleDeleteClick(); // Llama la función de eliminación
@@ -492,17 +498,33 @@ export function CardPost({
                                     comment.userId === userData.userId) ? (
                                     <button
                                       className="text-xs text-muted-foreground"
-                                      onClick={() =>
-                                        handleCommentDelete(comment.commentId)
+                                      onClick={
+                                        () => setIsDeleteOpen(true)
+
+                                        // handleCommentDelete(comment.commentId)
                                       }
                                     >
                                       {ICONS.trash}
                                     </button>
                                   ) : null}
+                                  <ConfirmationModal
+                                    isOpen={isDeleteOpen}
+                                    onCancel={() => setIsDeleteOpen(false)}
+                                    onConfirm={() =>
+                                      handleConfirmCommentDelete(
+                                        comment.commentId
+                                      )
+                                    }
+                                    title="¿Estás seguro?"
+                                    message="¿Deseas eliminar este comentario? Esta acción no se puede deshacer."
+                                    cancelText="Cancelar"
+                                    confirmText="Eliminar"
+                                  />
                                   <p className="text-xs text-gray-500">
                                     {formattedDate}
                                   </p>
                                 </div>
+
                                 <p className="text-sm break-words">
                                   {comment.contentComment}
                                 </p>
