@@ -41,11 +41,6 @@ export function WorkUserEdit() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleConfirmModal = () => {
-    handleSubmit(); // Ejecuta la función de editar perfil al confirmar
-    setIsModalOpen(false); // Cierra el modal
-  };
-
   const { deleteCategory } = useDeleteCategory();
 
   //const { deleteSkill } = useDeleteSkill();

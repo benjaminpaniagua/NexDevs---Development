@@ -10,6 +10,7 @@ import {
 } from "../ui/Buttons";
 import axios from "axios";
 import Alert from "../ui/Alert";
+import ConfirmationAlert from "../ui/ConfirmationAlert";
 
 export function EditPost() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export function EditPost() {
     commentsCount: 0,
     approved: 1,
   });
-
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -86,6 +87,7 @@ export function EditPost() {
   };
 
   const handleSubmitPost = async (e) => {
+    setIsConfirmationModalOpen(false);
     e.preventDefault();
     const formData = new FormData();
     formData.append("PostId", postId);
@@ -204,7 +206,15 @@ export function EditPost() {
                 disabled={loading}
                 extraStyles={"w-full"}
                 text={loading ? "Guardando..." : "Guardar Cambios"}
-                type="submit"
+                onClick={() => setIsConfirmationModalOpen(true)}
+              />
+              <ConfirmationAlert
+                isOpen={isConfirmationModalOpen}
+                onCancel={() => setIsConfirmationModalOpen(false)}
+                onConfirm={handleSubmitPost}
+                title="¿Estás seguro de guardar los cambios?"
+                message="Una vez guardados, los cambios serán enviados a revisión."
+                confirmText="Guardar"
               />
             </div>
           </section>
@@ -247,7 +257,7 @@ export function EditPost() {
           </section>
         </div>
       </form>
-       <Alert alert={alert} setAlert={setAlert} />
+      <Alert alert={alert} setAlert={setAlert} />
     </div>
   );
 }
