@@ -15,7 +15,6 @@ import Alert from "../ui/Alert.jsx";
 
 export function NormalUserEdit() {
   const navigate = useNavigate();
-  //const [isOwner, setIsOwner] = useState(false);
   const { userData, loading, error } = useFetchWorkUserData();
   const { userId } = useParams();
   const { editProfile, editLoading, editError } = useEditNormalUser();
@@ -87,7 +86,6 @@ export function NormalUserEdit() {
         const data = await response.json();
         const citiesArray = data ? Object.values(data) : [];
         setAvailableCities(citiesArray);
-        //console.log(citiesArray);
       } catch (error) {
         console.error("Error fetching cities:", error);
       }
@@ -118,8 +116,6 @@ export function NormalUserEdit() {
       if (userData.profileType == "W") {
         window.location.href = "/WorkUserEdit/" + userData.workId;
       } else if (userData.userId == userId) {
-        //console.log("Is owner");
-        //console.log(userData);
         setFormData({
           userId: userData.userId,
           firstName: userData.firstName,
@@ -147,7 +143,6 @@ export function NormalUserEdit() {
             const data = await response.json();
             const citiesArray = data ? Object.values(data) : [];
             setAvailableCities(citiesArray);
-            //console.log(citiesArray);
           } catch (error) {
             console.error("Error fetching cities:", error);
           }
@@ -180,10 +175,6 @@ export function NormalUserEdit() {
       newFormData.append("profilePictureUrl", userData.profilePictureUrl);
     }
 
-    /*for (let pair of newFormData.entries()) {
-            console.log(pair[0] + ': ' + pair[1]);
-        }*/
-
     const result = await editProfile(newFormData);
     if (result.success) {
       setAlert({
@@ -191,7 +182,9 @@ export function NormalUserEdit() {
         message: "Perfil editado con éxito",
         type: "success",
       });
-      console.log("Perfil editado con éxito", result);
+      setTimeout(() => {
+        navigate(-1);
+      }, 2500);
       window.location.href = "/Community_Feed/";
     } else if (editError) {
       setAlert({
@@ -199,7 +192,6 @@ export function NormalUserEdit() {
         message: `Error: ${editError}`,
         type: "error",
       });
-      console.error("Error al editar el perfil", editError);
     }
   };
 
