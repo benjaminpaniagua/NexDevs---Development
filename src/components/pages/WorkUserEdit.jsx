@@ -630,7 +630,7 @@ export function WorkUserEdit() {
             onCancel={() => setIsModalOpen(false)}
             onConfirm={handleSubmit}
             title="¿Estás seguro?"
-            message="Esta acción no se puede deshacer."
+            message="Estás a punto de guardar los cambios en tu perfil."
             cancelText="Cancelar"
             confirmText="Guardar"
           />

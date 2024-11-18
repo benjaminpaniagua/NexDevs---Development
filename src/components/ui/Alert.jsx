@@ -1,5 +1,5 @@
-import  { useEffect } from "react";
-import PropTypes from 'prop-types';
+import { useEffect } from "react";
+import PropTypes from "prop-types";
 
 const Alert = ({ alert, setAlert }) => {
   useEffect(() => {
@@ -17,7 +17,7 @@ const Alert = ({ alert, setAlert }) => {
 
   return (
     <div
-      className={`fixed flex gap-3 place-items-center left-1/2 transform -translate-x-1/2 z-50 px-8 py-4 rounded-md 
+      className={`fixed flex gap-3 place-items-center left-1/2 transform -translate-x-1/2 z-50 md:px-3 md:py-2 px-8 py-4 rounded-md 
             ${alert.type === "success" ? "bg-green-500" : "bg-red-500"} 
             bottom-auto translate-y-0 top-auto`}
     >
@@ -31,5 +31,5 @@ export default Alert;
 
 Alert.propTypes = {
   alert: PropTypes.object.isRequired,
-  setAlert: PropTypes.func.isRequired
-}
+  setAlert: PropTypes.func.isRequired,
+};
