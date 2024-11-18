@@ -509,11 +509,7 @@ export function CardPost({
                                     comment.userId === userData.userId) ? (
                                     <button
                                       className="text-xs text-muted-foreground"
-                                      onClick={
-                                        () => setIsDeleteOpen(true)
-
-                                        // handleCommentDelete(comment.commentId)
-                                      }
+                                      onClick={() => setIsDeleteOpen(true)}
                                     >
                                       {ICONS.trash}
                                     </button>

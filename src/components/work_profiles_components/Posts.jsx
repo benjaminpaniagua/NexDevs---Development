@@ -48,7 +48,7 @@ export function Posts() {
         type: "error",
       });
     } else {
-      setAlert({ show: true, message: result, type: "success" });
+      setAlert({ show: true, message: "Publicación eliminada correctamente.", type: "success" });
       setPosts((prevPosts) =>
         prevPosts.filter((post) => post.postId !== postId)
       );

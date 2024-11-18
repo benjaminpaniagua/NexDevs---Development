@@ -10,9 +10,13 @@ import { useDeletePost } from "../../hooks/useDeletePost";
 import Alert from "../ui/Alert";
 import AddIcon from "@mui/icons-material/Add";
 
-export function Posts_List({userData}) {
+export function Posts_List({ userData }) {
   const { data: posts, error, loading } = useFetchPosts();
-  const { likedPosts: likedPosts, error: likedError, loading: likedLoading } = useFetchLikedPosts(userData?.userId ?? 0, userData?.workId ?? 0);
+  const {
+    likedPosts: likedPosts,
+    error: likedError,
+    loading: likedLoading,
+  } = useFetchLikedPosts(userData?.userId ?? 0, userData?.workId ?? 0);
 
   const {
     deletePost,
@@ -23,7 +27,7 @@ export function Posts_List({userData}) {
   console.log(likedPosts);
   const { search } = useLocation();
   const queryParams = new URLSearchParams(search);
-  const liked = queryParams.get('liked')
+  const liked = queryParams.get("liked");
 
   const [postList, setPostList] = useState([]); // Estado local para manejar la lista de publicaciones
   const navigate = useNavigate();
@@ -44,7 +48,7 @@ export function Posts_List({userData}) {
       if (liked) {
         setPostList(likedPosts);
         //console.log("Lista de publicaciones actualizada:", likedPosts);
-      }else {
+      } else {
         setPostList(posts);
       }
       //console.log("Lista de publicaciones actualizada:", posts);
@@ -60,7 +64,11 @@ export function Posts_List({userData}) {
         type: "error",
       });
     } else {
-      setAlert({ show: true, message: result, type: "success" });
+      setAlert({
+        show: true,
+        message: "Publicación eliminada correctamente.",
+        type: "success",
+      });
       setPostList((prevPosts) =>
         prevPosts.filter((post) => post.postId !== postId)
       );
@@ -68,7 +76,9 @@ export function Posts_List({userData}) {
   };
 
   const renderIcon = () => {
-    return <AddIcon className="text-white bg-black rounded-full w-6 h-6 sm:w-4 sm:h-4" />;
+    return (
+      <AddIcon className="text-white bg-black rounded-full w-6 h-6 sm:w-4 sm:h-4" />
+    );
   };
 
   const renderTop = () => {
